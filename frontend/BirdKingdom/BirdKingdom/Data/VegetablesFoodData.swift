@@ -1,0 +1,126 @@
+import Foundation
+
+// MARK: - 蔬菜类食物数据 (120+种)
+extension BirdFood {
+    static let vegetablesFoods: [BirdFood] = [
+        // ========== 十字花科蔬菜 ==========
+        BirdFood(name: "西兰花", category: .vegetables, safetyLevel: .safe, description: "超级蔬菜，营养全面", notes: "生吃或轻微蒸煮，花和茎都可以", nutrients: ["维生素C", "维生素K", "叶酸", "萝卜硫素"]),
+        BirdFood(name: "花椰菜", category: .vegetables, safetyLevel: .safe, description: "西兰花的白色亲戚", notes: "生吃或轻蒸", nutrients: ["维生素C", "维生素K", "叶酸", "胆碱"]),
+        BirdFood(name: "羽衣甘蓝", category: .vegetables, safetyLevel: .safe, description: "营养密度极高", notes: "新鲜叶子，是钙的良好来源", nutrients: ["维生素K", "维生素A", "维生素C", "钙"]),
+        BirdFood(name: "卷心菜", category: .vegetables, safetyLevel: .safe, description: "耐储存的蔬菜", notes: "撕成小片喂食", nutrients: ["维生素C", "维生素K", "纤维素"]),
+        BirdFood(name: "紫甘蓝", category: .vegetables, safetyLevel: .safe, description: "富含花青素", notes: "比绿色卷心菜抗氧化物更多", nutrients: ["维生素C", "维生素K", "花青素"]),
+        BirdFood(name: "抱子甘蓝", category: .vegetables, safetyLevel: .safe, description: "迷你卷心菜", notes: "切半或切碎喂食", nutrients: ["维生素K", "维生素C", "叶酸"]),
+        BirdFood(name: "大白菜", category: .vegetables, safetyLevel: .safe, description: "常见蔬菜", notes: "洗净生吃或轻煮", nutrients: ["维生素C", "维生素K", "叶酸"]),
+        BirdFood(name: "小白菜/青江菜", category: .vegetables, safetyLevel: .safe, description: "钙含量较高", notes: "新鲜叶子和茎都可以", nutrients: ["钙", "维生素C", "维生素A", "钾"]),
+        BirdFood(name: "油菜", category: .vegetables, safetyLevel: .safe, description: "常见绿叶菜", notes: "新鲜叶子最佳", nutrients: ["钙", "维生素C", "维生素A"]),
+        BirdFood(name: "菜心", category: .vegetables, safetyLevel: .safe, description: "嫩茎蔬菜", notes: "茎和叶都可以", nutrients: ["维生素C", "维生素A", "钙"]),
+        BirdFood(name: "芥蓝", category: .vegetables, safetyLevel: .safe, description: "中国绿叶蔬菜", notes: "茎和叶都可以吃", nutrients: ["维生素A", "维生素C", "钙"]),
+        BirdFood(name: "芥菜", category: .vegetables, safetyLevel: .safe, description: "略带辛辣", notes: "少量喂食", nutrients: ["维生素K", "维生素A", "维生素C"]),
+        BirdFood(name: "萝卜", category: .vegetables, safetyLevel: .safe, description: "根茎蔬菜", notes: "切小块，叶子也可以吃", nutrients: ["维生素C", "钾", "叶酸"]),
+        BirdFood(name: "白萝卜", category: .vegetables, safetyLevel: .safe, description: "清爽的根茎", notes: "切丝或切片", nutrients: ["维生素C", "钾", "纤维素"]),
+        BirdFood(name: "红萝卜/樱桃萝卜", category: .vegetables, safetyLevel: .safe, description: "小型萝卜", notes: "切片喂食", nutrients: ["维生素C", "叶酸"]),
+        BirdFood(name: "芜菁", category: .vegetables, safetyLevel: .safe, description: "根茎蔬菜", notes: "煮熟后更易消化", nutrients: ["维生素C", "钾", "锰"]),
+        BirdFood(name: "芝麻菜", category: .vegetables, safetyLevel: .safe, description: "略带辛辣的绿叶菜", notes: "新鲜叶子", nutrients: ["维生素K", "叶酸", "钙"]),
+        BirdFood(name: "水芹/西洋菜", category: .vegetables, safetyLevel: .safe, description: "水生蔬菜", notes: "确保来源干净", nutrients: ["维生素K", "维生素C", "钙"]),
+        BirdFood(name: "芥蓝菜苗", category: .vegetables, safetyLevel: .safe, description: "嫩芽蔬菜", notes: "营养密集", nutrients: ["维生素C", "维生素K"]),
+        BirdFood(name: "萝卜苗", category: .vegetables, safetyLevel: .safe, description: "萝卜的嫩芽", notes: "新鲜的", nutrients: ["维生素C", "维生素E"]),
+        
+        // ========== 根茎类蔬菜 ==========
+        BirdFood(name: "胡萝卜", category: .vegetables, safetyLevel: .safe, description: "富含β-胡萝卜素，对羽毛色泽有益", notes: "生熟皆可，切丝或切片，叶子也可以吃", nutrients: ["维生素A", "纤维素", "钾", "生物素"]),
+        BirdFood(name: "红薯/地瓜", category: .vegetables, safetyLevel: .safe, description: "营养丰富的根茎类", notes: "必须煮熟！生红薯难消化且含胰蛋白酶抑制剂", nutrients: ["维生素A", "纤维素", "钾", "锰"]),
+        BirdFood(name: "紫薯", category: .vegetables, safetyLevel: .safe, description: "富含花青素", notes: "必须煮熟", nutrients: ["维生素A", "花青素", "纤维素"]),
+        BirdFood(name: "山药", category: .vegetables, safetyLevel: .safe, description: "滋补根茎", notes: "煮熟后喂食，生山药黏液可能刺激", nutrients: ["钾", "锰", "纤维素"]),
+        BirdFood(name: "芋头", category: .vegetables, safetyLevel: .caution, description: "含草酸钙结晶", notes: "必须完全煮熟！生芋头的草酸钙针晶会严重刺激口腔和消化道", nutrients: ["纤维素", "钾", "维生素E"]),
+        BirdFood(name: "莲藕", category: .vegetables, safetyLevel: .safe, description: "水生根茎", notes: "煮熟后喂食", nutrients: ["维生素C", "纤维素", "铜"]),
+        BirdFood(name: "甜菜根", category: .vegetables, safetyLevel: .safe, description: "深红色根茎", notes: "煮熟切小块，会使粪便变色(正常现象)", nutrients: ["叶酸", "锰", "钾", "甜菜碱"]),
+        BirdFood(name: "牛蒡", category: .vegetables, safetyLevel: .safe, description: "纤维丰富", notes: "煮熟后喂食", nutrients: ["纤维素", "钾", "锰"]),
+        BirdFood(name: "姜黄", category: .vegetables, safetyLevel: .caution, description: "香料根茎", notes: "极少量，主要作为调味", nutrients: ["姜黄素"]),
+        BirdFood(name: "生姜", category: .vegetables, safetyLevel: .caution, description: "刺激性根茎", notes: "极少量可能有益，但不建议常规喂食", nutrients: ["姜辣素"]),
+        
+        // ========== 瓜果类蔬菜 ==========
+        BirdFood(name: "黄瓜", category: .vegetables, safetyLevel: .safe, description: "水分充足，清凉解暑", notes: "去皮更安全(避免农药)，营养价值较低", nutrients: ["水分", "维生素K", "钾"]),
+        BirdFood(name: "西葫芦", category: .vegetables, safetyLevel: .safe, description: "低热量蔬菜", notes: "生熟皆可", nutrients: ["维生素C", "钾", "锰"]),
+        BirdFood(name: "南瓜", category: .vegetables, safetyLevel: .safe, description: "富含维生素A，对眼睛好", notes: "煮熟后喂食更易消化，籽也可以吃", nutrients: ["维生素A", "纤维素", "钾", "维生素C"]),
+        BirdFood(name: "冬瓜", category: .vegetables, safetyLevel: .safe, description: "水分充足", notes: "煮熟后喂食", nutrients: ["维生素C", "钾"]),
+        BirdFood(name: "苦瓜", category: .vegetables, safetyLevel: .caution, description: "味道苦涩", notes: "大多数鸟不喜欢，含苦瓜素，少量尝试", nutrients: ["维生素C", "叶酸"]),
+        BirdFood(name: "丝瓜", category: .vegetables, safetyLevel: .safe, description: "嫩瓜可食", notes: "嫩的煮熟喂食", nutrients: ["维生素C", "锰"]),
+        BirdFood(name: "佛手瓜", category: .vegetables, safetyLevel: .safe, description: "清淡蔬菜", notes: "煮熟后喂食", nutrients: ["维生素C", "叶酸", "锌"]),
+        BirdFood(name: "瓠瓜/葫芦", category: .vegetables, safetyLevel: .safe, description: "清淡蔬菜", notes: "嫩的煮熟喂食", nutrients: ["维生素C", "钾"]),
+        BirdFood(name: "节瓜", category: .vegetables, safetyLevel: .safe, description: "小型冬瓜", notes: "煮熟后喂食", nutrients: ["维生素C", "钾"]),
+        
+        // ========== 豆类蔬菜 ==========
+        BirdFood(name: "豌豆", category: .vegetables, safetyLevel: .safe, description: "蛋白质丰富", notes: "新鲜或冷冻的都可以", nutrients: ["蛋白质", "纤维素", "维生素K", "锰"]),
+        BirdFood(name: "荷兰豆/甜豆", category: .vegetables, safetyLevel: .safe, description: "连荚可食", notes: "新鲜的，整个都可以吃", nutrients: ["维生素C", "维生素K", "纤维素"]),
+        BirdFood(name: "四季豆/菜豆", category: .vegetables, safetyLevel: .caution, description: "必须煮熟", notes: "生四季豆含皂苷和植物血凝素(PHA)，可导致严重中毒！必须完全煮熟15分钟以上", nutrients: ["维生素K", "维生素C", "锰"]),
+        BirdFood(name: "豇豆/长豆角", category: .vegetables, safetyLevel: .caution, description: "必须煮熟", notes: "与四季豆类似，必须煮熟", nutrients: ["维生素C", "叶酸"]),
+        BirdFood(name: "毛豆", category: .vegetables, safetyLevel: .safe, description: "未成熟大豆", notes: "煮熟后去壳喂食", nutrients: ["蛋白质", "纤维素", "维生素K"]),
+        BirdFood(name: "扁豆", category: .vegetables, safetyLevel: .safe, description: "蛋白质丰富", notes: "煮熟后喂食", nutrients: ["蛋白质", "纤维素", "叶酸", "铁"]),
+        BirdFood(name: "绿豆", category: .vegetables, safetyLevel: .safe, description: "清热解毒", notes: "煮熟或发芽后喂食", nutrients: ["蛋白质", "纤维素", "叶酸"]),
+        BirdFood(name: "红豆", category: .vegetables, safetyLevel: .safe, description: "营养丰富", notes: "必须煮熟煮透", nutrients: ["蛋白质", "纤维素", "铁"]),
+        BirdFood(name: "黑豆", category: .vegetables, safetyLevel: .safe, description: "富含花青素", notes: "必须煮熟", nutrients: ["蛋白质", "纤维素", "花青素"]),
+        BirdFood(name: "鹰嘴豆", category: .vegetables, safetyLevel: .safe, description: "中东常见豆类", notes: "煮熟后喂食", nutrients: ["蛋白质", "纤维素", "叶酸"]),
+        BirdFood(name: "豆芽(绿豆芽)", category: .vegetables, safetyLevel: .safe, description: "发芽的绿豆", notes: "新鲜的，营养价值高", nutrients: ["维生素C", "维生素K", "叶酸"]),
+        BirdFood(name: "黄豆芽", category: .vegetables, safetyLevel: .safe, description: "发芽的黄豆", notes: "新鲜的", nutrients: ["维生素C", "蛋白质"]),
+        BirdFood(name: "蚕豆", category: .vegetables, safetyLevel: .caution, description: "可能引起蚕豆病", notes: "煮熟后少量，G6PD缺乏症患者(包括鸟)应避免", nutrients: ["蛋白质", "纤维素"]),
+        
+        // ========== 绿叶蔬菜 ==========
+        BirdFood(name: "生菜(罗马生菜)", category: .vegetables, safetyLevel: .safe, description: "营养价值较高的生菜品种", notes: "深绿色品种更有营养", nutrients: ["维生素A", "维生素K", "叶酸"]),
+        BirdFood(name: "生菜(卷心生菜)", category: .vegetables, safetyLevel: .caution, description: "水分多但营养低", notes: "几乎没有营养价值，仅作为水分补充，不建议作为主要蔬菜", nutrients: ["水分"]),
+        BirdFood(name: "菠菜", category: .vegetables, safetyLevel: .caution, description: "富含铁和叶酸", notes: "含草酸会阻碍钙吸收并可能导致肾结石，少量喂食，不宜作为主要绿叶菜", nutrients: ["铁", "叶酸", "维生素K", "镁"]),
+        BirdFood(name: "空心菜/蕹菜", category: .vegetables, safetyLevel: .safe, description: "中空茎的绿叶菜", notes: "新鲜的，茎和叶都可以", nutrients: ["维生素A", "维生素C", "铁"]),
+        BirdFood(name: "茼蒿", category: .vegetables, safetyLevel: .safe, description: "菊科蔬菜", notes: "新鲜叶子", nutrients: ["维生素A", "钾", "钠"]),
+        BirdFood(name: "苋菜", category: .vegetables, safetyLevel: .safe, description: "红色或绿色叶子", notes: "新鲜叶子", nutrients: ["维生素A", "维生素C", "钙", "铁"]),
+        BirdFood(name: "木耳菜/落葵", category: .vegetables, safetyLevel: .safe, description: "肉质叶片", notes: "新鲜叶子", nutrients: ["维生素A", "维生素C", "铁"]),
+        BirdFood(name: "芹菜", category: .vegetables, safetyLevel: .safe, description: "纤维丰富", notes: "切成小段，去掉粗纤维，叶子也可以吃且更有营养", nutrients: ["纤维素", "维生素K", "钾", "叶酸"]),
+        BirdFood(name: "西芹", category: .vegetables, safetyLevel: .safe, description: "西方芹菜品种", notes: "切小段", nutrients: ["维生素K", "钾", "叶酸"]),
+        BirdFood(name: "芦笋", category: .vegetables, safetyLevel: .safe, description: "春季时令蔬菜", notes: "轻微蒸煮后喂食", nutrients: ["叶酸", "维生素K", "维生素C", "维生素A"]),
+        BirdFood(name: "瑞士甜菜", category: .vegetables, safetyLevel: .caution, description: "彩色茎的绿叶菜", notes: "含草酸，少量喂食", nutrients: ["维生素K", "维生素A", "镁"]),
+        BirdFood(name: "韭黄", category: .vegetables, safetyLevel: .dangerous, description: "韭菜的变种", notes: "葱属植物，有毒！", nutrients: []),
+        
+        // ========== 茄科蔬菜 ==========
+        // 注意：茄科植物的绿色部分都含茄碱(solanine)，有毒！
+        BirdFood(name: "甜椒/彩椒", category: .vegetables, safetyLevel: .safe, description: "维生素C含量极高", notes: "去籽，各种颜色都可以，红色最甜营养最高", nutrients: ["维生素C", "维生素A", "维生素B6"]),
+        BirdFood(name: "青椒", category: .vegetables, safetyLevel: .safe, description: "未成熟的甜椒", notes: "去籽，略带苦味", nutrients: ["维生素C", "维生素K"]),
+        BirdFood(name: "红椒", category: .vegetables, safetyLevel: .safe, description: "成熟的甜椒", notes: "去籽，最甜", nutrients: ["维生素C", "维生素A"]),
+        BirdFood(name: "黄椒", category: .vegetables, safetyLevel: .safe, description: "成熟的甜椒", notes: "去籽", nutrients: ["维生素C", "维生素A"]),
+        BirdFood(name: "番茄", category: .vegetables, safetyLevel: .dangerous, description: "茎叶有毒！", notes: "茎、叶、未熟果实含茄碱(solanine)和番茄碱(tomatine)，对鸟有毒！成熟果肉酸性高也可能刺激消化道，建议完全避免", nutrients: []),
+        BirdFood(name: "圣女果/小番茄", category: .vegetables, safetyLevel: .dangerous, description: "与番茄同样危险", notes: "茎叶有毒，果肉酸性高，建议避免", nutrients: []),
+        BirdFood(name: "黄番茄", category: .vegetables, safetyLevel: .dangerous, description: "番茄变种", notes: "同样有风险，建议避免", nutrients: []),
+        BirdFood(name: "茄子", category: .vegetables, safetyLevel: .caution, description: "茄科植物", notes: "只能吃完全煮熟的果肉，生茄子和叶子含茄碱有毒", nutrients: ["纤维素", "维生素B1", "钾"]),
+        BirdFood(name: "土豆/马铃薯", category: .vegetables, safetyLevel: .caution, description: "必须煮熟", notes: "生土豆、发芽土豆、绿色部分含茄碱剧毒！只能吃煮熟的白色部分，绿皮绝对不能吃", nutrients: ["碳水化合物", "维生素C", "钾", "维生素B6"]),
+        
+        // ========== 其他蔬菜 ==========
+        BirdFood(name: "玉米", category: .vegetables, safetyLevel: .safe, description: "鸟儿喜爱的食物", notes: "新鲜玉米粒最佳，煮熟或生的都可以", nutrients: ["碳水化合物", "纤维素", "维生素B", "叶黄素"]),
+        BirdFood(name: "甜玉米", category: .vegetables, safetyLevel: .safe, description: "糖分较高的玉米", notes: "新鲜的", nutrients: ["碳水化合物", "维生素B"]),
+        BirdFood(name: "糯玉米", category: .vegetables, safetyLevel: .safe, description: "黏性玉米", notes: "煮熟后喂食", nutrients: ["碳水化合物"]),
+        BirdFood(name: "秋葵", category: .vegetables, safetyLevel: .safe, description: "黏液蔬菜", notes: "切片喂食", nutrients: ["维生素C", "维生素K", "叶酸"]),
+        BirdFood(name: "竹笋", category: .vegetables, safetyLevel: .caution, description: "含氰苷", notes: "必须煮熟！生竹笋含氰苷(taxiphyllin)，煮熟后安全", nutrients: ["纤维素", "钾", "维生素B6"]),
+        BirdFood(name: "茭白", category: .vegetables, safetyLevel: .safe, description: "水生蔬菜", notes: "煮熟后喂食", nutrients: ["钾", "维生素C"]),
+        BirdFood(name: "莴笋/莴苣", category: .vegetables, safetyLevel: .safe, description: "茎用蔬菜", notes: "生吃或煮熟都可以", nutrients: ["维生素A", "叶酸", "钾"]),
+        BirdFood(name: "蘑菇(食用)", category: .vegetables, safetyLevel: .caution, description: "真菌类", notes: "只能喂食超市购买的食用蘑菇(香菇、平菇、金针菇等)，煮熟后少量。野生蘑菇绝对不能喂！", nutrients: ["维生素D", "硒", "钾"]),
+        BirdFood(name: "香菇", category: .vegetables, safetyLevel: .safe, description: "常见食用菌", notes: "煮熟后少量", nutrients: ["维生素D", "硒", "B族维生素"]),
+        BirdFood(name: "平菇", category: .vegetables, safetyLevel: .safe, description: "常见食用菌", notes: "煮熟后少量", nutrients: ["蛋白质", "纤维素"]),
+        BirdFood(name: "金针菇", category: .vegetables, safetyLevel: .safe, description: "细长食用菌", notes: "煮熟后切短", nutrients: ["蛋白质", "纤维素"]),
+        BirdFood(name: "木耳", category: .vegetables, safetyLevel: .safe, description: "食用真菌", notes: "泡发煮熟后喂食", nutrients: ["铁", "纤维素", "维生素B2"]),
+        BirdFood(name: "银耳", category: .vegetables, safetyLevel: .safe, description: "食用真菌", notes: "泡发煮熟后喂食", nutrients: ["纤维素", "维生素D"]),
+        BirdFood(name: "海带", category: .vegetables, safetyLevel: .caution, description: "海藻类", notes: "少量，碘含量高，过量可能影响甲状腺", nutrients: ["碘", "纤维素", "钙"]),
+        BirdFood(name: "紫菜", category: .vegetables, safetyLevel: .caution, description: "海藻类", notes: "无盐的，少量", nutrients: ["碘", "蛋白质", "维生素B12"]),
+        BirdFood(name: "裙带菜", category: .vegetables, safetyLevel: .caution, description: "海藻类", notes: "少量，碘含量高", nutrients: ["碘", "钙", "镁"]),
+        
+        // ========== 危险蔬菜 - 葱属植物 ==========
+        // 所有葱属植物都含硫化物(thiosulfate)，会破坏红细胞导致溶血性贫血！
+        BirdFood(name: "洋葱", category: .vegetables, safetyLevel: .dangerous, description: "对鸟类剧毒！", notes: "含硫化物(n-propyl disulfide)，会破坏红细胞导致溶血性贫血(Heinz body anemia)，即使少量也危险，可能致死。煮熟也不能消除毒性！", nutrients: []),
+        BirdFood(name: "红洋葱", category: .vegetables, safetyLevel: .dangerous, description: "与洋葱同样危险", notes: "所有洋葱品种都有毒", nutrients: []),
+        BirdFood(name: "白洋葱", category: .vegetables, safetyLevel: .dangerous, description: "与洋葱同样危险", notes: "所有洋葱品种都有毒", nutrients: []),
+        BirdFood(name: "大蒜", category: .vegetables, safetyLevel: .dangerous, description: "对鸟类有毒！", notes: "与洋葱同属，含硫化物，即使少量也可能造成伤害。有些资料称极少量可能有益，但风险大于收益，建议完全避免", nutrients: []),
+        BirdFood(name: "大葱", category: .vegetables, safetyLevel: .dangerous, description: "葱属植物，有毒", notes: "所有葱属植物对鸟都有毒", nutrients: []),
+        BirdFood(name: "小葱/香葱", category: .vegetables, safetyLevel: .dangerous, description: "葱属植物，有毒", notes: "即使少量也不安全", nutrients: []),
+        BirdFood(name: "韭菜", category: .vegetables, safetyLevel: .dangerous, description: "葱属植物，有毒", notes: "与洋葱大蒜同属，不能喂食", nutrients: []),
+        BirdFood(name: "蒜苗/蒜苔", category: .vegetables, safetyLevel: .dangerous, description: "大蒜的茎", notes: "与大蒜同样有毒", nutrients: []),
+        BirdFood(name: "洋葱粉", category: .vegetables, safetyLevel: .dangerous, description: "洋葱制品", notes: "浓缩的洋葱，更危险", nutrients: []),
+        BirdFood(name: "蒜粉", category: .vegetables, safetyLevel: .dangerous, description: "大蒜制品", notes: "浓缩的大蒜，更危险", nutrients: []),
+        BirdFood(name: "葱油", category: .vegetables, safetyLevel: .dangerous, description: "葱制品", notes: "含葱的成分，有毒", nutrients: []),
+        BirdFood(name: "青蒜", category: .vegetables, safetyLevel: .dangerous, description: "大蒜幼苗", notes: "与大蒜同样有毒", nutrients: []),
+        BirdFood(name: "珠葱/分葱", category: .vegetables, safetyLevel: .dangerous, description: "葱属植物", notes: "有毒", nutrients: []),
+    ]
+}
