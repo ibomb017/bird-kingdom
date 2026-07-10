@@ -153,6 +153,31 @@ class NotificationService: ObservableObject {
             repeats: false
         )
     }
+    
+    /// 创建即时系统本地通知（用于寻鸟帖等重要警报）
+    func scheduleImmediateNotification(
+        id: String,
+        title: String,
+        body: String
+    ) async throws {
+        // 确保有权限
+        if !isAuthorized {
+            let granted = await requestAuthorization()
+            guard granted else { return }
+        }
+        
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = body
+        content.sound = .default
+        
+        // 1秒后立即触发
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
+        
+        try await UNUserNotificationCenter.current().add(request)
+        print("🔔 已成功发送即时本地通知: \(title)")
+    }
 }
 
 // MARK: - 错误类型

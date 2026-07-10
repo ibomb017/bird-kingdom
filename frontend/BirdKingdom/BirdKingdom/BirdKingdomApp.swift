@@ -471,7 +471,7 @@ struct MainTabView: View {
             if let post = nearbyService.alertPost {
                 let birdName = post.birdName ?? "小鸟"
                 let location = post.locationName ?? "附近"
-                Text("您附近5公里内有人发布了寻鸟帖\n\n🐦 鸟儿：\(birdName)\n📍 位置：\(location)\n\n如果您看到了这只鸟儿，请帮忙联系失主！")
+                Text("您附近10公里内有人发布了寻鸟帖\n\n🐦 鸟儿：\(birdName)\n📍 位置：\(location)\n\n如果您看到了这只鸟儿，请帮忙联系失主！")
             } else {
                 Text("附近有鸟儿走失，请查看详情")
             }

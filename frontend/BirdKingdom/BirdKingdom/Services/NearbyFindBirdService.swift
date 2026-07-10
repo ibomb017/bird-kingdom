@@ -14,7 +14,7 @@ class NearbyFindBirdService: ObservableObject {
     private let pollInterval: TimeInterval = 60
     
     /// 提醒范围（公里）
-    private let alertRadiusKm: Double = 5.0
+    private let alertRadiusKm: Double = 10.0
     
     /// 已经提醒过的帖子 ID（防止重复弹窗）
     private var alertedPostIds: Set<Int64> = []
@@ -104,10 +104,19 @@ class NearbyFindBirdService: ObservableObject {
                     let distanceKm = currentLocation.distance(from: postLocation) / 1000.0
                     
                     if distanceKm <= alertRadiusKm {
-                        // 在5公里范围内，触发弹窗
+                        // 在10公里范围内，触发弹窗与系统本地通知
                         await MainActor.run {
                             self.alertPost = post
                         }
+                        
+                        let birdName = post.birdName ?? "小鸟"
+                        let location = post.locationName ?? "附近"
+                        try? await NotificationService.shared.scheduleImmediateNotification(
+                            id: "nearby_find_bird_\(post.id)",
+                            title: "🚨 附近有鸟儿走失",
+                            body: "您附近10公里内有人发布了寻鸟帖：🐦 鸟儿：\(birdName)，📍 位置：\(location)，请帮忙留意！"
+                        )
+                        
                         // 一次只弹一个
                         break
                     }
