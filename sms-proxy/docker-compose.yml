@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  sms-proxy:
+    build: .
+    container_name: sms-proxy
+    ports:
+      - "8081:8081"
+    environment:
+      - SMS_PROXY_API_KEY=${SMS_PROXY_API_KEY}
+      - ALIYUN_SMS_ACCESS_KEY_ID=${ALIYUN_SMS_ACCESS_KEY_ID}
+      - ALIYUN_SMS_ACCESS_KEY_SECRET=${ALIYUN_SMS_ACCESS_KEY_SECRET}
+      - ALIYUN_SMS_SIGN_NAME=${ALIYUN_SMS_SIGN_NAME:-义乌市侨吧贸易}
+      - ALIYUN_SMS_TEMPLATE_CODE=${ALIYUN_SMS_TEMPLATE_CODE:-SMS_499015325}
+      - ALIYUN_SMS_REGION_ID=${ALIYUN_SMS_REGION_ID:-cn-shanghai}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8081/internal/sms/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

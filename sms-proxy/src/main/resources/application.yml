@@ -1,0 +1,40 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: sms-proxy
+
+# SMS代理安全配置
+sms-proxy:
+  # API密钥 - Swift 后端和 SMS Proxy 之间的认证密钥（两边必须相同）
+  api-key: ${SMS_PROXY_API_KEY:birdkingdom-sms-proxy-2026-production-key}
+  # 允许的来源IP（可选，用于额外安全）
+  # allowed-ips: ${SMS_PROXY_ALLOWED_IPS:}
+
+# 阿里云短信配置
+# 注意：生产环境必须通过环境变量设置，不要硬编码密钥！
+aliyun:
+  sms:
+    access-key-id: ${ALIYUN_SMS_ACCESS_KEY_ID:}
+    access-key-secret: ${ALIYUN_SMS_ACCESS_KEY_SECRET:}
+    sign-name: ${ALIYUN_SMS_SIGN_NAME:义乌市侨吧贸易}
+    template-code: ${ALIYUN_SMS_TEMPLATE_CODE:SMS_499015325}
+    region-id: ${ALIYUN_SMS_REGION_ID:cn-shanghai}
+
+# 日志配置
+logging:
+  level:
+    com.birdkingdom.smsproxy: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+# 邮件配置（用于发送用户反馈）
+email:
+  smtp:
+    host: ${EMAIL_SMTP_HOST:smtp.163.com}
+    port: ${EMAIL_SMTP_PORT:465}
+  sender: ${EMAIL_SENDER:birdkingdom@163.com}
+  password: ${EMAIL_PASSWORD:}
+  receiver: ${EMAIL_RECEIVER:birdkingdom@163.com}
+

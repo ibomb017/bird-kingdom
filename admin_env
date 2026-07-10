@@ -1,0 +1,6 @@
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_NAME=bird_kingdom
+DB_USER=root
+DB_PASSWORD=Chen_20040601
+JWT_SECRET=birdkingdomadmin2025secretkey1234567890abcdef

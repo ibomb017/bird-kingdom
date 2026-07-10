@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="24A335" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="LocalBirdEntity" representedClassName="LocalBirdEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="adoptionDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="avatarUrl" optional="YES" attributeType="String"/>
+        <attribute name="birthdayType" optional="YES" attributeType="String"/>
+        <attribute name="cacheTimestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="deathDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="deletedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="fatherInfo" optional="YES" attributeType="String"/>
+        <attribute name="featherColor" optional="YES" attributeType="String"/>
+        <attribute name="gender" optional="YES" attributeType="String"/>
+        <attribute name="hatchDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="isLost" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="legRingId" optional="YES" attributeType="String"/>
+        <attribute name="localId" attributeType="String"/>
+        <attribute name="lostDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="lostLocation" optional="YES" attributeType="String"/>
+        <attribute name="lostPostId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="markedAsDeleted" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="medicalHistory" optional="YES" attributeType="String"/>
+        <attribute name="motherInfo" optional="YES" attributeType="String"/>
+        <attribute name="needsSync" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="nickname" attributeType="String"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="serverId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="source" optional="YES" attributeType="String"/>
+        <attribute name="species" attributeType="String"/>
+        <attribute name="syncRetryCount" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="updatedAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="userId" optional="YES" attributeType="String"/>
+        <attribute name="version" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="syncError" optional="YES" attributeType="String"/>
+        <fetchIndex name="byUserId">
+            <fetchIndexElement property="userId" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byServerId">
+            <fetchIndexElement property="serverId" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byMarkedAsDeleted">
+            <fetchIndexElement property="markedAsDeleted" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="localId"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="ParrotSpeciesEntity" representedClassName="ParrotSpeciesEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="category" attributeType="String"/>
+        <attribute name="clutchSizeMax" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="clutchSizeMin" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="estrusCycleMax" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="estrusCycleMin" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="incubationDaysMax" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="incubationDaysMin" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="isLayingEggsAvailable" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="lastUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="moltingCycleMax" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="moltingCycleMin" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="moltingDurationMax" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="moltingDurationMin" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="serverId" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="weightMax" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="weightMin" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <fetchIndex name="byName">
+            <fetchIndexElement property="name" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="name"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="LocalBirdLogEntity" representedClassName="LocalBirdLogEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="behavior" optional="YES" attributeType="String"/>
+        <attribute name="birdLocalId" attributeType="String"/>
+        <attribute name="content" optional="YES" attributeType="String"/>
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="deletedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="healthScore" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" minValueString="1" maxValueString="10"/>
+        <attribute name="isMolting" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="isBreeding" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="markedAsDeleted" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="localId" attributeType="String"/>
+        <attribute name="logDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="mood" optional="YES" attributeType="String"/>
+        <attribute name="needsSync" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="serverId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="syncError" optional="YES" attributeType="String"/>
+        <attribute name="syncRetryCount" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="updatedAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="userId" optional="YES" attributeType="String"/>
+        <attribute name="version" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="weight" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO"/>
+        <attribute name="localImagePaths" optional="YES" attributeType="String"/>
+        <attribute name="ossURLs" optional="YES" attributeType="String"/>
+        <attribute name="imageUploadStatus" optional="YES" attributeType="String"/>
+        <attribute name="imageRetryCount" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="lastImageUploadError" optional="YES" attributeType="String"/>
+        <fetchIndex name="byBirdAndDate">
+            <fetchIndexElement property="birdLocalId" type="Binary" order="ascending"/>
+            <fetchIndexElement property="logDate" type="Binary" order="descending"/>
+        </fetchIndex>
+        <fetchIndex name="byUserId">
+            <fetchIndexElement property="userId" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="localId"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="LocalExpenseEntity" representedClassName="LocalExpenseEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="amount" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" minValueString="0.01"/>
+        <attribute name="birdId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="birdName" optional="YES" attributeType="String"/>
+        <attribute name="category" attributeType="String"/>
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="expenseDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="markedAsDeleted" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="localId" attributeType="String"/>
+        <attribute name="needsSync" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="note" optional="YES" attributeType="String"/>
+        <attribute name="serverId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="syncRetryCount" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="title" attributeType="String"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="userId" optional="YES" attributeType="String"/>
+        <fetchIndex name="byUserId">
+            <fetchIndexElement property="userId" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byUserAndCategory">
+            <fetchIndexElement property="userId" type="Binary" order="ascending"/>
+            <fetchIndexElement property="category" type="Binary" order="ascending"/>
+            <fetchIndexElement property="expenseDate" type="Binary" order="descending"/>
+        </fetchIndex>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="localId"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="LocalWeightRecordEntity" representedClassName="LocalWeightRecordEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="birdLocalId" attributeType="String"/>
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="deletedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="markedAsDeleted" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="localId" attributeType="String"/>
+        <attribute name="needsSync" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="recordDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="serverId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="syncError" optional="YES" attributeType="String"/>
+        <attribute name="syncRetryCount" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="updatedAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="userId" optional="YES" attributeType="String"/>
+        <attribute name="version" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="weight" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <fetchIndex name="byBirdAndDate">
+            <fetchIndexElement property="birdLocalId" type="Binary" order="ascending"/>
+            <fetchIndexElement property="recordDate" type="Binary" order="descending"/>
+        </fetchIndex>
+        <fetchIndex name="byUserId">
+            <fetchIndexElement property="userId" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="localId"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="LocalCycleRecordEntity" representedClassName="LocalCycleRecordEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="birdLocalId" attributeType="String"/>
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="cycleType" attributeType="String"/>
+        <attribute name="eggCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="endDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="hatchedCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="localId" attributeType="String"/>
+        <attribute name="markedAsDeleted" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="needsSync" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="nextPredictedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="serverId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="speciesName" optional="YES" attributeType="String"/>
+        <attribute name="startDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="syncError" optional="YES" attributeType="String"/>
+        <attribute name="syncRetryCount" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="syncStatus" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="userId" optional="YES" attributeType="String"/>
+        <fetchIndex name="byBirdAndType">
+            <fetchIndexElement property="birdLocalId" type="Binary" order="ascending"/>
+            <fetchIndexElement property="cycleType" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byStartDate">
+            <fetchIndexElement property="startDate" type="Binary" order="descending"/>
+        </fetchIndex>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="localId"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="LocalBirdShareEntity" representedClassName="LocalBirdShareEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="birdId" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="birdLocalId" optional="YES" attributeType="String"/>
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="localId" attributeType="String"/>
+        <attribute name="ownerId" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="ownerName" optional="YES" attributeType="String"/>
+        <attribute name="role" attributeType="String" defaultValueString="VIEWER"/>
+        <attribute name="serverId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="sharedUserId" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="sharedUserName" optional="YES" attributeType="String"/>
+        <attribute name="status" attributeType="String" defaultValueString="PENDING"/>
+        <attribute name="updatedAt" attributeType="Date" usesScalarValueType="NO"/>
+        <fetchIndex name="byBirdId">
+            <fetchIndexElement property="birdId" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="bySharedUserId">
+            <fetchIndexElement property="sharedUserId" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byStatus">
+            <fetchIndexElement property="status" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="localId"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+</model>

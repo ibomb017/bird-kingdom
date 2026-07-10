@@ -10,6 +10,8 @@
 !*.xcworkspace/contents.xcworkspacedata
 /*.gcno
 **/xcshareddata/WorkspaceSettings.xcsettings
+*.xcarchive/
+build_export/
 
 # Swift Package Manager
 .build/
@@ -58,6 +60,14 @@ backend/src/main/resources/application-local.yml
 .env
 .env.local
 .env.production
+.env.sms.prod
+.env.swift.prod
+.env.*.prod
+
+# Python virtual environment
+.venv/
+venv/
+env/
 
 # Logs
 logs/
@@ -77,6 +87,7 @@ yarn-error.log*
 build/
 dist/
 out/
+**/target/
 
 # IDE
 .vscode/
@@ -91,3 +102,29 @@ node_modules/
 *.o
 *.so
 *.dylib
+
+# Uploads (runtime generated)
+**/uploads/
+
+# Tools downloaded
+ossutil*/
+*.zip
+
+# Scripts (temporary)
+*.py
+
+# SMS Proxy target
+sms-proxy/target/
+
+# Certificates (don't commit private keys)
+docs/ibomb017.pem
+
+# App Store metadata & screenshots
+screenshots/
+screenshot-builder/
+
+# Documents & Presentations
+*.docx
+*.pptx
+*.xlsx
+*.pdf

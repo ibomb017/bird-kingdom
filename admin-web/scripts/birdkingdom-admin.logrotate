@@ -1,0 +1,9 @@
+/opt/bird-kingdom-admin/logs/*.log {
+    daily
+    rotate 7
+    compress
+    delaycompress
+    missingok
+    notifempty
+    copytruncate
+}

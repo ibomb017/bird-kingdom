@@ -1,0 +1,18 @@
+[Unit]
+Description=Bird Kingdom Admin Backend Service
+After=syslog.target network.target mysql.service
+
+[Service]
+User=root
+Type=simple
+WorkingDirectory=/opt/bird-kingdom-admin
+EnvironmentFile=/opt/bird-kingdom-admin/.env
+ExecStart=/usr/bin/java -Xms256m -Xmx512m -jar /opt/bird-kingdom-admin/admin-backend-1.0.0.jar --server.port=8081 --spring.datasource.url="jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true" --spring.datasource.username=${DB_USER} --spring.datasource.password=${DB_PASS}
+Restart=always
+RestartSec=10
+StandardOutput=append:/opt/bird-kingdom-admin/logs/admin-backend.log
+StandardError=append:/opt/bird-kingdom-admin/logs/admin-backend.log
+SyslogIdentifier=birdkingdom-admin
+
+[Install]
+WantedBy=multi-user.target

@@ -59,7 +59,7 @@ class NotificationService: ObservableObject {
         content.title = title
         content.body = body
         content.sound = .default
-        content.badge = 1
+        // 移除 badge 设置 - 提醒通知不应产生红点，红点仅应用于未处理的邀请等场景
         
         // 设置触发时间
         let calendar = Calendar.current

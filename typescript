@@ -1,0 +1,113 @@
+Script started on Fri Jan  9 18:34:44 2026
+[1m[7m%[27m[1m[0m                                               [0m[27m[24m[Jibomb017@chenliqiandeMac-mini bird_kingdom % [K[?2004h[?2004l
+[1m[7m%[27m[1m[0m                                               [0m[27m[24m[Jibomb017@chenliqiandeMac-mini bird_kingdom % [K[?2004hsss [Khhpass -p "Chen_20040601" ssh -o StrictHostKeyCh [Keecking=no -p 217 root@47.84.177.155 '[?2004l
+[0m[27m[24m[Jquote> [K[?2004heecho "=== 配置标准防火墙规则 ==="[?2004l
+[0m[27m[24m[Jquote> [K[?2004h[?2004l
+[0m[27m[24m[Jquote> [K[?2004h## 清除现有规则[?2004l
+[0m[27m[24m[Jquote> [K[?2004hiiptables -F[?2004l
+[0m[27m[24m[Jquote> [K[?2004hiiptables -X[?2004l
+[0m[27m[24m[Jquote> [K[?2004h[?2004l
+[0m[27m[24m[Jquote> [K[?2004h## 默认策略[?2004l
+[0m[27m[24m[Jquote> [K[?2004hiiptables -P INPUT DROP[?2004l
+[0m[27m[24m[Jquote> [K[?2004hiiptables -P FORWARD DROP[?2004l
+[0m[27m[24m[Jquote> [K[?2004hiiptables -P OUTPUT ACCEPT[?2004l
+[0m[27m[24m[Jquote> [K[?2004h[?2004l
+[0m[27m[24m[Jquote> [K[?2004h## 允许本地回环[?2004l
+[0m[27m[24m[Jquote> [K[?2004hiiptables -A INPUT -i lo -j ACCEPT[?2004l
+[0m[27m[24m[Jquote> [K[?2004h[?2004l
+[0m[27m[24m[Jquote> [K[?2004h## 允许已建立的连接[?2004l
+[0m[27m[24m[Jquote> [K[?2004hiiptables -A INPUT -m state --state ESTAB [KLLISHED,RELATED -j ACCEPT[?2004l
+[0m[27m[24m[Jquote> [K[?2004h[?2004l
+[0m[27m[24m[Jquote> [K[?2004h## 允许ICMP[?2004l
+[0m[27m[24m[Jquote> [K[?2004hiiptables -A INPUT -p icmp -j ACCEPT[?2004l
+[0m[27m[24m[Jquote> [K[?2004h[?2004l
+[0m[27m[24m[Jquote> [K[?2004h## SSH 217端口[?2004l
+[0m[27m[24m[Jquote> [K[?2004hiiptables -A INPUT -p tcp --dport 217 -j  [KAACCEPT[?2004l
+[0m[27m[24m[Jquote> [K[?2004h[?2004l
+[0m[27m[24m[Jquote> [K[?2004h## HTTP/HTTPS[?2004l
+[0m[27m[24m[Jquote> [K[?2004hiiptables -A INPUT -p tcp --dport 80 -j A [KCCCEPT[?2004l
+[0m[27m[24m[Jquote> [K[?2004hiiptables -A INPUT -p tcp --dport 443 -j  [KAACCEPT[?2004l
+[0m[27m[24m[Jquote> [K[?2004h[?2004l
+[0m[27m[24m[Jquote> [K[?2004h## 应用端口[?2004l
+[0m[27m[24m[Jquote> [K[?2004hiiptables -A INPUT -p tcp --dport 8080 -j [K  ACCEPT[?2004l
+[0m[27m[24m[Jquote> [K[?2004hiiptables -A INPUT -p tcp --dport 8081 -j [K  ACCEPT[?2004l
+[0m[27m[24m[Jquote> [K[?2004hiiptables -A INPUT -p tcp --dport 8082 -j [K  ACCEPT[?2004l
+[0m[27m[24m[Jquote> [K[?2004h[?2004l
+[0m[27m[24m[Jquote> [K[?2004h## FTP[?2004l
+[0m[27m[24m[Jquote> [K[?2004hiiptables -A INPUT -p tcp --dport 21 -j A [KCCCEPT[?2004l
+[0m[27m[24m[Jquote> [K[?2004h[?2004l
+[0m[27m[24m[Jquote> [K[?2004h## MySQL本地[?2004l
+[0m[27m[24m[Jquote> [K[?2004hiiptables -A INPUT -p tcp --dport 3306 -s [K  127.0.0.1 -j ACCEPT[?2004l
+[0m[27m[24m[Jquote> [K[?2004hiiptables -A INPUT -p tcp --dport 3306 -s [K  172.17.0.0/16 -j ACCEPT[?2004l
+[0m[27m[24m[Jquote> [K[?2004h[?2004l
+[0m[27m[24m[Jquote> [K[?2004h## 保存规则[?2004l
+[0m[27m[24m[Jquote> [K[?2004haapt-get install -y iptables-persistent 2 [K>>/dev/null[?2004l
+[0m[27m[24m[Jquote> [K[?2004hmmkdir -p /etc/iptables[?2004l
+[0m[27m[24m[Jquote> [K[?2004hiiptables-save > /etc/iptables/rules.v4[?2004l
+[0m[27m[24m[Jquote> [K[?2004h[?2004l
+[0m[27m[24m[Jquote> [K[?2004heecho ""[?2004l
+[0m[27m[24m[Jquote> [K[?2004heecho "=== 当前防火墙规则 ==="[?2004l
+[0m[27m[24m[Jquote> [K[?2004hiiptables -L INPUT -n --line-numbers[?2004l
+[0m[27m[24m[Jquote> [K[?2004h[?2004l
+[0m[27m[24m[Jquote> [K[?2004heecho ""[?2004l
+[0m[27m[24m[Jquote> [K[?2004heecho "✅ 防火墙配置完成！"[?2004l
+[0m[27m[24m[Jquote> [K[?2004h'[?2004l
+SSH Warning Banner
+=====================================
+Authorized access only!
+All activities are monitored.
+=====================================
+=== 配置标准防火墙规则 ===
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following packages were automatically installed and are no longer required:
+  intel-microcode iucode-tool libintl-perl libintl-xs-perl libmodule-find-perl
+  libmodule-scandeps-perl libproc-processtable-perl libsort-naturally-perl
+Use 'apt autoremove' to remove them.
+The following additional packages will be installed:
+  netfilter-persistent
+The following packages will be REMOVED:
+  ufw
+The following NEW packages will be installed:
+  iptables-persistent netfilter-persistent
+0 upgraded, 2 newly installed, 1 to remove and 72 not upgraded.
+Need to get 14.3 kB of archives.
+After this operation, 780 kB disk space will be freed.
+Get:1 http://mirrors.cloud.aliyuncs.com/ubuntu noble/universe amd64 netfilter-persistent all 1.0.20 [7,402 B]
+Get:2 http://mirrors.cloud.aliyuncs.com/ubuntu noble/universe amd64 iptables-persistent all 1.0.20 [6,946 B]
+Fetched 14.3 kB in 0s (1,203 kB/s)
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 114793 files and directories currently installed.)
+Removing ufw (0.36.2-6) ...
+Skip stopping firewall: ufw (not enabled)
+Selecting previously unselected package netfilter-persistent.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 114700 files and directories currently installed.)
+Preparing to unpack .../netfilter-persistent_1.0.20_all.deb ...
+Unpacking netfilter-persistent (1.0.20) ...
+Selecting previously unselected package iptables-persistent.
+Preparing to unpack .../iptables-persistent_1.0.20_all.deb ...
+Unpacking iptables-persistent (1.0.20) ...
+Setting up netfilter-persistent (1.0.20) ...
+Created symlink /etc/systemd/system/iptables.service → /usr/lib/systemd/system/netfilter-persistent.service.
+Created symlink /etc/systemd/system/ip6tables.service → /usr/lib/systemd/system/netfilter-persistent.service.
+Created symlink /etc/systemd/system/multi-user.target.wants/netfilter-persistent.service → /usr/lib/systemd/system/netfilter-persistent.service.
+Setting up iptables-persistent (1.0.20) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (TERM is not set, so the dialog frontend is not usable.)
+debconf: falling back to frontend: Readline
+debconf: unable to initialize frontend: Readline
+debconf: (This frontend requires a controlling tty.)
+debconf: falling back to frontend: Teletype
+Configuring iptables-persistent
+-------------------------------
+
+Current iptables rules can be saved to the configuration file 
+/etc/iptables/rules.v4. These rules will then be loaded automatically during 
+system startup.
+
+Rules are only saved automatically during package installation. See the manual 
+page of iptables-save(8) for instructions on keeping the rules file up-to-date.
+
+Save current IPv4 rules? [yes/no] Connection to 47.84.177.155 closed by remote host.
+[1m[7m%[27m[1m[0m                                               [0m[27m[24m[Jibomb017@chenliqiandeMac-mini bird_kingdom % [K[?2004h[?2004l
+[1m[7m%[27m[1m[0m                                               [0m[27m[24m[Jibomb017@chenliqiandeMac-mini bird_kingdom % [K[?2004h

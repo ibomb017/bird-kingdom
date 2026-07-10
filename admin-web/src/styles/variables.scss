@@ -1,0 +1,114 @@
+// 🌲 森林科技感主题变量 - Bird Kingdom Admin
+// 极简高级设计：以森林绿为唯一主色调，其他使用灰色层次
+
+// ======= 深色模式 (默认) =======
+:root {
+  // 主色调 - 唯一强调色（翡翠森林绿）
+  --primary-color: #10B981;
+  --primary-light: #34D399;
+  --primary-dark: #059669;
+  --primary-glow: rgba(16, 185, 129, 0.4);
+  --primary-subtle: rgba(16, 185, 129, 0.08);
+
+  // 深色背景层级 - 统一灰色调
+  --bg-base: #0A0F14;
+  --bg-sidebar: #0F1419;
+  --bg-header: #0F1419;
+  --bg-content: #0D1117;
+  --bg-card: #161B22;
+  --bg-card-hover: #21262D;
+  --bg-elevated: #1C2128;
+
+  // 文字颜色 - 深色模式灰度层次
+  --text-primary: #F0F6FC;
+  --text-regular: #C9D1D9;
+  --text-secondary: #8B949E;
+  --text-placeholder: #6E7681;
+  --text-disabled: #484F58;
+
+  // 边框 - 统一灰色
+  --border-base: #30363D;
+  --border-light: #3D444D;
+  --border-lighter: #21262D;
+  --border-glow: rgba(16, 185, 129, 0.3);
+
+  // 功能色 - 仅用于必要状态提示，尽量少用
+  --success-color: #10B981; // 与主色一致
+  --warning-color: #F59E0B; // 仅用于重要警告
+  --danger-color: #EF4444; // 仅用于危险操作
+  --info-color: var(--text-secondary); // 使用灰色
+
+  // 阴影 - 科技感发光
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 20px rgba(16, 185, 129, 0.15);
+  --shadow-glow-lg: 0 0 40px rgba(16, 185, 129, 0.25);
+  --shadow-glow-intense: 0 0 60px rgba(16, 185, 129, 0.35);
+
+  // 渐变 - 森林科技
+  --gradient-forest: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  --gradient-glow: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(5, 150, 105, 0.05) 100%);
+  --gradient-card: linear-gradient(145deg, #1C2128 0%, #161B22 100%);
+
+  // 玻璃态效果
+  --glass-bg: rgba(22, 27, 34, 0.85);
+  --glass-border: rgba(48, 54, 61, 0.8);
+  --glass-blur: blur(12px);
+
+  // 圆角
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  // 布局尺寸
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 72px;
+  --header-height: 64px;
+
+  // 过渡时间
+  --transition-fast: 0.15s;
+  --transition-normal: 0.25s;
+  --transition-slow: 0.4s;
+}
+
+// ======= 亮色模式 =======
+html:not(.dark) {
+  // 亮色背景 - 自然清新
+  --bg-base: #F8FAFC;
+  --bg-sidebar: #FFFFFF;
+  --bg-header: #FFFFFF;
+  --bg-content: #F1F5F9;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #F8FAFC;
+  --bg-elevated: #FFFFFF;
+
+  // 亮色文字 - 深色清晰可读
+  --text-primary: #0F172A;
+  --text-regular: #1E293B;
+  --text-secondary: #64748B;
+  --text-placeholder: #94A3B8;
+  --text-disabled: #CBD5E1;
+
+  // 亮色边框
+  --border-base: #E2E8F0;
+  --border-light: #F1F5F9;
+  --border-lighter: #F8FAFC;
+  --border-glow: rgba(16, 185, 129, 0.4);
+
+  // 渐变调整
+  --gradient-card: linear-gradient(145deg, #FFFFFF 0%, #F8FAFC 100%);
+  --gradient-glow: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, transparent 100%);
+
+  // 阴影 - 柔和自然
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-glow: 0 0 20px rgba(16, 185, 129, 0.12);
+  --shadow-glow-lg: 0 0 40px rgba(16, 185, 129, 0.18);
+
+  // 玻璃态效果
+  --glass-bg: rgba(255, 255, 255, 0.9);
+  --glass-border: rgba(255, 255, 255, 0.8);
+}

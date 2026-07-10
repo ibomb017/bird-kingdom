@@ -1,0 +1,22 @@
+/* App Display Name */
+CFBundleDisplayName = "鸟鸟王国";
+CFBundleName = "鸟鸟王国";
+
+/* Privacy - Camera Usage Description */
+NSCameraUsageDescription = "鸟鸟王国需要使用您的相机来拍摄照片，用于设置您的个人头像、鸟儿头像或发布动态";
+
+/* Privacy - Photo Library Usage Description */
+NSPhotoLibraryUsageDescription = "鸟鸟王国需要访问您的相册来选择照片，用于设置您的个人头像、鸟儿头像或发布动态";
+
+/* Privacy - Photo Library Add Usage Description */
+NSPhotoLibraryAddUsageDescription = "鸟鸟王国需要将照片保存到您的相册";
+
+/* Privacy - Location When In Use Usage Description */
+NSLocationWhenInUseUsageDescription = "鸟鸟王国需要获取您的位置来帮助寻找走失的鸟儿、显示附近的帖子和鸟友";
+
+/* Privacy - Location Always and When In Use Usage Description */
+NSLocationAlwaysAndWhenInUseUsageDescription = "鸟鸟王国需要获取您的位置来帮助寻找走失的鸟儿，即使应用在后台运行时也能接收附近的寻鸟通知";
+
+/* Privacy - Microphone Usage Description */
+NSMicrophoneUsageDescription = "鸟鸟王国需要使用您的麦克风来录音并进行AI声音识别";
+

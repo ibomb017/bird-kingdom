@@ -1,0 +1,144 @@
+{
+  "identifier" : "B5E9F4A8-F1C3-4D8A-B9E1-3F2A7C6D8E9F",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "10",
+      "familyShareable" : false,
+      "internalID" : "splash_single_001",
+      "localizations" : [
+        {
+          "description" : "解锁APP开屏庆生主题展示特权，为你的鸟鸟打造独一无二的启动仪式",
+          "displayName" : "鸟鸟庆生开屏专属权益",
+          "locale" : "zh_CN"
+        }
+      ],
+      "productID" : "com.birdkingdom.splash.birthday",
+      "referenceName" : "Splash Single",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "18",
+      "familyShareable" : false,
+      "internalID" : "vip_monthly_001",
+      "localizations" : [
+        {
+          "description" : "解锁所有VIP功能，按月订阅",
+          "displayName" : "VIP月度会员",
+          "locale" : "zh_CN"
+        }
+      ],
+      "productID" : "com.birdkingdom.vip.monthly",
+      "referenceName" : "VIP Monthly",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "128",
+      "familyShareable" : false,
+      "internalID" : "vip_yearly_001",
+      "localizations" : [
+        {
+          "description" : "解锁所有VIP功能，按年订阅更优惠",
+          "displayName" : "VIP年度会员",
+          "locale" : "zh_CN"
+        }
+      ],
+      "productID" : "com.birdkingdom.vip.yearly",
+      "referenceName" : "VIP Yearly",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "298",
+      "familyShareable" : false,
+      "internalID" : "vip_lifetime_001",
+      "localizations" : [
+        {
+          "description" : "一次购买，终身享用所有VIP功能",
+          "displayName" : "VIP永久会员",
+          "locale" : "zh_CN"
+        }
+      ],
+      "productID" : "com.birdkingdom.vip.lifetime",
+      "referenceName" : "VIP Lifetime",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "398",
+      "familyShareable" : true,
+      "internalID" : "vip_couple_lifetime_001",
+      "localizations" : [
+        {
+          "description" : "情侣双人终身VIP，可绑定伴侣账号共享",
+          "displayName" : "情侣VIP永久会员",
+          "locale" : "zh_CN"
+        }
+      ],
+      "productID" : "com.birdkingdom.vip.couple.lifetime",
+      "referenceName" : "Couple VIP Lifetime",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_applicationInternalID" : "BirdKingdom",
+    "_developerTeamID" : "YOUR_TEAM_ID",
+    "_failTransactionsEnabled" : false,
+    "_locale" : "zh_CN",
+    "_storefront" : "CHN",
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}
