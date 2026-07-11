@@ -50,7 +50,7 @@ struct CoupleVipView: View {
             .padding(20)
         }
         .themedBackground()
-        .themedNavigationBar(title: "情侣会员")
+        .themedNavigationBar(title: NSLocalizedString("情侣会员", comment: ""))
         .background(
             LinearGradient(
                 colors: [pinkColor.opacity(0.1), Color.white],
@@ -58,25 +58,25 @@ struct CoupleVipView: View {
                 endPoint: .bottom
             )
         )
-        .alert("绑定成功", isPresented: $showBindSuccess) {
-            Button("确定") {
+        .alert(NSLocalizedString("绑定成功", comment: ""), isPresented: $showBindSuccess) {
+            Button(NSLocalizedString("确定", comment: "")) {
                 Task {
                     try? await authService.fetchCurrentUser()
                 }
             }
         } message: {
-            Text("恭喜你们成为情侣会员！💕")
+            Text(NSLocalizedString("恭喜你们成为情侣会员！💕", comment: ""))
         }
-        .alert("解绑确认", isPresented: $showUnbindConfirm) {
-            Button("取消", role: .cancel) {}
-            Button("确认解绑", role: .destructive) {
+        .alert(NSLocalizedString("解绑确认", comment: ""), isPresented: $showUnbindConfirm) {
+            Button(NSLocalizedString("取消", comment: ""), role: .cancel) {}
+            Button(NSLocalizedString("确认解绑", comment: ""), role: .destructive) {
                 unbindPartner()
             }
         } message: {
-            Text("解绑后将降级为普通永久会员，情侣标识将永久失效，无法恢复。确定要解绑吗？")
+            Text(NSLocalizedString("解绑后将降级为普通永久会员，情侣标识将永久失效，无法恢复。确定要解绑吗？", comment: ""))
         }
-        .alert("错误", isPresented: $showError) {
-            Button("确定") {}
+        .alert(NSLocalizedString("错误", comment: ""), isPresented: $showError) {
+            Button(NSLocalizedString("确定", comment: "")) {}
         } message: {
             Text(errorMessage)
         }
@@ -84,11 +84,11 @@ struct CoupleVipView: View {
             editPendingSheet
                 .hidesTabBar()
         }
-        .alert("收到情侣邀请 💕", isPresented: $showInvitationAlert) {
-            Button("拒绝", role: .destructive) {
+        .alert(NSLocalizedString("收到情侣邀请 💕", comment: ""), isPresented: $showInvitationAlert) {
+            Button(NSLocalizedString("拒绝", comment: ""), role: .destructive) {
                 rejectInvitation()
             }
-            Button("接受") {
+            Button(NSLocalizedString("接受", comment: "")) {
                 acceptInvitation()
             }
         } message: {
@@ -119,18 +119,18 @@ struct CoupleVipView: View {
             
             // 标题
             VStack(spacing: 8) {
-                Text("修改预留绑定")
+                Text(NSLocalizedString("修改预留绑定", comment: ""))
                     .font(.title2)
                     .fontWeight(.bold)
                 
-                Text("请输入正确的伴侣手机号")
+                Text(NSLocalizedString("请输入正确的伴侣手机号", comment: ""))
                     .font(.subheadline)
                     .foregroundColor(.secondary)
             }
             
             // 手机号输入
             VStack(alignment: .leading, spacing: 8) {
-                Text("伴侣手机号")
+                Text(NSLocalizedString("伴侣手机号", comment: ""))
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                 
@@ -138,7 +138,7 @@ struct CoupleVipView: View {
                     Image(systemName: "phone.fill")
                         .foregroundColor(pinkColor)
                     
-                    TextField("请输入伴侣的手机号", text: $newPartnerPhone)
+                    TextField(NSLocalizedString("请输入伴侣的手机号", comment: ""), text: $newPartnerPhone)
                         .keyboardType(.phonePad)
                 }
                 .padding()
@@ -159,7 +159,7 @@ struct CoupleVipView: View {
                             ProgressView()
                                 .progressViewStyle(CircularProgressViewStyle(tint: .white))
                         } else {
-                            Text("确认修改")
+                            Text(NSLocalizedString("确认修改", comment: ""))
                                 .fontWeight(.semibold)
                         }
                     }
@@ -181,7 +181,7 @@ struct CoupleVipView: View {
                 Button {
                     showEditPending = false
                 } label: {
-                    Text("取消")
+                    Text(NSLocalizedString("取消", comment: ""))
                         .foregroundColor(.secondary)
                 }
             }
@@ -195,7 +195,7 @@ struct CoupleVipView: View {
                 endPoint: .bottom
             )
         )
-        .themedNavigationBar(title: "修改手机号")
+        .themedNavigationBar(title: NSLocalizedString("修改手机号", comment: ""))
     }
     
     // 情侣会员头部
@@ -216,11 +216,11 @@ struct CoupleVipView: View {
                     .font(.system(size: 40))
             }
             
-            Text("情侣永久会员")
+            Text(NSLocalizedString("情侣永久会员", comment: ""))
                 .font(.title2)
                 .fontWeight(.bold)
             
-            Text("专属情侣标识 · 爱的结晶")
+            Text(NSLocalizedString("专属情侣标识 · 爱的结晶", comment: ""))
                 .font(.subheadline)
                 .foregroundColor(.secondary)
         }
@@ -231,9 +231,12 @@ struct CoupleVipView: View {
     // 已绑定状态
     private var boundStatusSection: some View {
         let partnerName = authService.currentUser?.couplePartnerName ?? "TA"
+        let myPrefix = authService.currentUser?.nickname.isEmpty == false ? String(authService.currentUser!.nickname.prefix(1)) : NSLocalizedString("我", comment: "")
+        let myName = authService.currentUser?.nickname ?? NSLocalizedString("我", comment: "")
+        let partnerPrefix = String(partnerName.prefix(1))
         
         return VStack(spacing: 16) {
-            Text("已绑定情侣")
+            Text(NSLocalizedString("已绑定情侣", comment: ""))
                 .font(.headline)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
@@ -246,11 +249,11 @@ struct CoupleVipView: View {
                             .fill(goldColor.opacity(0.2))
                             .frame(width: 60, height: 60)
                             .overlay(
-                                Text(authService.currentUser?.nickname.prefix(1) ?? "我")
+                                Text(myPrefix)
                                     .font(.title2)
                                     .fontWeight(.bold)
                             )
-                        Text(authService.currentUser?.nickname ?? "我")
+                        Text(myName)
                             .font(.caption)
                             .fontWeight(.medium)
                     }
@@ -259,7 +262,7 @@ struct CoupleVipView: View {
                     VStack(spacing: 4) {
                         Text("💕")
                             .font(.title)
-                        Text("已绑定")
+                        Text(NSLocalizedString("已绑定", comment: ""))
                             .font(.caption2)
                             .foregroundColor(.secondary)
                     }
@@ -270,7 +273,7 @@ struct CoupleVipView: View {
                             .fill(pinkColor.opacity(0.5))
                             .frame(width: 60, height: 60)
                             .overlay(
-                                Text(partnerName.prefix(1))
+                                Text(partnerPrefix)
                                     .font(.title2)
                                     .fontWeight(.bold)
                             )
@@ -291,7 +294,7 @@ struct CoupleVipView: View {
                 } label: {
                     HStack {
                         Image(systemName: "link.badge.minus")
-                        Text("解除绑定")
+                        Text(NSLocalizedString("解除绑定", comment: ""))
                     }
                     .font(.subheadline)
                     .foregroundColor(.red)
@@ -306,7 +309,7 @@ struct CoupleVipView: View {
                     Image(systemName: "exclamationmark.circle")
                         .font(.system(size: 14))
                         .foregroundColor(.secondary)
-                    Text("解绑后将降级为普通永久会员，情侣标识永久失效")
+                    Text(NSLocalizedString("解绑后将降级为普通永久会员，情侣标识永久失效", comment: ""))
                         .font(.caption2)
                         .foregroundColor(.secondary)
                 }
@@ -320,18 +323,18 @@ struct CoupleVipView: View {
     // 未绑定状态
     private var unboundStatusSection: some View {
         VStack(spacing: 16) {
-            Text("绑定情侣伴侣")
+            Text(NSLocalizedString("绑定情侣伴侣", comment: ""))
                 .font(.headline)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             VStack(spacing: 12) {
                 // 输入框
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("伴侣手机号")
+                    Text(NSLocalizedString("伴侣手机号", comment: ""))
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                     
-                    TextField("请输入对方手机号", text: $partnerPhone)
+                    TextField(NSLocalizedString("请输入对方手机号", comment: ""), text: $partnerPhone)
                         .keyboardType(.phonePad)
                         .textFieldStyle(.plain)
                         .padding(12)
@@ -349,7 +352,7 @@ struct CoupleVipView: View {
                                 .tint(.white)
                         } else {
                             Image(systemName: "heart.circle.fill")
-                            Text("发送绑定请求")
+                            Text(NSLocalizedString("发送绑定请求", comment: ""))
                         }
                     }
                     .font(.headline)
@@ -369,7 +372,7 @@ struct CoupleVipView: View {
                 
                 // 绑定条件
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("绑定条件：")
+                    Text(NSLocalizedString("绑定条件：", comment: ""))
                         .font(.caption)
                         .fontWeight(.medium)
                         .foregroundColor(.secondary)
@@ -378,7 +381,7 @@ struct CoupleVipView: View {
                         Image(systemName: "checkmark.circle.fill")
                             .foregroundColor(.green)
                             .font(.caption)
-                        Text("双方都必须是情侣永久会员")
+                        Text(NSLocalizedString("双方都必须是情侣永久会员", comment: ""))
                             .font(.caption2)
                             .foregroundColor(.secondary)
                     }
@@ -387,7 +390,7 @@ struct CoupleVipView: View {
                         Image(systemName: "checkmark.circle.fill")
                             .foregroundColor(.green)
                             .font(.caption)
-                        Text("双方都未绑定其他伴侣")
+                        Text(NSLocalizedString("双方都未绑定其他伴侣", comment: ""))
                             .font(.caption2)
                             .foregroundColor(.secondary)
                     }
@@ -406,15 +409,15 @@ struct CoupleVipView: View {
     // 特权说明
     private var privilegesSection: some View {
         VStack(spacing: 16) {
-            Text("情侣专属特权")
+            Text(NSLocalizedString("情侣专属特权", comment: ""))
                 .font(.headline)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             VStack(spacing: 12) {
-                privilegeRow(icon: "heart.circle.fill", title: "💕 粉红色泡泡标识", description: "专属情侣标识")
-                privilegeRow(icon: "sparkles", title: "💖 爱的结晶", description: "共同鸟儿特殊标记")
-                privilegeRow(icon: "paintpalette.fill", title: "🎨 情侣专属主题", description: "粉色浪漫主题")
-                privilegeRow(icon: "crown.fill", title: "👑 永久会员权益", description: "所有VIP特权")
+                privilegeRow(icon: "heart.circle.fill", title: NSLocalizedString("💕 粉红色泡泡标识", comment: ""), description: NSLocalizedString("专属情侣标识", comment: ""))
+                privilegeRow(icon: "sparkles", title: NSLocalizedString("💖 爱的结晶", comment: ""), description: NSLocalizedString("共同鸟儿特殊标记", comment: ""))
+                privilegeRow(icon: "paintpalette.fill", title: NSLocalizedString("🎨 情侣专属主题", comment: ""), description: NSLocalizedString("粉色浪漫主题", comment: ""))
+                privilegeRow(icon: "crown.fill", title: NSLocalizedString("👑 永久会员权益", comment: ""), description: NSLocalizedString("所有VIP特权", comment: ""))
             }
         }
     }
@@ -463,7 +466,7 @@ struct CoupleVipView: View {
         let pendingPartnerName = authService.currentUser?.pendingCouplePartnerName
         
         return VStack(spacing: 16) {
-            Text(isPendingConfirmation ? "等待伴侣确认" : "等待伴侣注册")
+            Text(isPendingConfirmation ? NSLocalizedString("等待伴侣确认", comment: "") : NSLocalizedString("等待伴侣注册", comment: ""))
                 .font(.headline)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
@@ -488,7 +491,7 @@ struct CoupleVipView: View {
                     if isPendingConfirmation, let partnerName = pendingPartnerName {
                         // 等待对方确认
                         VStack(spacing: 8) {
-                            Text("已邀请")
+                            Text(NSLocalizedString("已邀请", comment: ""))
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                             
@@ -497,14 +500,14 @@ struct CoupleVipView: View {
                                 .fontWeight(.bold)
                                 .foregroundColor(pinkColor)
                             
-                            Text("等待对方在会员页面确认")
+                            Text(NSLocalizedString("等待对方在会员页面确认", comment: ""))
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
                     } else {
                         // 等待对方注册
                         VStack(spacing: 8) {
-                            Text("已为以下手机号预留情侣绑定")
+                            Text(NSLocalizedString("已为以下手机号预留情侣绑定", comment: ""))
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                             
@@ -515,7 +518,7 @@ struct CoupleVipView: View {
                                     .foregroundColor(pinkColor)
                             }
                             
-                            Text("对方注册后需确认才能成为您的情侣伴侣")
+                            Text(NSLocalizedString("对方注册后需确认才能成为您的情侣伴侣", comment: ""))
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                                 .multilineTextAlignment(.center)
@@ -537,7 +540,7 @@ struct CoupleVipView: View {
                     } label: {
                         HStack {
                             Image(systemName: "pencil.circle")
-                            Text("修改手机号")
+                            Text(NSLocalizedString("修改手机号", comment: ""))
                         }
                         .font(.subheadline)
                         .foregroundColor(pinkColor)
@@ -553,7 +556,7 @@ struct CoupleVipView: View {
                     } label: {
                         HStack {
                             Image(systemName: "xmark.circle")
-                            Text("取消预留")
+                            Text(NSLocalizedString("取消预留", comment: ""))
                         }
                         .font(.subheadline)
                         .foregroundColor(.red)
@@ -568,7 +571,7 @@ struct CoupleVipView: View {
                 HStack(spacing: 8) {
                     Image(systemName: "info.circle.fill")
                         .foregroundColor(.blue)
-                    Text("您可以通知对方使用该手机号注册，注册后将自动绑定。如果手机号填错了，可以点击修改。")
+                    Text(NSLocalizedString("您可以通知对方使用该手机号注册，注册后将自动绑定。如果手机号填错了，可以点击修改。", comment: ""))
                         .font(.caption2)
                         .foregroundColor(.secondary)
                 }

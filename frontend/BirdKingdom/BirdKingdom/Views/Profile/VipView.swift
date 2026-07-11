@@ -320,7 +320,7 @@ struct VipView: View {
                 
                 // 醒目显示剩余天数
                 if let days = user.vipRemainingDays {
-                    Text("剩余 \(days) 天")
+                    Text(String(format: NSLocalizedString("剩余 %d 天", comment: ""), days))
                         .font(.title3)
                         .fontWeight(.bold)
                         .foregroundColor(.brown)
@@ -333,7 +333,7 @@ struct VipView: View {
                 
                 // 有效期细节
                 if let expireDate = user.vipExpireDate {
-                    Text("有效期至 \(formatDate(expireDate))")
+                    Text(String(format: NSLocalizedString("有效期至 %@", comment: ""), formatDate(expireDate)))
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -361,7 +361,7 @@ struct VipView: View {
             .font(.subheadline)
             .foregroundColor(.secondary)
         } else if let expireDate = user.vipExpireDate {
-            Text("有效期至 \(formatDate(expireDate))")
+            Text(String(format: NSLocalizedString("有效期至 %@", comment: ""), formatDate(expireDate)))
                 .font(.subheadline)
                 .foregroundColor(.secondary)
         }
@@ -499,7 +499,7 @@ struct VipView: View {
                 Spacer()
                 
                 if let days = user?.vipRemainingDays, !isLifetimeMember {
-                    Text("当前剩余 \(days) 天")
+                    Text(String(format: NSLocalizedString("当前剩余 %d 天", comment: ""), days))
                         .font(.caption)
                         .foregroundColor(days <= 7 ? .red : .secondary)
                 }
@@ -568,7 +568,7 @@ struct VipView: View {
                     if (plan == .monthly || plan == .yearly) {
                         let currentDays = authService.currentUser?.vipRemainingDays ?? 0
                         let totalDays = currentDays + plan.days
-                        Text("购买后有效期将延长至 \(totalDays) 天")
+                        Text(String(format: NSLocalizedString("购买后有效期将延长至 %d 天", comment: ""), totalDays))
                             .font(.caption2)
                             .foregroundColor(goldColor)
                             .padding(.top, 2)
@@ -634,7 +634,7 @@ struct VipView: View {
                         ProgressView()
                             .tint(.white)
                     } else {
-                        Text("立即开通 ¥\(selectedPlan.price)")
+                        Text(String(format: NSLocalizedString("立即开通 ¥%@", comment: ""), selectedPlan.price))
                     }
                 }
                 .font(.headline)
