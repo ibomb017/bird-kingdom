@@ -27,7 +27,7 @@ struct ExpenseListView: View {
                     Image(systemName: "clock.arrow.circlepath")
                         .font(.system(size: 14))
                         .foregroundColor(.secondary)
-                    Text("统计数据可能已过期，联网后刷新")
+                    Text(NSLocalizedString("统计数据可能已过期，联网后刷新", comment: ""))
                         .font(.caption)
                         .foregroundColor(.secondary)
                     Spacer()
@@ -52,7 +52,7 @@ struct ExpenseListView: View {
             }
         }
         .background(Color.adaptiveCard)
-        .navigationTitle("支出明细")
+        .navigationTitle(NSLocalizedString("支出明细", comment: ""))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -82,12 +82,12 @@ struct ExpenseListView: View {
             }
         }
         // 删除确认弹窗
-        .alert("确认删除", isPresented: Binding(
+        .alert(NSLocalizedString("确认删除", comment: ""), isPresented: Binding(
             get: { expenseToDelete != nil },
             set: { if !$0 { expenseToDelete = nil } }
         )) {
-            Button("取消", role: .cancel) { expenseToDelete = nil }
-            Button("删除", role: .destructive) {
+            Button(NSLocalizedString("取消", comment: ""), role: .cancel) { expenseToDelete = nil }
+            Button(NSLocalizedString("删除", comment: ""), role: .destructive) {
                 if let expense = expenseToDelete {
                     Task { await expenseService.deleteExpense(id: expense.id) }
                 }
@@ -108,7 +108,7 @@ struct ExpenseListView: View {
             // 总支出
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("累计支出")
+                    Text(NSLocalizedString("累计支出", comment: ""))
                         .font(.caption)
                         .foregroundColor(.secondary)
                     Text("¥\(ExpenseService.formatAmount(expenseService.totalExpense))")
@@ -120,7 +120,7 @@ struct ExpenseListView: View {
                 Spacer()
                 
                 VStack(alignment: .trailing, spacing: 4) {
-                    Text("本月支出")
+                    Text(NSLocalizedString("本月支出", comment: ""))
                         .font(.caption)
                         .foregroundColor(.secondary)
                     Text("¥\(ExpenseService.formatAmount(expenseService.monthlyExpense))")
@@ -135,7 +135,7 @@ struct ExpenseListView: View {
                 Divider()
                 
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("历史支出")
+                    Text(NSLocalizedString("历史支出", comment: ""))
                         .font(.caption)
                         .foregroundColor(.secondary)
                     
@@ -206,7 +206,7 @@ struct ExpenseListView: View {
                 Button {
                     selectedCategory = nil
                 } label: {
-                    Text("全部")
+                    Text(NSLocalizedString("全部", comment: ""))
                         .font(.caption)
                         .fontWeight(selectedCategory == nil ? .semibold : .regular)
                         .padding(.horizontal, 14)
@@ -248,10 +248,10 @@ struct ExpenseListView: View {
             Image(systemName: "yensign.circle")
                 .font(.system(size: 50))
                 .foregroundColor(.gray.opacity(0.5))
-            Text("暂无支出记录")
+            Text(NSLocalizedString("暂无支出记录", comment: ""))
                 .font(.headline)
                 .foregroundColor(.secondary)
-            Text("点击右上角 + 添加第一笔支出")
+            Text(NSLocalizedString("点击右上角 + 添加第一笔支出", comment: ""))
                 .font(.subheadline)
                 .foregroundColor(.secondary)
             Spacer()
@@ -421,7 +421,7 @@ struct AddExpenseView: View {
                         ZStack(alignment: .leading) {
                             // P0 改进：自定义 placeholder
                             if amountText.isEmpty {
-                                Text("* 请输入金额")
+                                Text(NSLocalizedString("* 请输入金额", comment: ""))
                                     .font(.title)
                                     .foregroundColor(hasAttemptedSave ? .red : .secondary)
                             }
@@ -462,11 +462,11 @@ struct AddExpenseView: View {
                 Section {
                     // 支出名称：标签 + 自定义 placeholder
                     HStack {
-                        Text("名称")
+                        Text(NSLocalizedString("名称", comment: ""))
                             .foregroundColor(.primary)
                         ZStack(alignment: .leading) {
                             if title.isEmpty {
-                                Text("* 请输入支出名称")
+                                Text(NSLocalizedString("* 请输入支出名称", comment: ""))
                                     .foregroundColor(hasAttemptedSave ? .red : .secondary)
                             }
                             TextField("", text: $title)
@@ -474,7 +474,7 @@ struct AddExpenseView: View {
                     }
                     .id(FormField.title)  // P0 改进：添加 ID 用于滚动定位
                 
-                Picker("分类", selection: $category) {
+                Picker(NSLocalizedString("分类", comment: ""), selection: $category) {
                     ForEach(ExpenseCategory.allCases, id: \.self) { cat in
                         HStack {
                             Image(systemName: cat.icon)
@@ -485,13 +485,13 @@ struct AddExpenseView: View {
                     }
                 }
                 
-                DatePicker("日期", selection: $date, in: ...Date(), displayedComponents: .date)
+                DatePicker(NSLocalizedString("日期", comment: ""), selection: $date, in: ...Date(), displayedComponents: .date)
             }
                 
                 // 关联鸟儿（可选，多选）
-                Section("关联鸟儿（可选，可多选）") {
+                Section(NSLocalizedString("关联鸟儿（可选，可多选）", comment: "")) {
                     if birds.isEmpty {
-                        Text("暂无鸟儿")
+                        Text(NSLocalizedString("暂无鸟儿", comment: ""))
                             .foregroundColor(.secondary)
                     } else {
                         ForEach(birds, id: \.id) { bird in
@@ -517,8 +517,8 @@ struct AddExpenseView: View {
                 }
                 
                 // 备注
-                Section("备注（可选）") {
-                    TextField("添加备注...", text: $note, axis: .vertical)
+                Section(NSLocalizedString("备注（可选）", comment: "")) {
+                    TextField(NSLocalizedString("添加备注...", comment: ""), text: $note, axis: .vertical)
                         .lineLimit(3...6)
                 }
             }
@@ -534,23 +534,23 @@ struct AddExpenseView: View {
                 }
             }
         }  // ScrollViewReader 结束
-        .navigationTitle(isEditing ? "编辑支出" : "添加支出")
+        .navigationTitle(isEditing ? NSLocalizedString("编辑支出", comment: "") : NSLocalizedString("添加支出", comment: ""))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
-                Button("取消") { dismiss() }
+                Button(NSLocalizedString("取消", comment: "")) { dismiss() }
                     .foregroundColor(.secondary)
             }
             ToolbarItem(placement: .confirmationAction) {
                 // P0 改进：保存按钮始终可点击
-                Button("保存") { saveExpense() }
+                Button(NSLocalizedString("保存", comment: "")) { saveExpense() }
                     .disabled(isSaving)
                     .foregroundColor(isSaving ? .gray : themeManager.primaryColor)
             }
         }
         .scrollContentBackground(.hidden)
-        .alert("保存失败", isPresented: $showError) {
-            Button("确定", role: .cancel) {}
+        .alert(NSLocalizedString("保存失败", comment: ""), isPresented: $showError) {
+            Button(NSLocalizedString("确定", comment: ""), role: .cancel) {}
         } message: {
             Text(errorMessage)
         }
@@ -605,7 +605,7 @@ struct AddExpenseView: View {
         
         // 检查登录状态
         guard AuthService.shared.isLoggedIn else {
-            errorMessage = "请先登录后再添加支出"
+            errorMessage = NSLocalizedString("请先登录后再添加支出", comment: "")
             showError = true
             return
         }
@@ -623,14 +623,14 @@ struct AddExpenseView: View {
         
         // P1-04: 金额校验，最小0.01元
         guard let amount = Double(amountText), amount >= 0.01 else {
-            errorMessage = "金额需大于等于0.01元"
+            errorMessage = NSLocalizedString("金额需大于等于0.01元", comment: "")
             showError = true
             return
         }
         
         // 金额上限校验（防止超大金额导致数据异常）
         guard amount <= 999_999 else {
-            errorMessage = "金额不能超过999,999元"
+            errorMessage = NSLocalizedString("金额不能超过999,999元", comment: "")
             showError = true
             return
         }
@@ -656,7 +656,7 @@ struct AddExpenseView: View {
                     if success {
                         dismiss()
                     } else {
-                        errorMessage = "保存失败，请检查网络连接"
+                        errorMessage = NSLocalizedString("保存失败，请检查网络连接", comment: "")
                         showError = true
                     }
                 }
@@ -694,7 +694,7 @@ struct AddExpenseView: View {
                         if allSuccess {
                             dismiss()
                         } else {
-                            errorMessage = "部分记录保存失败，请检查网络连接"
+                            errorMessage = NSLocalizedString("部分记录保存失败，请检查网络连接", comment: "")
                             showError = true
                         }
                     }
@@ -717,7 +717,7 @@ struct AddExpenseView: View {
                         if success {
                             dismiss()
                         } else {
-                            errorMessage = "保存失败，请检查网络连接"
+                            errorMessage = NSLocalizedString("保存失败，请检查网络连接", comment: "")
                             showError = true
                         }
                     }

@@ -25,8 +25,8 @@ struct ForumView: View {
     @State private var searchText = ""
     @State private var isSearchFocused = false  // 搜索框是否聚焦
     @State private var searchHistory: [String] = []  // 搜索历史
-    @State private var selectedSort = "综合排序"
-    @State private var selectedRange = "附近" // 附近/同城/全国 - 仅影响"附近"标签页
+    @State private var selectedSort = NSLocalizedString("综合排序", comment: "")
+    @State private var selectedRange = NSLocalizedString(NSLocalizedString("附近", comment: ""), comment: "") // 附近/同城/全国 - 仅影响"附近"标签页
     @State private var isLoading = false
     @State private var hasLoadedInitialData = false  // Fix #3: 防重复加载标志
     @State private var isLoadingPosts = false  // Fix #3: 防止并发请求
@@ -62,11 +62,11 @@ struct ForumView: View {
         // 获取距离限制（公里）
         let maxDistance: Double
         switch selectedRange {
-        case "附近":
+        case NSLocalizedString("附近", comment: ""):
             maxDistance = 3.0
-        case "同城":
+        case NSLocalizedString("同城", comment: ""):
             maxDistance = 50.0
-        case "全国":
+        case NSLocalizedString("全国", comment: ""):
             maxDistance = 5000.0
         default:
             return nearbyPosts
@@ -75,7 +75,7 @@ struct ForumView: View {
         // 筛选在范围内的帖子
         return nearbyPosts.filter { post in
             guard let postLat = post.latitude, let postLng = post.longitude else {
-                return selectedRange == "全国"
+                return selectedRange == NSLocalizedString("全国", comment: "")
             }
             
             let distanceKm = locationService.distanceTo(latitude: postLat, longitude: postLng) ?? Double.infinity
@@ -83,11 +83,11 @@ struct ForumView: View {
         }
     }
     
-    private let tabs = ["关注", "附近", "推荐"]
-    private let sortOptions = ["最热", "最新"]  // 小红书风格排序
-    @State private var selectedSearchSort = "最热"  // 搜索时的排序
-    @State private var selectedMediaFilter = "全部"  // 媒体类型筛选
-    private let mediaFilterOptions = ["全部", "图文", "视频"]
+    private let tabs = [NSLocalizedString("关注", comment: ""), NSLocalizedString("附近", comment: ""), NSLocalizedString("推荐", comment: "")]
+    private let sortOptions = [NSLocalizedString("最热", comment: ""), NSLocalizedString("最新", comment: "")]  // 小红书风格排序
+    @State private var selectedSearchSort = NSLocalizedString("最热", comment: "")  // 搜索时的排序
+    @State private var selectedMediaFilter = NSLocalizedString("全部", comment: "")  // 媒体类型筛选
+    private let mediaFilterOptions = [NSLocalizedString("全部", comment: ""), NSLocalizedString("图文", comment: ""), NSLocalizedString("视频", comment: "")]
     @ObservedObject var themeManager = ThemeManager.shared
     
     // 导航栏高度（用于内容避让）
@@ -153,13 +153,13 @@ struct ForumView: View {
         .sheet(isPresented: $showLocationPicker) {
             LocationPickerView(selectedRange: $selectedRange)
         }
-        .alert("请先登录", isPresented: $showLoginAlert) {
-            Button("取消", role: .cancel) {}
-            Button("去登录") {
+        .alert(NSLocalizedString("请先登录", comment: ""), isPresented: $showLoginAlert) {
+            Button(NSLocalizedString("取消", comment: ""), role: .cancel) {}
+            Button(NSLocalizedString("去登录", comment: "")) {
                 showLoginSheet = true
             }
         } message: {
-            Text("登录后才能发布帖子，快去登录吧～")
+            Text(NSLocalizedString("登录后才能发布帖子，快去登录吧～", comment: ""))
         }
         .sheet(isPresented: $showLoginSheet) {
             LoginView()
@@ -218,7 +218,7 @@ struct ForumView: View {
                 VStack(spacing: 16) {
                     ProgressView()
                         .scaleEffect(1.2)
-                    Text("加载帖子中...")
+                    Text(NSLocalizedString("加载帖子中...", comment: ""))
                         .foregroundColor(.secondary)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -315,7 +315,7 @@ struct ForumView: View {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.gray)
                 
-                TextField("搜索帖子、用户、鸟名、品种...", text: $searchText)
+                TextField(NSLocalizedString("搜索帖子、用户、鸟名、品种...", comment: ""), text: $searchText)
                     .font(.subheadline)
                     .focused($searchFieldFocused)
                     .submitLabel(.search)
@@ -455,18 +455,18 @@ struct ForumView: View {
     // 获取相关延伸关键词
     private func getRelatedKeywords(for keyword: String) -> [String] {
         let keywordExtensions: [String: [String]] = [
-            "虎皮": ["虎皮鹦鹉饲养", "虎皮鹦鹉笼具", "虎皮鹦鹉食物", "虎皮鹦鹉训练"],
-            "玄凤": ["玄凤鹦鹉饲养", "玄凤鹦鹉说话", "玄凤鹦鹉配色", "玄凤鹦鹉训练"],
-            "牡丹": ["牡丹鹦鹉饲养", "牡丹鹦鹉配对", "牡丹鹦鹉繁殖"],
-            "金刚": ["金刚鹦鹉饲养", "金刚鹦鹉价格", "金刚鹦鹉寿命"],
-            "灰鹦鹉": ["灰鹦鹉说话", "灰鹦鹉饲养", "灰鹦鹉价格"],
-            "小太阳": ["小太阳饲养", "小太阳训练", "小太阳互动"],
-            "和尚": ["和尚鹦鹉饲养", "和尚鹦鹉说话", "和尚鹦鹉训练"],
-            "断奶": ["鹦鹉断奶时间", "断奶食物", "断奶注意事项"],
-            "饲养": ["新手饲养", "饲养注意事项", "饲养环境"],
-            "训练": ["说话训练", "飞行训练", "互动训练"],
-            "生病": ["鹦鹉生病症状", "生病怎么办", "常见疾病"],
-            "笼具": ["鸟笼推荐", "笼具选择", "站架推荐"]
+            NSLocalizedString("虎皮", comment: ""): [NSLocalizedString("虎皮鹦鹉饲养", comment: ""), NSLocalizedString("虎皮鹦鹉笼具", comment: ""), NSLocalizedString("虎皮鹦鹉食物", comment: ""), NSLocalizedString("虎皮鹦鹉训练", comment: "")],
+            NSLocalizedString("玄凤", comment: ""): [NSLocalizedString("玄凤鹦鹉饲养", comment: ""), NSLocalizedString("玄凤鹦鹉说话", comment: ""), NSLocalizedString("玄凤鹦鹉配色", comment: ""), NSLocalizedString("玄凤鹦鹉训练", comment: "")],
+            NSLocalizedString("牡丹", comment: ""): [NSLocalizedString("牡丹鹦鹉饲养", comment: ""), NSLocalizedString("牡丹鹦鹉配对", comment: ""), NSLocalizedString("牡丹鹦鹉繁殖", comment: "")],
+            NSLocalizedString("金刚", comment: ""): [NSLocalizedString("金刚鹦鹉饲养", comment: ""), NSLocalizedString("金刚鹦鹉价格", comment: ""), NSLocalizedString("金刚鹦鹉寿命", comment: "")],
+            NSLocalizedString("灰鹦鹉", comment: ""): [NSLocalizedString("灰鹦鹉说话", comment: ""), NSLocalizedString("灰鹦鹉饲养", comment: ""), NSLocalizedString("灰鹦鹉价格", comment: "")],
+            NSLocalizedString("小太阳", comment: ""): [NSLocalizedString("小太阳饲养", comment: ""), NSLocalizedString("小太阳训练", comment: ""), NSLocalizedString("小太阳互动", comment: "")],
+            NSLocalizedString("和尚", comment: ""): [NSLocalizedString("和尚鹦鹉饲养", comment: ""), NSLocalizedString("和尚鹦鹉说话", comment: ""), NSLocalizedString("和尚鹦鹉训练", comment: "")],
+            NSLocalizedString("断奶", comment: ""): [NSLocalizedString("鹦鹉断奶时间", comment: ""), NSLocalizedString("断奶食物", comment: ""), NSLocalizedString("断奶注意事项", comment: "")],
+            NSLocalizedString("饲养", comment: ""): [NSLocalizedString("新手饲养", comment: ""), NSLocalizedString("饲养注意事项", comment: ""), NSLocalizedString("饲养环境", comment: "")],
+            NSLocalizedString("训练", comment: ""): [NSLocalizedString("说话训练", comment: ""), NSLocalizedString("飞行训练", comment: ""), NSLocalizedString("互动训练", comment: "")],
+            NSLocalizedString("生病", comment: ""): [NSLocalizedString("鹦鹉生病症状", comment: ""), NSLocalizedString("生病怎么办", comment: ""), NSLocalizedString("常见疾病", comment: "")],
+            NSLocalizedString("笼具", comment: ""): [NSLocalizedString("鸟笼推荐", comment: ""), NSLocalizedString("笼具选择", comment: ""), NSLocalizedString("站架推荐", comment: "")]
         ]
         
         for (key, extensions) in keywordExtensions {
@@ -518,10 +518,10 @@ struct ForumView: View {
                             }
                         } label: {
                             HStack(spacing: 3) {
-                                if option == "图文" {
+                                if option == NSLocalizedString("图文", comment: "") {
                                     Image(systemName: "photo")
                                         .font(.caption2)
-                                } else if option == "视频" {
+                                } else if option == NSLocalizedString("视频", comment: "") {
                                     Image(systemName: "play.rectangle")
                                         .font(.caption2)
                                 }
@@ -557,7 +557,7 @@ struct ForumView: View {
             if !searchHistory.isEmpty {
                 VStack(alignment: .leading, spacing: 10) {
                     HStack {
-                        Text("搜索历史")
+                        Text(NSLocalizedString("搜索历史", comment: ""))
                             .font(.subheadline)
                             .fontWeight(.semibold)
                             .foregroundColor(.primary)
@@ -567,7 +567,7 @@ struct ForumView: View {
                         Button {
                             clearSearchHistory()
                         } label: {
-                            Text("清空")
+                            Text(NSLocalizedString("清空", comment: ""))
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
@@ -601,7 +601,7 @@ struct ForumView: View {
             // 热门搜索（仅在成功加载到后端数据时显示）
             if !hotKeywords.isEmpty {
                 VStack(alignment: .leading, spacing: 10) {
-                    Text("热门搜索")
+                    Text(NSLocalizedString("热门搜索", comment: ""))
                         .font(.subheadline)
                         .fontWeight(.semibold)
                         .foregroundColor(.primary)
@@ -753,7 +753,7 @@ struct ForumView: View {
                 VStack(spacing: 16) {
                     ProgressView()
                         .scaleEffect(1.2)
-                    Text("加载中...")
+                    Text(NSLocalizedString("加载中...", comment: ""))
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
@@ -792,12 +792,12 @@ struct ForumView: View {
     // MARK: - 搜索结果头部（显示结果数量）
     private func searchResultHeader(count: Int) -> some View {
         HStack {
-            Text("找到 ")
+            Text(NSLocalizedString("找到 ", comment: ""))
                 .foregroundColor(.secondary)
             + Text("\(count)")
                 .foregroundColor(themeManager.primaryColor)
                 .fontWeight(.semibold)
-            + Text(" 条相关内容")
+            + Text(NSLocalizedString(" 条相关内容", comment: ""))
                 .foregroundColor(.secondary)
             
             Spacer()
@@ -820,14 +820,14 @@ struct ForumView: View {
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                 
-                Text("换个关键词试试吧")
+                Text(NSLocalizedString("换个关键词试试吧", comment: ""))
                     .font(.caption)
                     .foregroundColor(.secondary.opacity(0.7))
             }
             
             // 推荐搜索词
             VStack(alignment: .leading, spacing: 10) {
-                Text("试试搜索")
+                Text(NSLocalizedString("试试搜索", comment: ""))
                     .font(.caption)
                     .fontWeight(.medium)
                     .foregroundColor(.secondary)
@@ -862,12 +862,12 @@ struct ForumView: View {
         var recommendations: [String] = []
         
         // 品种相关推荐
-        if lowercased.contains("鹦鹉") || lowercased.contains("鸟") {
-            recommendations = ["虎皮鹦鹉", "玄凤鹦鹉", "小太阳", "牡丹鹦鹉", "金刚鹦鹉"]
-        } else if lowercased.contains("饲养") || lowercased.contains("养") {
-            recommendations = ["新手饲养", "饲养攻略", "饲养注意事项"]
-        } else if lowercased.contains("生病") || lowercased.contains("病") {
-            recommendations = ["常见疾病", "病症判断", "养护建议"]
+        if lowercased.contains(NSLocalizedString("鹦鹉", comment: "")) || lowercased.contains(NSLocalizedString("鸟", comment: "")) {
+            recommendations = [NSLocalizedString("虎皮鹦鹉", comment: ""), NSLocalizedString("玄凤鹦鹉", comment: ""), NSLocalizedString("小太阳", comment: ""), NSLocalizedString("牡丹鹦鹉", comment: ""), NSLocalizedString("金刚鹦鹉", comment: "")]
+        } else if lowercased.contains(NSLocalizedString("饲养", comment: "")) || lowercased.contains(NSLocalizedString("养", comment: "")) {
+            recommendations = [NSLocalizedString("新手饲养", comment: ""), NSLocalizedString("饲养攻略", comment: ""), NSLocalizedString("饲养注意事项", comment: "")]
+        } else if lowercased.contains(NSLocalizedString("生病", comment: "")) || lowercased.contains(NSLocalizedString("病", comment: "")) {
+            recommendations = [NSLocalizedString("常见疾病", comment: ""), NSLocalizedString("病症判断", comment: ""), NSLocalizedString("养护建议", comment: "")]
         } else {
             // 默认推荐热门搜索词
             recommendations = hotSearchKeywords.prefix(5).map { $0 }
@@ -925,14 +925,14 @@ struct ForumView: View {
             }
             
             // 搜索时应用媒体类型筛选
-            if selectedMediaFilter == "图文" {
+            if selectedMediaFilter == NSLocalizedString("图文", comment: "") {
                 result = result.filter { $0.mediaType == "IMAGE" }
-            } else if selectedMediaFilter == "视频" {
+            } else if selectedMediaFilter == NSLocalizedString("视频", comment: "") {
                 result = result.filter { $0.mediaType == "VIDEO" }
             }
             
             // 搜索时应用排序
-            if selectedSearchSort == "最新" {
+            if selectedSearchSort == NSLocalizedString("最新", comment: "") {
                 // 最新排序：按时间倒序
                 return result
             } else {
@@ -945,9 +945,9 @@ struct ForumView: View {
         
         // 非搜索时的排序
         switch selectedSort {
-        case "最新":
+        case NSLocalizedString("最新", comment: ""):
             return result
-        case "最热":
+        case NSLocalizedString("最热", comment: ""):
             return result.sorted { 
                 ($0.likeCount * 3 + $0.commentCount * 2) > ($1.likeCount * 3 + $1.commentCount * 2)
             }
@@ -966,11 +966,11 @@ struct ForumView: View {
                     .font(.system(size: 50))
                     .foregroundColor(.orange.opacity(0.5))
                 
-                Text("需要定位权限")
+                Text(NSLocalizedString("需要定位权限", comment: ""))
                     .font(.headline)
                     .foregroundColor(.secondary)
                 
-                Text("开启定位权限后，可以查看附近的鸟友动态")
+                Text(NSLocalizedString("开启定位权限后，可以查看附近的鸟友动态", comment: ""))
                     .font(.subheadline)
                     .foregroundColor(.secondary.opacity(0.7))
                     .multilineTextAlignment(.center)
@@ -980,7 +980,7 @@ struct ForumView: View {
                         UIApplication.shared.open(url)
                     }
                 } label: {
-                    Text("去设置")
+                    Text(NSLocalizedString("去设置", comment: ""))
                         .font(.subheadline)
                         .fontWeight(.medium)
                         .foregroundColor(.white)
@@ -1009,7 +1009,7 @@ struct ForumView: View {
                     Button {
                         showLoginSheet = true
                     } label: {
-                        Text("去登录")
+                        Text(NSLocalizedString("去登录", comment: ""))
                             .font(.subheadline)
                             .fontWeight(.medium)
                             .foregroundColor(.white)
@@ -1036,23 +1036,23 @@ struct ForumView: View {
     
     private func emptyStateTitleFor(tabIndex: Int) -> String {
         if !searchText.isEmpty {
-            return "未找到相关内容"
+            return NSLocalizedString("未找到相关内容", comment: "")
         }
         switch tabIndex {
-        case 0: return authService.isLoggedIn ? "还没有关注的人" : "登录后查看关注"
-        case 1: return "附近暂无动态"
-        default: return "暂无推荐内容"
+        case 0: return authService.isLoggedIn ? NSLocalizedString("还没有关注的人", comment: "") : NSLocalizedString("登录后查看关注", comment: "")
+        case 1: return NSLocalizedString("附近暂无动态", comment: "")
+        default: return NSLocalizedString("暂无推荐内容", comment: "")
         }
     }
     
     private func emptyStateSubtitleFor(tabIndex: Int) -> String {
         if !searchText.isEmpty {
-            return "换个关键词试试吧"
+            return NSLocalizedString("换个关键词试试吧", comment: "")
         }
         switch tabIndex {
-        case 0: return authService.isLoggedIn ? "去发现更多有趣的鸟友吧" : "登录后可以关注其他鸟友"
-        case 1: return "成为第一个分享的人吧"
-        default: return "下拉刷新试试"
+        case 0: return authService.isLoggedIn ? NSLocalizedString("去发现更多有趣的鸟友吧", comment: "") : NSLocalizedString("登录后可以关注其他鸟友", comment: "")
+        case 1: return NSLocalizedString("成为第一个分享的人吧", comment: "")
+        default: return NSLocalizedString("下拉刷新试试", comment: "")
         }
     }
     
@@ -1080,7 +1080,7 @@ struct ForumView: View {
                             HStack(spacing: 6) {
                                 Image(systemName: "exclamationmark.triangle.fill")
                                     .font(.system(size: 14))
-                                Text("寻鸟")
+                                Text(NSLocalizedString("寻鸟", comment: ""))
                                     .font(.caption)
                                     .fontWeight(.semibold)
                             }
@@ -1105,7 +1105,7 @@ struct ForumView: View {
                             HStack(spacing: 6) {
                                 Image(systemName: "square.and.pencil")
                                     .font(.system(size: 14))
-                                Text("发帖")
+                                Text(NSLocalizedString("发帖", comment: ""))
                                     .font(.caption)
                                     .fontWeight(.semibold)
                             }
@@ -1405,9 +1405,9 @@ struct LocationPickerView: View {
     
     @ObservedObject var themeManager = ThemeManager.shared
     private let ranges = [
-        ("附近", "location.fill", "当前位置3公里内", 3.0),
-        ("同城", "building.2.fill", "同一城市的鸟友", 50.0),
-        ("全国", "map.fill", "全国各地的鸟友", -1.0),
+        (NSLocalizedString("附近", comment: ""), "location.fill", NSLocalizedString("当前位置3公里内", comment: ""), 3.0),
+        (NSLocalizedString("同城", comment: ""), "building.2.fill", NSLocalizedString("同一城市的鸟友", comment: ""), 50.0),
+        (NSLocalizedString("全国", comment: ""), "map.fill", NSLocalizedString("全国各地的鸟友", comment: ""), -1.0),
     ]
     
     var body: some View {
@@ -1430,12 +1430,12 @@ struct LocationPickerView: View {
                         }
                         
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("当前位置")
+                            Text(NSLocalizedString("当前位置", comment: ""))
                                 .font(.subheadline)
                                 .fontWeight(.medium)
                             
                             if locationService.isLocating {
-                                Text("正在获取位置...")
+                                Text(NSLocalizedString("正在获取位置...", comment: ""))
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                             } else if let error = locationService.locationError {
@@ -1467,11 +1467,11 @@ struct LocationPickerView: View {
                         HStack(spacing: 8) {
                             Image(systemName: "exclamationmark.triangle.fill")
                                 .foregroundColor(.orange)
-                            Text("请在系统设置中开启定位权限")
+                            Text(NSLocalizedString("请在系统设置中开启定位权限", comment: ""))
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                             Spacer()
-                            Button("去设置") {
+                            Button(NSLocalizedString("去设置", comment: "")) {
                                 if let url = URL(string: UIApplication.openSettingsURLString) {
                                     UIApplication.shared.open(url)
                                 }
@@ -1482,7 +1482,7 @@ struct LocationPickerView: View {
                         .padding(.vertical, 4)
                     }
                 } header: {
-                    Text("我的位置")
+                    Text(NSLocalizedString("我的位置", comment: ""))
                 }
                 
                 // 范围选择
@@ -1519,13 +1519,13 @@ struct LocationPickerView: View {
                         }
                     }
                 } header: {
-                    Text("选择范围")
+                    Text(NSLocalizedString("选择范围", comment: ""))
                 } footer: {
-                    Text("选择范围后，将只显示该范围内的帖子")
+                    Text(NSLocalizedString("选择范围后，将只显示该范围内的帖子", comment: ""))
                 }
             }
             .scrollContentBackground(.hidden)
-            .themedNavigationBarWithDone(title: "位置设置") {
+            .themedNavigationBarWithDone(title: NSLocalizedString("位置设置", comment: "")) {
                 dismiss()
             }
         }
@@ -1787,7 +1787,7 @@ struct PostCard: View {
                                     VStack(spacing: 8) {
                                         ProgressView()
                                             .scaleEffect(1.2)
-                                        Text("加载中...")
+                                        Text(NSLocalizedString("加载中...", comment: ""))
                                             .font(.caption)
                                             .foregroundColor(.secondary)
                                     }
@@ -1809,7 +1809,7 @@ struct PostCard: View {
                         Circle()
                             .fill(Color.adaptiveCard)
                             .frame(width: 6, height: 6)
-                        Text("寻鸟")
+                        Text(NSLocalizedString("寻鸟", comment: ""))
                             .font(.system(size: 10, weight: .semibold))
                     }
                     .foregroundColor(.white)
@@ -2366,7 +2366,7 @@ class VideoPlayerController: NSObject, ObservableObject {
                     self?.loadError = nil
                 case .failed:
                     self?.isReady = false
-                    self?.loadError = item.error?.localizedDescription ?? "播放失败"
+                    self?.loadError = item.error?.localizedDescription ?? NSLocalizedString("播放失败", comment: "")
                 case .unknown:
                     break
                 @unknown default:
@@ -2621,7 +2621,7 @@ struct VideoPlayerView: View {
                             }
                             
                             VStack(spacing: 8) {
-                                Text("视频暂时无法播放")
+                                Text(NSLocalizedString("视频暂时无法播放", comment: ""))
                                     .font(.system(size: 18, weight: .semibold))
                                     .foregroundColor(.white)
                                 
@@ -2640,7 +2640,7 @@ struct VideoPlayerView: View {
                             } label: {
                                 HStack(spacing: 8) {
                                     Image(systemName: "arrow.clockwise")
-                                    Text("重新加载")
+                                    Text(NSLocalizedString("重新加载", comment: ""))
                                 }
                                 .font(.system(size: 15, weight: .medium))
                                 .foregroundColor(.white)
@@ -2678,7 +2678,7 @@ struct VideoPlayerView: View {
                                     .scaleEffect(1.3)
                             }
                             
-                            Text("加载中...")
+                            Text(NSLocalizedString("加载中...", comment: ""))
                                 .font(.system(size: 14))
                                 .foregroundColor(.white.opacity(0.7))
                         }
@@ -2716,11 +2716,11 @@ struct VideoPlayerView: View {
                         // 三个点菜单
                         Menu {
                             Button { showShareSheet = true } label: {
-                                Label("分享", systemImage: "square.and.arrow.up")
+                                Label(NSLocalizedString("分享", comment: ""), systemImage: "square.and.arrow.up")
                             }
                             if authService.currentUser?.id == post.authorId {
                                 Button(role: .destructive) { showDeleteAlert = true } label: {
-                                    Label("删除", systemImage: "trash")
+                                    Label(NSLocalizedString("删除", comment: ""), systemImage: "trash")
                                 }
                             }
                         } label: {
@@ -2979,7 +2979,7 @@ struct VideoPlayerView: View {
                                         }
                                     }
                                 } label: {
-                                    Text("关注")
+                                    Text(NSLocalizedString("关注", comment: ""))
                                         .font(.caption)
                                         .fontWeight(.semibold)
                                         .foregroundColor(.white)
@@ -2991,7 +2991,7 @@ struct VideoPlayerView: View {
                                         )
                                 }
                             } else {
-                                Text("已关注")
+                                Text(NSLocalizedString("已关注", comment: ""))
                                     .font(.caption)
                                     .foregroundColor(.white.opacity(0.6))
                             }
@@ -3037,26 +3037,26 @@ struct VideoPlayerView: View {
         .sheet(isPresented: $showShareSheet) {
             PostShareSheet(post: post)
         }
-        .alert("需要登录", isPresented: $showLoginAlert) {
-            Button("取消", role: .cancel) {}
-            Button("去登录") {
+        .alert(NSLocalizedString("需要登录", comment: ""), isPresented: $showLoginAlert) {
+            Button(NSLocalizedString("取消", comment: ""), role: .cancel) {}
+            Button(NSLocalizedString("去登录", comment: "")) {
                 // 这里可以触发登录流程
             }
         } message: {
-            Text("请先登录后再进行此操作")
+            Text(NSLocalizedString("请先登录后再进行此操作", comment: ""))
         }
-        .alert("无法关注", isPresented: $showSelfFollowAlert) {
-            Button("确定", role: .cancel) {}
+        .alert(NSLocalizedString("无法关注", comment: ""), isPresented: $showSelfFollowAlert) {
+            Button(NSLocalizedString("确定", comment: ""), role: .cancel) {}
         } message: {
-            Text("你不能关注自己哦")
+            Text(NSLocalizedString("你不能关注自己哦", comment: ""))
         }
-        .alert("删除帖子", isPresented: $showDeleteAlert) {
-            Button("取消", role: .cancel) {}
-            Button("删除", role: .destructive) {
+        .alert(NSLocalizedString("删除帖子", comment: ""), isPresented: $showDeleteAlert) {
+            Button(NSLocalizedString("取消", comment: ""), role: .cancel) {}
+            Button(NSLocalizedString("删除", comment: ""), role: .destructive) {
                 deletePost()
             }
         } message: {
-            Text("确定要删除这条帖子吗？此操作不可撤销。")
+            Text(NSLocalizedString("确定要删除这条帖子吗？此操作不可撤销。", comment: ""))
         }
     }
     
@@ -3096,7 +3096,7 @@ struct VideoPlayerView: View {
         let videoURLString = post.videoUrl ?? sampleVideoURLs[Int(post.id) % sampleVideoURLs.count]
         
         guard let url = URL(string: videoURLString) else {
-            videoLoadError = "无效的视频地址"
+            videoLoadError = NSLocalizedString("无效的视频地址", comment: "")
             isVideoLoading = false
             return
         }
@@ -3182,17 +3182,17 @@ struct CommentsSheetView: View {
             VStack(spacing: 0) {
                 // 评论列表
                 if isLoading {
-                    ProgressView("加载评论中...")
+                    ProgressView(NSLocalizedString("加载评论中...", comment: ""))
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else if comments.isEmpty {
                     VStack(spacing: 12) {
                         Image(systemName: "bubble.left.and.bubble.right")
                             .font(.system(size: 40))
                             .foregroundColor(.gray.opacity(0.5))
-                        Text("暂无评论")
+                        Text(NSLocalizedString("暂无评论", comment: ""))
                             .font(.subheadline)
                             .foregroundColor(.secondary)
-                        Text("快来发表第一条评论吧")
+                        Text(NSLocalizedString("快来发表第一条评论吧", comment: ""))
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
@@ -3219,7 +3219,7 @@ struct CommentsSheetView: View {
                 
                 // 评论输入框
                 HStack(spacing: 12) {
-                    TextField("说点什么...", text: $commentText)
+                    TextField(NSLocalizedString("说点什么...", comment: ""), text: $commentText)
                         .padding(.horizontal, 16)
                         .padding(.vertical, 10)
                         .background(Color(uiColor: .systemGray6))
@@ -3228,7 +3228,7 @@ struct CommentsSheetView: View {
                         .toolbar {
                             ToolbarItemGroup(placement: .keyboard) {
                                 Spacer()
-                                Button("完成") {
+                                Button(NSLocalizedString("完成", comment: "")) {
                                     isInputFocused = false
                                 }
                                 .foregroundColor(primaryColor)
@@ -3266,8 +3266,8 @@ struct CommentsSheetView: View {
         .onAppear {
             loadComments()
         }
-        .alert("请先登录", isPresented: $showLoginAlert) {
-            Button("确定", role: .cancel) {}
+        .alert(NSLocalizedString("请先登录", comment: ""), isPresented: $showLoginAlert) {
+            Button(NSLocalizedString("确定", comment: ""), role: .cancel) {}
         }
     }
     
@@ -3309,11 +3309,11 @@ struct CommentsSheetView: View {
                 let newComment = PostComment(
                     id: dto.id,
                     authorId: dto.authorId ?? 0,
-                    authorName: dto.authorName ?? authService.currentUser?.nickname ?? "用户",
+                    authorName: dto.authorName ?? authService.currentUser?.nickname ?? NSLocalizedString("用户", comment: ""),
                     authorAvatar: dto.authorAvatar ?? authService.currentUser?.avatarUrl,
                     content: dto.content,
                     likeCount: 0,
-                    timeAgo: "刚刚",
+                    timeAgo: NSLocalizedString("刚刚", comment: ""),
                     isLiked: false
                 )
                 await MainActor.run {
@@ -3430,7 +3430,7 @@ struct PostDetailView: View {
         Menu {
             // 分享
             Button { showShareSheet = true } label: {
-                Label("分享", systemImage: "square.and.arrow.up")
+                Label(NSLocalizedString("分享", comment: ""), systemImage: "square.and.arrow.up")
             }
             
             // 非自己的帖子才显示关注和举报
@@ -3446,7 +3446,7 @@ struct PostDetailView: View {
                     }
                 } label: {
                     let isFollowing = socialService.isFollowing(userId: post.authorId)
-                    Label(isFollowing ? "取消关注" : "关注作者", systemImage: isFollowing ? "person.badge.minus" : "person.badge.plus")
+                    Label(isFollowing ? NSLocalizedString("取消关注", comment: "") : NSLocalizedString("关注作者", comment: ""), systemImage: isFollowing ? "person.badge.minus" : "person.badge.plus")
                 }
                 
                 // 举报
@@ -3457,14 +3457,14 @@ struct PostDetailView: View {
                         showLoginAlert = true
                     }
                 } label: {
-                    Label("举报", systemImage: "exclamationmark.triangle")
+                    Label(NSLocalizedString("举报", comment: ""), systemImage: "exclamationmark.triangle")
                 }
             }
             
             // 自己的帖子显示删除
             if authService.currentUser?.id == post.authorId {
                 Button(role: .destructive) { showDeleteAlert = true } label: {
-                    Label("删除", systemImage: "trash")
+                    Label(NSLocalizedString("删除", comment: ""), systemImage: "trash")
                 }
             }
         } label: {
@@ -3527,16 +3527,16 @@ struct PostDetailView: View {
             .sheet(isPresented: $showShareSheet) {
                 PostShareSheet(post: post)
             }
-            .alert("请先登录", isPresented: $showLoginAlert) {
-                Button("确定", role: .cancel) {}
+            .alert(NSLocalizedString("请先登录", comment: ""), isPresented: $showLoginAlert) {
+                Button(NSLocalizedString("确定", comment: ""), role: .cancel) {}
             }
-            .alert("删除帖子", isPresented: $showDeleteAlert) {
-            Button("取消", role: .cancel) {}
-            Button("删除", role: .destructive) {
+            .alert(NSLocalizedString("删除帖子", comment: ""), isPresented: $showDeleteAlert) {
+            Button(NSLocalizedString("取消", comment: ""), role: .cancel) {}
+            Button(NSLocalizedString("删除", comment: ""), role: .destructive) {
                 deletePost()
             }
         } message: {
-            Text("确定要删除这条帖子吗？此操作不可撤销。")
+            Text(NSLocalizedString("确定要删除这条帖子吗？此操作不可撤销。", comment: ""))
         }
         .sheet(isPresented: $showReportSheet) {
             ReportPostSheet(
@@ -3549,13 +3549,13 @@ struct PostDetailView: View {
             .presentationDetents([.medium, .large])
             .presentationDragIndicator(.visible)
         }
-        .alert("举报成功", isPresented: $showReportSuccessAlert) {
-            Button("确定", role: .cancel) {}
+        .alert(NSLocalizedString("举报成功", comment: ""), isPresented: $showReportSuccessAlert) {
+            Button(NSLocalizedString("确定", comment: ""), role: .cancel) {}
         } message: {
-            Text("感谢您的反馈，我们会尽快处理。")
+            Text(NSLocalizedString("感谢您的反馈，我们会尽快处理。", comment: ""))
         }
-        .alert("举报失败", isPresented: $showReportErrorAlert) {
-            Button("确定", role: .cancel) {}
+        .alert(NSLocalizedString("举报失败", comment: ""), isPresented: $showReportErrorAlert) {
+            Button(NSLocalizedString("确定", comment: ""), role: .cancel) {}
         } message: {
             Text(reportErrorMessage)
         }
@@ -3629,10 +3629,10 @@ struct PostDetailView: View {
                         case .serverError(let message):
                             reportErrorMessage = message
                         default:
-                            reportErrorMessage = "举报失败，请稍后重试"
+                            reportErrorMessage = NSLocalizedString("举报失败，请稍后重试", comment: "")
                         }
                     } else {
-                        reportErrorMessage = "网络错误，请检查网络连接"
+                        reportErrorMessage = NSLocalizedString("网络错误，请检查网络连接", comment: "")
                     }
                     showReportSheet = false
                     showReportErrorAlert = true
@@ -3711,7 +3711,7 @@ struct PostDetailView: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 6) {
                 Image(systemName: "exclamationmark.triangle.fill")
-                Text("寻鸟启事")
+                Text(NSLocalizedString("寻鸟启事", comment: ""))
                     .fontWeight(.bold)
             }
             .font(.subheadline)
@@ -3831,7 +3831,7 @@ struct PostDetailView: View {
                             .scaledToFit()
                             .frame(width: 16, height: 16)
                             .foregroundColor(primaryColor)
-                        Text("关联鸟儿")
+                        Text(NSLocalizedString("关联鸟儿", comment: ""))
                             .font(.caption)
                             .fontWeight(.medium)
                             .foregroundColor(primaryColor)
@@ -3908,26 +3908,26 @@ struct PostDetailView: View {
     private var findBirdDetailSection: some View {
         VStack(alignment: .leading, spacing: 16) {
             // 标题栏 - 简洁样式
-            Text("寻鸟信息")
+            Text(NSLocalizedString("寻鸟信息", comment: ""))
                 .font(.headline)
                 .fontWeight(.bold)
             
             // 信息列表 - 简洁样式
             VStack(alignment: .leading, spacing: 12) {
                 if let birdName = post.birdName {
-                    simpleInfoRow(title: "鸟儿名字", value: birdName)
+                    simpleInfoRow(title: NSLocalizedString("鸟儿名字", comment: ""), value: birdName)
                 }
                 if let species = post.birdSpecies {
-                    simpleInfoRow(title: "鸟儿品种", value: species)
+                    simpleInfoRow(title: NSLocalizedString("鸟儿品种", comment: ""), value: species)
                 }
                 if let location = post.lostLocation {
-                    simpleInfoRow(title: "走失地点", value: location)
+                    simpleInfoRow(title: NSLocalizedString("走失地点", comment: ""), value: location)
                 }
                 if let phone = post.contactPhone {
-                    simpleInfoRow(title: "联系电话", value: phone)
+                    simpleInfoRow(title: NSLocalizedString("联系电话", comment: ""), value: phone)
                 }
                 if let reward = post.reward {
-                    simpleInfoRow(title: "悬赏金额", value: "¥\(reward)")
+                    simpleInfoRow(title: NSLocalizedString("悬赏金额", comment: ""), value: "¥\(reward)")
                 }
             }
             .padding(16)
@@ -3942,7 +3942,7 @@ struct PostDetailView: View {
                     HStack(spacing: 8) {
                         Image(systemName: "phone.fill")
                             .font(.system(size: 16))
-                        Text("联系失主")
+                        Text(NSLocalizedString("联系失主", comment: ""))
                             .fontWeight(.semibold)
                     }
                     .font(.subheadline)
@@ -3967,7 +3967,7 @@ struct PostDetailView: View {
                     HStack(spacing: 8) {
                         Image(systemName: "arrowshape.turn.up.right.fill")
                             .font(.system(size: 16))
-                        Text("帮忙转发")
+                        Text(NSLocalizedString("帮忙转发", comment: ""))
                             .fontWeight(.semibold)
                     }
                     .font(.subheadline)
@@ -4040,7 +4040,7 @@ struct PostDetailView: View {
     private var commentsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text("评论")
+                Text(NSLocalizedString("评论", comment: ""))
                     .font(.subheadline)
                     .fontWeight(.semibold)
                 Text("\(comments.count)")
@@ -4050,7 +4050,7 @@ struct PostDetailView: View {
             }
             
             if isLoadingComments {
-                ProgressView("加载评论中...")
+                ProgressView(NSLocalizedString("加载评论中...", comment: ""))
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 30)
             } else if comments.isEmpty {
@@ -4058,7 +4058,7 @@ struct PostDetailView: View {
                     Image(systemName: "bubble.left.and.bubble.right")
                         .font(.title)
                         .foregroundColor(.gray.opacity(0.3))
-                    Text("暂无评论，快来抢沙发～")
+                    Text(NSLocalizedString("暂无评论，快来抢沙发～", comment: ""))
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -4111,7 +4111,7 @@ struct PostDetailView: View {
             HStack(spacing: 16) {
                 // 评论输入框
                 HStack {
-                    TextField(replyingToComment != nil ? "回复 @\(replyingToComment!.authorName)..." : "说点什么...", text: $commentText)
+                    TextField(replyingToComment != nil ? "回复 @\(replyingToComment!.authorName)..." : NSLocalizedString("说点什么...", comment: ""), text: $commentText)
                         .font(.subheadline)
                         .focused($isCommentInputFocused)
                     
@@ -4160,7 +4160,7 @@ struct PostDetailView: View {
                     Image(systemName: socialService.isFavorited(postId: post.id) ? "bookmark.fill" : "bookmark")
                         .font(.title3)
                         .foregroundColor(socialService.isFavorited(postId: post.id) ? primaryColor : .gray)
-                    Text(socialService.isFavorited(postId: post.id) ? "已收藏" : "收藏")
+                    Text(socialService.isFavorited(postId: post.id) ? NSLocalizedString("已收藏", comment: "") : NSLocalizedString("收藏", comment: ""))
                         .font(.caption2)
                         .foregroundColor(socialService.isFavorited(postId: post.id) ? primaryColor : .gray)
                 }
@@ -4214,11 +4214,11 @@ struct PostDetailView: View {
                 let newComment = PostComment(
                     id: commentDTO.id,
                     authorId: commentDTO.authorId ?? 0,
-                    authorName: commentDTO.authorName ?? authService.currentUser?.nickname ?? "用户",
+                    authorName: commentDTO.authorName ?? authService.currentUser?.nickname ?? NSLocalizedString("用户", comment: ""),
                     authorAvatar: commentDTO.authorAvatar ?? authService.currentUser?.avatarUrl,
                     content: commentDTO.content,
                     likeCount: 0,
-                    timeAgo: "刚刚",
+                    timeAgo: NSLocalizedString("刚刚", comment: ""),
                     isLiked: false,
                     parentId: parentId,
                     replyToName: replyingToComment?.authorName
@@ -4362,7 +4362,7 @@ struct PostComment: Identifiable {
         return PostComment(
             id: dto.id,
             authorId: dto.authorId ?? 0,
-            authorName: dto.authorName ?? "用户",
+            authorName: dto.authorName ?? NSLocalizedString("用户", comment: ""),
             authorAvatar: dto.authorAvatar,
             content: dto.content,
             likeCount: dto.likeCount ?? 0,
@@ -4377,11 +4377,11 @@ struct PostComment: Identifiable {
     /// 根据 createdAt 字符串计算相对时间（小红书风格）
     /// 规则：刚刚 -> X分钟前 -> X小时前 -> 昨天 HH:mm -> X天前 -> MM月dd日 -> YYYY年MM月dd日
     private static func formatRelativeTime(from createdAtString: String?) -> String {
-        guard let createdAtString = createdAtString else { return "刚刚" }
+        guard let createdAtString = createdAtString else { return NSLocalizedString("刚刚", comment: "") }
         
         // 尝试解析日期字符串（支持多种格式）
         let date = parseDate(createdAtString)
-        guard let createdAt = date else { return "刚刚" }
+        guard let createdAt = date else { return NSLocalizedString("刚刚", comment: "") }
         
         let now = Date()
         let calendar = Calendar.current
@@ -4395,12 +4395,12 @@ struct PostComment: Identifiable {
         
         // 未来时间显示"刚刚"
         if createdAt > now {
-            return "刚刚"
+            return NSLocalizedString("刚刚", comment: "")
         }
         
         // 1分钟内
         if days == 0 && hours == 0 && minutes == 0 {
-            return "刚刚"
+            return NSLocalizedString("刚刚", comment: "")
         }
         
         // 1小时内
@@ -4428,13 +4428,13 @@ struct PostComment: Identifiable {
         // 今年内
         if years == 0 {
             let formatter = DateFormatter()
-            formatter.dateFormat = "M月d日"
+            formatter.dateFormat = NSLocalizedString("M月d日", comment: "")
             return formatter.string(from: createdAt)
         }
         
         // 往年
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy年M月d日"
+        formatter.dateFormat = NSLocalizedString("yyyy年M月d日", comment: "")
         return formatter.string(from: createdAt)
     }
     
@@ -4554,7 +4554,7 @@ struct CommentWithRepliesView: View {
                             }
                         } label: {
                             HStack(spacing: 4) {
-                                Text("收起")
+                                Text(NSLocalizedString("收起", comment: ""))
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                                 Image(systemName: "chevron.up")
@@ -4574,13 +4574,13 @@ struct CommentWithRepliesView: View {
             Divider()
                 .padding(.top, 8)
         }
-        .alert("删除评论", isPresented: $showDeleteAlert) {
-            Button("取消", role: .cancel) { }
-            Button("删除", role: .destructive) {
+        .alert(NSLocalizedString("删除评论", comment: ""), isPresented: $showDeleteAlert) {
+            Button(NSLocalizedString("取消", comment: ""), role: .cancel) { }
+            Button(NSLocalizedString("删除", comment: ""), role: .destructive) {
                 performDelete()
             }
         } message: {
-            Text("确定要删除这条评论吗？")
+            Text(NSLocalizedString("确定要删除这条评论吗？", comment: ""))
         }
     }
     
@@ -4748,7 +4748,7 @@ struct CommentRow: View {
                     
                     // 情侣标签
                     if isCoupleComment {
-                        Text("💕伴侣")
+                        Text(NSLocalizedString("💕伴侣", comment: ""))
                             .font(.system(size: 9))
                             .foregroundColor(.white)
                             .padding(.horizontal, 4)
@@ -4818,14 +4818,14 @@ struct CommentRow: View {
                 Button(role: .destructive) {
                     onDelete?()
                 } label: {
-                    Label("删除评论", systemImage: "trash")
+                    Label(NSLocalizedString("删除评论", comment: ""), systemImage: "trash")
                 }
             }
             
             Button {
                 onReply?(comment)
             } label: {
-                Label("回复", systemImage: "arrowshape.turn.up.left")
+                Label(NSLocalizedString("回复", comment: ""), systemImage: "arrowshape.turn.up.left")
             }
         }
         .navigationDestination(isPresented: $showUserProfile) {
@@ -4951,7 +4951,7 @@ struct ForumPost: Identifiable, Equatable {
         return ForumPost(
             id: dto.id,
             authorId: dto.authorId ?? 0,
-            authorName: dto.authorName ?? "用户",
+            authorName: dto.authorName ?? NSLocalizedString("用户", comment: ""),
             authorAvatar: dto.authorAvatar,
             content: dto.content,
             images: dto.images ?? [],
@@ -5062,11 +5062,11 @@ struct ForumPost: Identifiable, Equatable {
     /// 根据 createdAt 字符串计算相对时间（小红书风格）
     /// 规则：刚刚 -> X分钟前 -> X小时前 -> 昨天 HH:mm -> X天前 -> MM月dd日 -> YYYY年MM月dd日
     private static func formatRelativeTime(from createdAtString: String?) -> String {
-        guard let createdAtString = createdAtString else { return "刚刚" }
+        guard let createdAtString = createdAtString else { return NSLocalizedString("刚刚", comment: "") }
         
         // 尝试解析日期字符串（支持多种格式）
         let date = parseDate(createdAtString)
-        guard let createdAt = date else { return "刚刚" }
+        guard let createdAt = date else { return NSLocalizedString("刚刚", comment: "") }
         
         let now = Date()
         let calendar = Calendar.current
@@ -5079,12 +5079,12 @@ struct ForumPost: Identifiable, Equatable {
         
         // 未来时间显示"刚刚"
         if createdAt > now {
-            return "刚刚"
+            return NSLocalizedString("刚刚", comment: "")
         }
         
         // 1分钟内
         if days == 0 && hours == 0 && minutes == 0 {
-            return "刚刚"
+            return NSLocalizedString("刚刚", comment: "")
         }
         
         // 1小时内
@@ -5112,13 +5112,13 @@ struct ForumPost: Identifiable, Equatable {
         // 今年内
         if years == 0 {
             let formatter = DateFormatter()
-            formatter.dateFormat = "M月d日"
+            formatter.dateFormat = NSLocalizedString("M月d日", comment: "")
             return formatter.string(from: createdAt)
         }
         
         // 往年
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy年M月d日"
+        formatter.dateFormat = NSLocalizedString("yyyy年M月d日", comment: "")
         return formatter.string(from: createdAt)
     }
     
@@ -5253,7 +5253,7 @@ struct CreatePostView: View {
                         HStack {
                             Image(systemName: "location.fill")
                                 .foregroundColor(themeManager.primaryColor)
-                            Text("添加位置")
+                            Text(NSLocalizedString("添加位置", comment: ""))
                                 .font(.subheadline)
                                 .fontWeight(.medium)
                             
@@ -5304,7 +5304,7 @@ struct CreatePostView: View {
                                             .font(.caption)
                                         Image(systemName: "pencil")
                                             .font(.caption)
-                                        Text(!useCurrentLocation && !customLocationName.isEmpty ? customLocationName : "手动输入")
+                                        Text(!useCurrentLocation && !customLocationName.isEmpty ? customLocationName : NSLocalizedString("手动输入", comment: ""))
                                             .font(.caption)
                                             .lineLimit(1)
                                     }
@@ -5330,7 +5330,7 @@ struct CreatePostView: View {
                                 ProgressView()
                                     .tint(.white)
                             } else {
-                                Text("发布")
+                                Text(NSLocalizedString("发布", comment: ""))
                             }
                         }
                         .font(.headline)
@@ -5351,10 +5351,10 @@ struct CreatePostView: View {
                 }
             }
             .scrollDismissesKeyboard(.interactively)  // 滑动时键盘可交互式隐藏，但不会立即消失
-            .themedNavigationBar(title: "发布帖子")
+            .themedNavigationBar(title: NSLocalizedString("发布帖子", comment: ""))
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("发布") {
+                    Button(NSLocalizedString("发布", comment: "")) {
                         postContent()
                     }
                     .fontWeight(.semibold)
@@ -5371,13 +5371,13 @@ struct CreatePostView: View {
             // 加载用户的鸟儿列表
             loadMyBirds()
         }
-        .alert("发布成功", isPresented: $showSuccess) {
-                Button("确定") { dismiss() }
+        .alert(NSLocalizedString("发布成功", comment: ""), isPresented: $showSuccess) {
+                Button(NSLocalizedString("确定", comment: "")) { dismiss() }
             } message: {
-                Text("你的帖子已发布到广场")
+                Text(NSLocalizedString("你的帖子已发布到广场", comment: ""))
             }
-            .alert("发布失败", isPresented: $showError) {
-                Button("确定", role: .cancel) {}
+            .alert(NSLocalizedString("发布失败", comment: ""), isPresented: $showError) {
+                Button(NSLocalizedString("确定", comment: ""), role: .cancel) {}
             } message: {
                 Text(errorMessage)
             }
@@ -5427,7 +5427,7 @@ struct CreatePostView: View {
                         
                         if !isValidFormat {
                             await MainActor.run {
-                                errorMessage = "仅支持MP4/MOV格式视频"
+                                errorMessage = NSLocalizedString("仅支持MP4/MOV格式视频", comment: "")
                                 showError = true
                                 selectedVideoItem = nil
                             }
@@ -5448,7 +5448,7 @@ struct CreatePostView: View {
                                     print("🎬 视频已压缩: \(data.count / 1024 / 1024)MB → \(compressedData.count / 1024 / 1024)MB")
                                 } else {
                                     await MainActor.run {
-                                        errorMessage = "视频过大且压缩失败，请选择小于200MB的视频"
+                                        errorMessage = NSLocalizedString("视频过大且压缩失败，请选择小于200MB的视频", comment: "")
                                         showError = true
                                         selectedVideoItem = nil
                                     }
@@ -5683,10 +5683,10 @@ struct CreatePostView: View {
                 UserAvatarView(avatarUrl: authService.currentUser?.avatarUrl, size: 44)
                 
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(authService.currentUser?.nickname ?? "用户")
+                    Text(authService.currentUser?.nickname ?? NSLocalizedString("用户", comment: ""))
                         .font(.subheadline)
                         .fontWeight(.semibold)
-                    Text("发布到广场")
+                    Text(NSLocalizedString("发布到广场", comment: ""))
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -5705,7 +5705,7 @@ struct CreatePostView: View {
                 .toolbar {
                     ToolbarItemGroup(placement: .keyboard) {
                         Spacer()
-                        Button("完成") {
+                        Button(NSLocalizedString("完成", comment: "")) {
                             isTextEditorFocused = false
                         }
                         .foregroundColor(themeManager.primaryColor)
@@ -5749,7 +5749,7 @@ struct CreatePostView: View {
                     Image(systemName: mediaType == "IMAGE" ? "checkmark.circle.fill" : "circle")
                         .foregroundColor(mediaType == "IMAGE" ? themeManager.primaryColor : .gray)
                     Image(systemName: "photo.fill")
-                    Text("图片")
+                    Text(NSLocalizedString("图片", comment: ""))
                 }
                 .font(.subheadline)
                 .foregroundColor(mediaType == "IMAGE" ? themeManager.primaryColor : .secondary)
@@ -5764,7 +5764,7 @@ struct CreatePostView: View {
                     Image(systemName: mediaType == "VIDEO" ? "checkmark.circle.fill" : "circle")
                         .foregroundColor(mediaType == "VIDEO" ? themeManager.primaryColor : .gray)
                     Image(systemName: "video.fill")
-                    Text("视频")
+                    Text(NSLocalizedString("视频", comment: ""))
                 }
                 .font(.subheadline)
                 .foregroundColor(mediaType == "VIDEO" ? themeManager.primaryColor : .secondary)
@@ -5778,7 +5778,7 @@ struct CreatePostView: View {
     private var imagePickerSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text("添加图片")
+                Text(NSLocalizedString("添加图片", comment: ""))
                     .font(.subheadline)
                     .fontWeight(.medium)
                 Spacer()
@@ -5827,7 +5827,7 @@ struct CreatePostView: View {
             VStack(spacing: 6) {
                 Image(systemName: "photo.badge.plus")
                     .font(.title2)
-                Text("添加")
+                Text(NSLocalizedString("添加", comment: ""))
                     .font(.caption)
             }
             .foregroundColor(themeManager.primaryColor)
@@ -5840,7 +5840,7 @@ struct CreatePostView: View {
     private var videoPickerSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text("添加视频")
+                Text(NSLocalizedString("添加视频", comment: ""))
                     .font(.subheadline)
                     .fontWeight(.medium)
                 Spacer()
@@ -5903,7 +5903,7 @@ struct CreatePostView: View {
                 HStack(spacing: 4) {
                     Image(systemName: "photo.on.rectangle")
                         .font(.caption)
-                    Text("选择封面")
+                    Text(NSLocalizedString("选择封面", comment: ""))
                         .font(.caption)
                 }
                 .foregroundColor(themeManager.primaryColor)
@@ -5923,7 +5923,7 @@ struct CreatePostView: View {
             VStack(spacing: 6) {
                 Image(systemName: "video.badge.plus")
                     .font(.title2)
-                Text("添加视频")
+                Text(NSLocalizedString("添加视频", comment: ""))
                     .font(.caption)
             }
             .foregroundColor(themeManager.primaryColor)
@@ -5941,7 +5941,7 @@ struct CreatePostView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 20, height: 20)
-                Text("关联我的鸟儿")
+                Text(NSLocalizedString("关联我的鸟儿", comment: ""))
                     .font(.subheadline)
                     .fontWeight(.medium)
                 
@@ -5957,7 +5957,7 @@ struct CreatePostView: View {
                 
                 Spacer()
                 
-                Text("可多选")
+                Text(NSLocalizedString("可多选", comment: ""))
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
@@ -5968,7 +5968,7 @@ struct CreatePostView: View {
                     let availableBirds = myBirds.filter { $0.isLost != true && !$0.isDead }
                     
                     if availableBirds.isEmpty {
-                        Text("暂无可关联的鸟儿")
+                        Text(NSLocalizedString("暂无可关联的鸟儿", comment: ""))
                             .font(.caption)
                             .foregroundColor(.secondary)
                             .padding(.horizontal, 16)
@@ -6031,14 +6031,14 @@ struct CreatePostView: View {
         // P2-11: 重复发布防抖（3秒内相同内容不允许发布）
         let now = Date()
         if content == lastPostContent && now.timeIntervalSince(lastPostTime) < 3 {
-            errorMessage = "请勿重复发布相同内容"
+            errorMessage = NSLocalizedString("请勿重复发布相同内容", comment: "")
             showError = true
             return
         }
         
         // 防止后台已有发布任务
         if BackgroundPostService.shared.isPublishing {
-            errorMessage = "已有帖子正在发布中，请稍后再试"
+            errorMessage = NSLocalizedString("已有帖子正在发布中，请稍后再试", comment: "")
             showError = true
             return
         }
@@ -6111,10 +6111,10 @@ struct VideoCoverPickerView: View {
                         .padding(.horizontal)
                 }
                 
-                Text("选择视频封面")
+                Text(NSLocalizedString("选择视频封面", comment: ""))
                     .font(.headline)
                 
-                Text("滑动选择一帧作为视频封面")
+                Text(NSLocalizedString("滑动选择一帧作为视频封面", comment: ""))
                     .font(.caption)
                     .foregroundColor(.secondary)
                 
@@ -6156,7 +6156,7 @@ struct VideoCoverPickerView: View {
                         onSelect(frames[selectedIndex])
                     }
                 } label: {
-                    Text("使用此封面")
+                    Text(NSLocalizedString("使用此封面", comment: ""))
                         .font(.headline)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
@@ -6168,7 +6168,7 @@ struct VideoCoverPickerView: View {
                 .padding(.bottom)
             }
             .themedNavigationBarWithActions(
-                title: "选择封面",
+                title: NSLocalizedString("选择封面", comment: ""),
                 onCancel: { dismiss() },
                 onSave: {
                     if selectedIndex < frames.count {
@@ -6191,7 +6191,7 @@ struct LocationInputView: View {
     
     // 常用位置建议
     private let suggestions = [
-        "家里", "公司", "公园", "宠物店", "宠物医院", "小区", "学校", "商场"
+        NSLocalizedString("家里", comment: ""), NSLocalizedString("公司", comment: ""), NSLocalizedString("公园", comment: ""), NSLocalizedString("宠物店", comment: ""), NSLocalizedString("宠物医院", comment: ""), NSLocalizedString("小区", comment: ""), NSLocalizedString("学校", comment: ""), NSLocalizedString("商场", comment: "")
     ]
     
     @ObservedObject private var themeManager = ThemeManager.shared
@@ -6201,11 +6201,11 @@ struct LocationInputView: View {
             VStack(spacing: 20) {
                 // 输入框
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("输入位置名称")
+                    Text(NSLocalizedString("输入位置名称", comment: ""))
                         .font(.subheadline)
                         .fontWeight(.medium)
                     
-                    TextField("例如：北京市朝阳区xxx小区", text: $inputText)
+                    TextField(NSLocalizedString("例如：北京市朝阳区xxx小区", comment: ""), text: $inputText)
                         .padding()
                         .background(Color(uiColor: .systemGray6))
                         .cornerRadius(12)
@@ -6214,7 +6214,7 @@ struct LocationInputView: View {
                 
                 // 快捷选择
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("快捷选择")
+                    Text(NSLocalizedString("快捷选择", comment: ""))
                         .font(.subheadline)
                         .fontWeight(.medium)
                         .padding(.horizontal)
@@ -6246,7 +6246,7 @@ struct LocationInputView: View {
                     locationName = inputText
                     onConfirm()
                 } label: {
-                    Text("确认")
+                    Text(NSLocalizedString("确认", comment: ""))
                         .font(.headline)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
@@ -6259,7 +6259,7 @@ struct LocationInputView: View {
                 .padding(.bottom)
             }
             .themedNavigationBarWithActions(
-                title: "输入位置",
+                title: NSLocalizedString("输入位置", comment: ""),
                 onCancel: { dismiss() },
                 onSave: {
                     locationName = inputText
@@ -6344,10 +6344,10 @@ struct CreateFindBirdPostView: View {
             }
             .scrollDismissesKeyboard(.interactively)  // 滑动时交互式收起键盘
             .onTapGesture { hideKeyboard() }  // 点击空白处收起键盘
-            .themedNavigationBar(title: "寻鸟启事")
+            .themedNavigationBar(title: NSLocalizedString("寻鸟启事", comment: ""))
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("发布") {
+                    Button(NSLocalizedString("发布", comment: "")) {
                         postFindBird()
                     }
                     .fontWeight(.semibold)
@@ -6356,13 +6356,13 @@ struct CreateFindBirdPostView: View {
                 }
             }
         }
-        .alert("发布成功", isPresented: $showSuccess) {
-                Button("确定") { dismiss() }
+        .alert(NSLocalizedString("发布成功", comment: ""), isPresented: $showSuccess) {
+                Button(NSLocalizedString("确定", comment: "")) { dismiss() }
             } message: {
-                Text("寻鸟启事已发布，将推送给附近10公里内的鸟友")
+                Text(NSLocalizedString("寻鸟启事已发布，将推送给附近10公里内的鸟友", comment: ""))
             }
-        .alert("信息不完整", isPresented: $showValidationError) {
-            Button("知道了", role: .cancel) { }
+        .alert(NSLocalizedString("信息不完整", comment: ""), isPresented: $showValidationError) {
+            Button(NSLocalizedString("知道了", comment: ""), role: .cancel) { }
         } message: {
             Text(validationErrorMessage)
         }
@@ -6422,7 +6422,7 @@ struct CreateFindBirdPostView: View {
     @ViewBuilder
     private var imagePickerSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            sectionTitle("鸟儿照片", required: true)
+            sectionTitle(NSLocalizedString("鸟儿照片", comment: ""), required: true)
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
@@ -6455,7 +6455,7 @@ struct CreateFindBirdPostView: View {
                             VStack(spacing: 8) {
                                 Image(systemName: "photo.badge.plus")
                                     .font(.title2)
-                                Text("添加照片")
+                                Text(NSLocalizedString("添加照片", comment: ""))
                                     .font(.caption)
                             }
                             .foregroundColor(urgentColor)
@@ -6471,7 +6471,7 @@ struct CreateFindBirdPostView: View {
                 }
             }
             
-            Text("上传清晰的鸟儿照片，帮助大家识别")
+            Text(NSLocalizedString("上传清晰的鸟儿照片，帮助大家识别", comment: ""))
                 .font(.caption)
                 .foregroundColor(.secondary)
         }
@@ -6484,14 +6484,14 @@ struct CreateFindBirdPostView: View {
     private var birdAssociationSection: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
-                sectionTitle("关联我的鸟儿", required: false)
-                Text("可选")
+                sectionTitle(NSLocalizedString("关联我的鸟儿", comment: ""), required: false)
+                Text(NSLocalizedString("可选", comment: ""))
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
             
             if myBirds.isEmpty {
-                Text("暂无可关联的鸟儿")
+                Text(NSLocalizedString("暂无可关联的鸟儿", comment: ""))
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .padding(12)
@@ -6508,7 +6508,7 @@ struct CreateFindBirdPostView: View {
                                 Image(systemName: "nosign")
                                     .font(.title2)
                                     .foregroundColor(selectedBirdId == nil ? .white : .secondary)
-                                Text("不关联")
+                                Text(NSLocalizedString("不关联", comment: ""))
                                     .font(.caption)
                                     .foregroundColor(selectedBirdId == nil ? .white : .secondary)
                             }
@@ -6524,7 +6524,7 @@ struct CreateFindBirdPostView: View {
                 }
             }
             
-            Text("关联后将自动标记该鸟儿为「丢失」状态")
+            Text(NSLocalizedString("关联后将自动标记该鸟儿为「丢失」状态", comment: ""))
                 .font(.caption)
                 .foregroundColor(.secondary)
         }
@@ -6569,7 +6569,7 @@ struct CreateFindBirdPostView: View {
     @ViewBuilder
     private var locationSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            sectionTitle("走失地点", required: true)
+            sectionTitle(NSLocalizedString("走失地点", comment: ""), required: true)
             
             HStack(spacing: 12) {
                 Button {
@@ -6577,7 +6577,7 @@ struct CreateFindBirdPostView: View {
                 } label: {
                     HStack {
                         Image(systemName: "location.fill")
-                        Text("当前定位")
+                        Text(NSLocalizedString("当前定位", comment: ""))
                     }
                     .font(.subheadline)
                     .foregroundColor(useCurrentLocation ? .white : .primary)
@@ -6593,7 +6593,7 @@ struct CreateFindBirdPostView: View {
                 } label: {
                     HStack {
                         Image(systemName: "map")
-                        Text("手动选择")
+                        Text(NSLocalizedString("手动选择", comment: ""))
                     }
                     .font(.subheadline)
                     .foregroundColor(!useCurrentLocation ? .white : .primary)
@@ -6620,7 +6620,7 @@ struct CreateFindBirdPostView: View {
             if useCurrentLocation {
                 if locationService.isLocating {
                     ProgressView().scaleEffect(0.8)
-                    Text("正在获取位置...")
+                    Text(NSLocalizedString("正在获取位置...", comment: ""))
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 } else if let error = locationService.locationError {
@@ -6628,13 +6628,13 @@ struct CreateFindBirdPostView: View {
                         .font(.subheadline)
                         .foregroundColor(.red)
                 } else {
-                    Text(locationService.fullAddress.isEmpty ? "无法获取位置" : locationService.fullAddress)
+                    Text(locationService.fullAddress.isEmpty ? NSLocalizedString("无法获取位置", comment: "") : locationService.fullAddress)
                         .font(.subheadline)
                         .foregroundColor(.primary)
                         .lineLimit(2)
                 }
             } else {
-                Text(customLocationName.isEmpty ? "请选择位置" : customLocationName)
+                Text(customLocationName.isEmpty ? NSLocalizedString("请选择位置", comment: "") : customLocationName)
                     .font(.subheadline)
                     .foregroundColor(customLocationName.isEmpty ? .secondary : .primary)
                     .lineLimit(2)
@@ -6650,9 +6650,9 @@ struct CreateFindBirdPostView: View {
     @ViewBuilder
     private var birdInfoInputSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            sectionTitle("鸟儿信息", required: true)
+            sectionTitle(NSLocalizedString("鸟儿信息", comment: ""), required: true)
             
-            inputField(title: "鸟儿名字", placeholder: "如：小黄", text: $birdName, required: true)
+            inputField(title: NSLocalizedString("鸟儿名字", comment: ""), placeholder: NSLocalizedString("如：小黄", comment: ""), text: $birdName, required: true)
             
             speciesPickerField
             descriptionField
@@ -6666,7 +6666,7 @@ struct CreateFindBirdPostView: View {
     private var speciesPickerField: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 4) {
-                Text("鸟儿品种")
+                Text(NSLocalizedString("鸟儿品种", comment: ""))
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                 Text("*")
@@ -6678,7 +6678,7 @@ struct CreateFindBirdPostView: View {
                 showSpeciesPicker = true
             } label: {
                 HStack {
-                    Text(birdSpecies.isEmpty ? "点击选择品种" : birdSpecies)
+                    Text(birdSpecies.isEmpty ? NSLocalizedString("点击选择品种", comment: "") : birdSpecies)
                         .foregroundColor(birdSpecies.isEmpty ? .secondary : .primary)
                     Spacer()
                     Image(systemName: "chevron.right")
@@ -6704,7 +6704,7 @@ struct CreateFindBirdPostView: View {
     private var descriptionField: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 4) {
-                Text("外观特征")
+                Text(NSLocalizedString("外观特征", comment: ""))
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                 Text("*")
@@ -6721,7 +6721,7 @@ struct CreateFindBirdPostView: View {
                 .overlay(
                     Group {
                         if description.isEmpty {
-                            Text("描述鸟儿的颜色、体型、特殊标记等特征...")
+                            Text(NSLocalizedString("描述鸟儿的颜色、体型、特殊标记等特征...", comment: ""))
                                 .font(.subheadline)
                                 .foregroundColor(.gray.opacity(0.5))
                                 .padding(.leading, 14)
@@ -6736,11 +6736,11 @@ struct CreateFindBirdPostView: View {
     @ViewBuilder
     private var contactSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            sectionTitle("联系方式", required: true)
+            sectionTitle(NSLocalizedString("联系方式", comment: ""), required: true)
             
-            inputField(title: "联系电话", placeholder: "方便鸟友联系您", text: $contactPhone, keyboardType: .phonePad, required: true)
+            inputField(title: NSLocalizedString("联系电话", comment: ""), placeholder: NSLocalizedString("方便鸟友联系您", comment: ""), text: $contactPhone, keyboardType: .phonePad, required: true)
             
-            Text("电话将部分隐藏显示，保护您的隐私")
+            Text(NSLocalizedString("电话将部分隐藏显示，保护您的隐私", comment: ""))
                 .font(.caption)
                 .foregroundColor(.secondary)
         }
@@ -6753,8 +6753,8 @@ struct CreateFindBirdPostView: View {
     private var rewardSection: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
-                sectionTitle("悬赏金额", required: false)
-                Text("可选")
+                sectionTitle(NSLocalizedString("悬赏金额", comment: ""), required: false)
+                Text(NSLocalizedString("可选", comment: ""))
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
@@ -6763,7 +6763,7 @@ struct CreateFindBirdPostView: View {
                 Text("¥")
                     .font(.title3)
                     .foregroundColor(.secondary)
-                TextField("输入金额", text: $reward)
+                TextField(NSLocalizedString("输入金额", comment: ""), text: $reward)
                     .font(.title3)
                     .keyboardType(.numberPad)
             }
@@ -6771,7 +6771,7 @@ struct CreateFindBirdPostView: View {
             .background(Color(uiColor: .systemGray6))
             .cornerRadius(10)
             
-            Text("设置悬赏可以提高帖子曝光度和响应速度")
+            Text(NSLocalizedString("设置悬赏可以提高帖子曝光度和响应速度", comment: ""))
                 .font(.caption)
                 .foregroundColor(.secondary)
         }
@@ -6791,7 +6791,7 @@ struct CreateFindBirdPostView: View {
                         .tint(.white)
                 } else {
                     Image(systemName: "megaphone.fill")
-                    Text("立即发布寻鸟启事")
+                    Text(NSLocalizedString("立即发布寻鸟启事", comment: ""))
                 }
             }
             .font(.headline)
@@ -6832,7 +6832,7 @@ struct CreateFindBirdPostView: View {
         
         // 1. 校验图片
         if selectedImages.isEmpty {
-            missingFields.append("鸟儿照片 (至少一张)")
+            missingFields.append(NSLocalizedString("鸟儿照片 (至少一张)", comment: ""))
         }
         
         // 2. 校验位置
@@ -6843,29 +6843,29 @@ struct CreateFindBirdPostView: View {
             hasLocation = !customLocationName.isEmpty
         }
         if !hasLocation {
-            missingFields.append("走失地点")
+            missingFields.append(NSLocalizedString("走失地点", comment: ""))
         }
         
         // 3. 校验鸟儿信息
         if birdName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            missingFields.append("鸟儿名字")
+            missingFields.append(NSLocalizedString("鸟儿名字", comment: ""))
         }
         
         if birdSpecies.isEmpty {
-            missingFields.append("鸟儿品种")
+            missingFields.append(NSLocalizedString("鸟儿品种", comment: ""))
         }
         
         if description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            missingFields.append("外观特征")
+            missingFields.append(NSLocalizedString("外观特征", comment: ""))
         }
         
         // 4. 校验联系方式
         if contactPhone.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            missingFields.append("联系电话")
+            missingFields.append(NSLocalizedString("联系电话", comment: ""))
         }
         
         if !missingFields.isEmpty {
-            validationErrorMessage = "请完善以下必填信息：\n\n" + missingFields.map { "• " + $0 }.joined(separator: "\n")
+            validationErrorMessage = NSLocalizedString("请完善以下必填信息：\n\n", comment: "") + missingFields.map { "• " + $0 }.joined(separator: "\n")
             showValidationError = true
             return
         }
@@ -7112,7 +7112,7 @@ struct ZoomableImage: View {
                             Image(systemName: "photo")
                                 .font(.system(size: 50))
                                 .foregroundColor(.white.opacity(0.5))
-                            Text("图片加载失败")
+                            Text(NSLocalizedString("图片加载失败", comment: ""))
                                 .font(.subheadline)
                                 .foregroundColor(.white.opacity(0.5))
                         }
@@ -7158,25 +7158,25 @@ enum ReportType: String, CaseIterable, Identifiable {
     
     var title: String {
         switch self {
-        case .spam: return "垃圾广告"
-        case .inappropriate: return "不当内容"
-        case .harassment: return "骚扰辱骂"
-        case .fraud: return "虚假信息/诈骗"
-        case .violence: return "暴力血腥"
-        case .copyright: return "侵权内容"
-        case .other: return "其他"
+        case .spam: return NSLocalizedString("垃圾广告", comment: "")
+        case .inappropriate: return NSLocalizedString("不当内容", comment: "")
+        case .harassment: return NSLocalizedString("骚扰辱骂", comment: "")
+        case .fraud: return NSLocalizedString("虚假信息/诈骗", comment: "")
+        case .violence: return NSLocalizedString("暴力血腥", comment: "")
+        case .copyright: return NSLocalizedString("侵权内容", comment: "")
+        case .other: return NSLocalizedString("其他", comment: "")
         }
     }
     
     var description: String {
         switch self {
-        case .spam: return "垃圾广告或营销信息"
-        case .inappropriate: return "含有不当内容或违规信息"
-        case .harassment: return "言语骚扰或人身攻击"
-        case .fraud: return "虚假信息或疑似诈骗"
-        case .violence: return "含有暴力或血腥内容"
-        case .copyright: return "侵犯他人著作权或知识产权"
-        case .other: return "其他违规内容"
+        case .spam: return NSLocalizedString("垃圾广告或营销信息", comment: "")
+        case .inappropriate: return NSLocalizedString("含有不当内容或违规信息", comment: "")
+        case .harassment: return NSLocalizedString("言语骚扰或人身攻击", comment: "")
+        case .fraud: return NSLocalizedString("虚假信息或疑似诈骗", comment: "")
+        case .violence: return NSLocalizedString("含有暴力或血腥内容", comment: "")
+        case .copyright: return NSLocalizedString("侵犯他人著作权或知识产权", comment: "")
+        case .other: return NSLocalizedString("其他违规内容", comment: "")
         }
     }
     
@@ -7209,7 +7209,7 @@ struct ReportPostSheet: View {
             VStack(spacing: 0) {
                 // 标题
                 HStack {
-                    Text("举报帖子")
+                    Text(NSLocalizedString("举报帖子", comment: ""))
                         .font(.headline)
                     Spacer()
                 }
@@ -7219,7 +7219,7 @@ struct ReportPostSheet: View {
                 
                 // 提示文字
                 HStack {
-                    Text("请选择举报原因，我们会尽快处理")
+                    Text(NSLocalizedString("请选择举报原因，我们会尽快处理", comment: ""))
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                     Spacer()
@@ -7240,7 +7240,7 @@ struct ReportPostSheet: View {
                         
                         // 补充说明
                         VStack(alignment: .leading, spacing: 8) {
-                            Text("补充说明（可选）")
+                            Text(NSLocalizedString("补充说明（可选）", comment: ""))
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                             
@@ -7268,7 +7268,7 @@ struct ReportPostSheet: View {
                         Button {
                             dismiss()
                         } label: {
-                            Text("取消")
+                            Text(NSLocalizedString("取消", comment: ""))
                                 .font(.headline)
                                 .foregroundColor(.primary)
                                 .frame(maxWidth: .infinity)
@@ -7286,7 +7286,7 @@ struct ReportPostSheet: View {
                                         .progressViewStyle(CircularProgressViewStyle(tint: .white))
                                         .scaleEffect(0.8)
                                 }
-                                Text(isReporting ? "提交中..." : "提交举报")
+                                Text(isReporting ? NSLocalizedString("提交中...", comment: "") : NSLocalizedString("提交举报", comment: ""))
                                     .font(.headline)
                             }
                             .foregroundColor(.white)

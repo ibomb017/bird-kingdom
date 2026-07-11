@@ -32,7 +32,7 @@ struct AllBirdsView: View {
                                 Button {
                                     birdToMarkFound = bird
                                 } label: {
-                                    Label("找到了", systemImage: "checkmark.circle.fill")
+                                    Label(NSLocalizedString("找到了", comment: ""), systemImage: "checkmark.circle.fill")
                                 }
                                 .tint(.green)
                             }
@@ -43,7 +43,7 @@ struct AllBirdsView: View {
             }
         }
         .themedBackground()
-        .navigationTitle("我的鸟舍")
+        .navigationTitle(NSLocalizedString("我的鸟舍", comment: ""))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -68,12 +68,12 @@ struct AllBirdsView: View {
             }
         }
         .hidesTabBar()  // 进入详情页时隐藏底部导航栏
-        .alert("确认找回", isPresented: .init(
+        .alert(NSLocalizedString("确认找回", comment: ""), isPresented: .init(
             get: { birdToMarkFound != nil },
             set: { if !$0 { birdToMarkFound = nil } }
         )) {
-            Button("取消", role: .cancel) { birdToMarkFound = nil }
-            Button("确认找回") {
+            Button(NSLocalizedString("取消", comment: ""), role: .cancel) { birdToMarkFound = nil }
+            Button(NSLocalizedString("确认找回", comment: "")) {
                 if let bird = birdToMarkFound {
                     markBirdAsFound(bird)
                 }
@@ -125,7 +125,7 @@ struct AllBirdsView: View {
                     if let idx = birds.firstIndex(where: { $0.id == bird.id }) {
                         birds[idx] = originalBird
                     }
-                    ToastManager.shared.showError("操作失败，请检查网络")
+                    ToastManager.shared.showError(NSLocalizedString("操作失败，请检查网络", comment: ""))
                 }
                 print("❌ 更新鸟儿状态失败: \(error)")
             }
@@ -210,7 +210,7 @@ struct BirdRowView: View {
                         .foregroundColor(bird.isDead ? .gray : .primary)
                     
                     if bird.isDead {
-                        Text("已故")
+                        Text(NSLocalizedString("已故", comment: ""))
                             .font(.caption2)
                             .foregroundColor(.white)
                             .padding(.horizontal, 6)

@@ -75,7 +75,7 @@ struct WeightTrendFullView: View {
             }
         }
         .themedBackground()
-        .navigationTitle("体重趋势")
+        .navigationTitle(NSLocalizedString("体重趋势", comment: ""))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -101,11 +101,11 @@ struct WeightTrendFullView: View {
         .onChange(of: selectedBirdIndex) { _, _ in
             loadSpeciesWeightRange()
         }
-        .alert("删除体重记录", isPresented: $showDeleteAlert) {
-            Button("取消", role: .cancel) {
+        .alert(NSLocalizedString("删除体重记录", comment: ""), isPresented: $showDeleteAlert) {
+            Button(NSLocalizedString("取消", comment: ""), role: .cancel) {
                 recordToDelete = nil
             }
-            Button("删除", role: .destructive) {
+            Button(NSLocalizedString("删除", comment: ""), role: .destructive) {
                 if let record = recordToDelete {
                     deleteWeightRecord(birdId: record.birdId, logId: record.logId)
                 }
@@ -126,7 +126,7 @@ struct WeightTrendFullView: View {
         VStack(spacing: 0) {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 8) {
-                    birdChip(title: "全部", isSelected: selectedBirdIndex == 0) {
+                    birdChip(title: NSLocalizedString("全部", comment: ""), isSelected: selectedBirdIndex == 0) {
                         withAnimation(.easeInOut(duration: 0.2)) {
                             selectedBirdIndex = 0
                         }
@@ -206,7 +206,7 @@ struct WeightTrendFullView: View {
                     Image(systemName: "bird")
                         .font(.system(size: 32))
                         .foregroundStyle(primaryColor.opacity(0.4))
-                    Text("选择一只小鸟查看体重趋势")
+                    Text(NSLocalizedString("选择一只小鸟查看体重趋势", comment: ""))
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
@@ -237,28 +237,28 @@ struct WeightTrendFullView: View {
     private var statsSection: some View {
         HStack(spacing: 10) {
             statItem(
-                title: "最低",
+                title: NSLocalizedString("最低", comment: ""),
                 value: filteredDataPoints.map(\.weight).min().map { String(format: "%.1f", $0) } ?? "--",
                 icon: "arrow.down",
                 color: Color(red: 0.2, green: 0.72, blue: 0.45)
             )
             
             statItem(
-                title: "最高",
+                title: NSLocalizedString("最高", comment: ""),
                 value: filteredDataPoints.map(\.weight).max().map { String(format: "%.1f", $0) } ?? "--",
                 icon: "arrow.up",
                 color: Color(red: 0.95, green: 0.55, blue: 0.25)
             )
             
             statItem(
-                title: "均值",
+                title: NSLocalizedString("均值", comment: ""),
                 value: averageWeight,
                 icon: "chart.bar",
                 color: primaryColor
             )
             
             statItem(
-                title: "记录",
+                title: NSLocalizedString("记录", comment: ""),
                 value: "\(filteredDataPoints.count)",
                 icon: "number",
                 color: .secondary
@@ -294,7 +294,7 @@ struct WeightTrendFullView: View {
     private var recordsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text("体重记录")
+                Text(NSLocalizedString("体重记录", comment: ""))
                     .font(.system(size: 16, weight: .semibold))
                     .foregroundColor(.primary)
                 
@@ -311,7 +311,7 @@ struct WeightTrendFullView: View {
                 HStack(spacing: 8) {
                     Image(systemName: "doc.text")
                         .foregroundColor(.secondary.opacity(0.5))
-                    Text("暂无记录")
+                    Text(NSLocalizedString("暂无记录", comment: ""))
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
@@ -506,7 +506,7 @@ struct WeightTrendFullView: View {
     
     private func formatFullDate(_ date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy年M月d日"
+        formatter.dateFormat = NSLocalizedString("yyyy年M月d日", comment: "")
         formatter.timeZone = TimeZone(identifier: "Asia/Shanghai")
         return formatter.string(from: date)
     }
@@ -520,7 +520,7 @@ struct WeightTrendFullView: View {
     
     private func formatMonthYear(_ date: Date) -> String {
         let f = DateFormatter()
-        f.dateFormat = "M月"
+        f.dateFormat = NSLocalizedString("M月", comment: "")
         f.timeZone = TimeZone(identifier: "Asia/Shanghai")
         return f.string(from: date)
     }
