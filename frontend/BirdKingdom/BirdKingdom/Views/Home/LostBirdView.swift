@@ -118,12 +118,12 @@ struct LostBirdView: View {
                             HStack(spacing: 6) {
                                 Image(systemName: "calendar")
                                     .font(.caption)
-                                Text("走失于 \(formatDate(lostDate))")
+                                Text(String(format: NSLocalizedString("走失于 %@", comment: ""), formatDate(lostDate)))
                                     .font(.subheadline)
                             }
                             .foregroundColor(.white.opacity(0.7))
                             
-                            Text("已经 \(daysSinceLost(lostDate)) 天")
+                            Text(String(format: NSLocalizedString("已经 %d 天", comment: ""), daysSinceLost(lostDate)))
                                 .font(.caption)
                                 .foregroundColor(hopeColor)
                         }
@@ -256,7 +256,7 @@ struct LostBirdView: View {
                 dismiss()
             }
         } message: {
-            Text("太好了！\(bird.nickname)回来了！\n确认后将取消丢失模式")
+            Text(String(format: NSLocalizedString("太好了！%@回来了！\n确认后将取消丢失模式", comment: ""), bird.nickname))
         }
     }
     

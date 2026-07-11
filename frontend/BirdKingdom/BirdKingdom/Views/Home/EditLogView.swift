@@ -80,7 +80,7 @@ struct EditLogView: View {
                         Text(NSLocalizedString("照片记录", comment: ""))
                             .fontWeight(.semibold)
                         Spacer()
-                        Text("\(imageUrls.count) 张")
+                        Text(String(format: NSLocalizedString("%d张", comment: ""), imageUrls.count))
                             .font(.caption)
                             .foregroundColor(.secondary)
                             .padding(.horizontal, 8)
@@ -263,7 +263,7 @@ struct EditLogView: View {
             } catch {
                 await MainActor.run {
                     isSubmitting = false
-                    errorMessage = "保存失败: \(error.localizedDescription)"
+                    errorMessage = String(format: NSLocalizedString("保存失败: %@", comment: ""), error.localizedDescription)
                 }
             }
         }

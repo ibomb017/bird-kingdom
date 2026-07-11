@@ -196,13 +196,13 @@ struct SplashPurchaseView: View {
         .alert(NSLocalizedString("🎉 审核通过", comment: ""), isPresented: $showApprovedAlert) {
             Button(NSLocalizedString("太棒了", comment: "")) { }
         } message: {
-            Text("您的开屏图片已审核通过！\n\n将在 \(approvedDate) 展示给所有用户。")
+            Text(String(format: NSLocalizedString("您的开屏图片已审核通过！\n\n将在 %@ 展示给所有用户。", comment: ""), approvedDate))
         }
         // 审核驳回弹窗
         .alert(NSLocalizedString("审核未通过", comment: ""), isPresented: $showRejectedAlert) {
             Button(NSLocalizedString("我知道了", comment: "")) { }
         } message: {
-            Text("很抱歉，您的开屏图片未通过审核。\n\n驳回原因：\(rejectedReason)\n\n费用将自动退还到您的账户。")
+            Text(String(format: NSLocalizedString("很抱歉，您的开屏图片未通过审核。\n\n驳回原因：%@\n\n费用将自动退还到您的账户。", comment: ""), rejectedReason))
         }
     }
     
@@ -284,7 +284,7 @@ struct SplashPurchaseView: View {
                 try? await splashService.fetchOrders()
                 await ToastManager.shared.showSuccess(NSLocalizedString("订单已取消", comment: ""))
             } catch {
-                await ToastManager.shared.showError("取消失败: \(error.localizedDescription)")
+                await ToastManager.shared.showError(String(format: NSLocalizedString("取消失败: %@", comment: ""), error.localizedDescription))
                 try? await splashService.fetchOrders()
             }
         }
@@ -298,7 +298,7 @@ struct SplashPurchaseView: View {
                 try? await splashService.fetchOrders()
                 await ToastManager.shared.showSuccess(NSLocalizedString("订单已删除", comment: ""))
             } catch {
-                await ToastManager.shared.showError("删除失败: \(error.localizedDescription)")
+                await ToastManager.shared.showError(String(format: NSLocalizedString("删除失败: %@", comment: ""), error.localizedDescription))
                 try? await splashService.fetchOrders()
             }
         }
@@ -446,7 +446,7 @@ struct AppleStyleOrderRow: View {
                     
                     VStack(alignment: .leading, spacing: 4) {
                         if isRejected, let reason = order.reviewReason, !reason.isEmpty {
-                            Text("由于[\(reason)]，审核已驳回")
+                            Text(String(format: NSLocalizedString("由于[%@]，审核已驳回", comment: ""), reason))
                         } else if isRefunded {
                             Text(NSLocalizedString("款项已按原路全部退还至您的账户", comment: ""))
                         }

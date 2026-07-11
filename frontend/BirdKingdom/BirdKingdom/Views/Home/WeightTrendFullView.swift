@@ -301,7 +301,7 @@ struct WeightTrendFullView: View {
                 Spacer()
                 
                 if !weightRecordsWithBirdNameAndId.isEmpty {
-                    Text("共 \(weightRecordsWithBirdNameAndId.count) 条")
+                    Text(String(format: NSLocalizedString("共 %d 条", comment: ""), weightRecordsWithBirdNameAndId.count))
                         .font(.system(size: 12))
                         .foregroundColor(.secondary)
                 }

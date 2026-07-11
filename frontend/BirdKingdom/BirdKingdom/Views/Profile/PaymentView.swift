@@ -46,7 +46,7 @@ struct PaymentView: View {
                     dismiss()
                 }
             } message: {
-                Text("恭喜您成为\(plan.name)！")
+                Text(String(format: NSLocalizedString("恭喜您成为%@！", comment: ""), plan.name))
             }
             .alert(NSLocalizedString("支付失败", comment: ""), isPresented: $showError) {
                 Button(NSLocalizedString("确定", comment: "")) {}
@@ -160,7 +160,7 @@ struct PaymentView: View {
                     ProgressView()
                         .tint(.white)
                 } else {
-                    Text("确认支付 ¥\(plan.price)")
+                    Text(String(format: NSLocalizedString("确认支付 ¥%@", comment: ""), plan.price))
                 }
             }
             .font(.headline)
@@ -294,7 +294,7 @@ struct PaymentView: View {
             } catch {
                 await MainActor.run {
                     isProcessing = false
-                    errorMessage = "支付失败：\(error.localizedDescription)"
+                    errorMessage = String(format: NSLocalizedString("支付失败：%@", comment: ""), error.localizedDescription)
                     showError = true
                 }
             }
@@ -569,7 +569,7 @@ class StoreManager: ObservableObject {
                     print("✅ 恢复购买成功: \(response.message)")
                     // 显示剩余天数
                     if let days = response.remainingDays, days > 0 {
-                        return (true, "恢复成功！会员剩余 \(days) 天")
+                        return (true, String(format: NSLocalizedString("恢复成功！会员剩余 %d 天", comment: ""), days))
                     }
                     return (true, response.message)
                 } else {

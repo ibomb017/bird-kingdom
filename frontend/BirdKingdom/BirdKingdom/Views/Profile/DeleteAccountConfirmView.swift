@@ -80,7 +80,7 @@ struct DeleteAccountConfirmView: View {
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                         
-                        Text("验证码将发送至：\(maskedPhone)")
+                        Text(String(format: NSLocalizedString("验证码将发送至：%@", comment: ""), maskedPhone))
                             .font(.caption)
                             .foregroundColor(.secondary)
                         
@@ -197,7 +197,7 @@ struct DeleteAccountConfirmView: View {
             } catch {
                 await MainActor.run {
                     isSendingCode = false
-                    errorMessage = "发送验证码失败: \(error.localizedDescription)"
+                    errorMessage = String(format: NSLocalizedString("发送验证码失败: %@", comment: ""), error.localizedDescription)
                     showError = true
                 }
             }
@@ -229,7 +229,7 @@ struct DeleteAccountConfirmView: View {
             } catch {
                 await MainActor.run {
                     isDeleting = false
-                    errorMessage = "注销失败: \(error.localizedDescription)"
+                    errorMessage = String(format: NSLocalizedString("注销失败: %@", comment: ""), error.localizedDescription)
                     showError = true
                 }
             }

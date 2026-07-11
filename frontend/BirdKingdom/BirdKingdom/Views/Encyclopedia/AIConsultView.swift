@@ -105,7 +105,7 @@ struct AIConsultView: View {
                 HStack {
                     Image(systemName: "info.circle")
                         .font(.caption)
-                    Text("已有 \(aiService.messages.count) 条对话")
+                    Text(String(format: NSLocalizedString("已有 %d 条对话", comment: ""), aiService.messages.count))
                         .font(.caption)
                     Spacer()
                     Button {

@@ -219,7 +219,7 @@ struct CoupleBindingView: View {
             } catch {
                 await MainActor.run {
                     isBinding = false
-                    errorMessage = "绑定失败：\(error.localizedDescription)"
+                    errorMessage = String(format: NSLocalizedString("绑定失败：%@", comment: ""), error.localizedDescription)
                     showError = true
                 }
             }

@@ -64,7 +64,7 @@ struct SplashReuploadView: View {
                 dismiss()
             }
         } message: {
-            Text("您的开屏图片已提交，正在等待审核。\n\n审核通过后将在 \(orderResponse.displayDate) 展示给所有用户。\n\n如审核未通过，费用将自动退还。")
+            Text(String(format: NSLocalizedString("您的开屏图片已提交，正在等待审核。\n\n审核通过后将在 %@ 展示给所有用户。\n\n如审核未通过，费用将自动退还。", comment: ""), orderResponse.displayDate))
         }
         .alert(NSLocalizedString("确认上传", comment: ""), isPresented: $showConfirmAlert) {
             Button(L10n.cancel, role: .cancel) { }

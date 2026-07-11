@@ -2003,3 +2003,35 @@
 "当前剩余 %d 天" = "Currently %d days left";
 "购买后有效期将延长至 %d 天" = "Validity will extend to %d days after purchase";
 "立即开通 ¥%@" = "Activate Now ¥%@";
+
+// --- BAT 2 FORMAT KEYS ---
+"走失于 %@" = "Lost on %@";
+"已经 %d 天" = "Already %d days";
+"周期间隔波动较大（CV: %@）" = "Cycle interval fluctuates significantly (CV: %@)";
+"%d张" = "%d photos";
+"保存失败: %@" = "Save failed: %@";
+"共 %d 条" = "Total %d records";
+"确定要删除 %@ 的%@记录吗？此操作不可撤销。" = "Are you sure you want to delete %@'s %@ record? This action cannot be undone.";
+"加载失败: %@" = "Load failed: %@";
+"忌日: %@" = "Anniversary of Death: %@";
+"此鸟已共享给 %d 位用户" = "This bird has been shared with %d users";
+"%d人" = "%d people";
+"输入对方的手机号，邀请TA一起照顾 %@" = "Enter the partner's phone number to invite them to take care of %@ together";
+"已向 %@ 发送共享邀请，等待对方确认" = "Shared invitation sent to %@, waiting for confirmation";
+"%@ 邀请你成为 %@ 的%@" = "%@ invites you to become the %@ of %@";
+"年龄：%@" = "Age: %@";
+"立即购买 ¥%@" = "Buy Now ¥%@";
+"剩%d" = "%d left";
+"您的开屏图片已提交，正在等待审核。\n\n审核通过后将在 %@ 展示给所有用户。\n\n如审核未通过，费用将自动退还。" = "Your splash screen image has been submitted and is awaiting review.\n\nOnce approved, it will be shown to all users on %@.\n\nIf rejected, the fee will be automatically refunded.";
+"支付已成功，但图片上传失败。\n请进入「我的订单」重新上传图片，或联系客服处理退款。\n\n错误详情：%@" = "Payment succeeded, but image upload failed.\nPlease go to 'My Orders' to re-upload, or contact support for a refund.\n\nError details: %@";
+"您的开屏图片已审核通过！\n\n将在 %@ 展示给所有用户。" = "Your splash screen image has been approved!\n\nIt will be displayed to all users on %@.";
+"很抱歉，您的开屏图片未通过审核。\n\n驳回原因：%@\n\n费用将自动退还到您的账户。" = "We are sorry, your splash screen image did not pass review.\n\nRejection reason: %@\n\nFees will be automatically refunded to your account.";
+"取消失败: %@" = "Cancellation failed: %@";
+"删除失败: %@" = "Deletion failed: %@";
+"由于[%@]，审核已驳回" = "Review rejected due to [%@]";
+"加载图片失败: %@" = "Failed to load image: %@";
+"保存头像失败: %@" = "Failed to save avatar: %@";
+"验证码已发送至 %@" = "Verification code sent to %@";
+"已有 %d 条对话" = "There are already %d conversations";
+"支持识别%d种常见鸟类" = "Supports recognition of %d common bird species";
+"%d 种" = "%d species";

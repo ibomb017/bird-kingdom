@@ -224,7 +224,7 @@ struct BirdRowView: View {
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                 
-                Text("年龄：\(bird.ageText)")
+                Text(String(format: NSLocalizedString("年龄：%@", comment: ""), bird.ageText))
                     .font(.caption)
                     .foregroundColor(.gray)
             }

@@ -120,7 +120,7 @@ struct SetPasswordView: View {
                                 .background(Color(uiColor: .systemGray6))
                                 .cornerRadius(10)
                                 
-                                Text("验证码将发送至 \(maskedPhone)")
+                                Text(String(format: NSLocalizedString("验证码将发送至 %@", comment: ""), maskedPhone))
                                     .font(.caption2)
                                     .foregroundColor(.secondary)
                             }
@@ -293,7 +293,7 @@ struct SetPasswordView: View {
             } catch {
                 await MainActor.run {
                     isSendingCode = false
-                    errorMessage = "发送验证码失败：\(error.localizedDescription)"
+                    errorMessage = String(format: NSLocalizedString("发送验证码失败：%@", comment: ""), error.localizedDescription)
                     showError = true
                 }
             }

@@ -222,7 +222,7 @@ struct ContactAuthorView: View {
                 HStack(spacing: 4) {
                     Image(systemName: "exclamationmark.circle.fill")
                         .font(.caption)
-                    Text("还需要 \(10 - content.count) 个字")
+                    Text(String(format: NSLocalizedString("还需要 %d 个字", comment: ""), 10 - content.count))
                         .font(.caption)
                 }
                 .foregroundColor(.orange)

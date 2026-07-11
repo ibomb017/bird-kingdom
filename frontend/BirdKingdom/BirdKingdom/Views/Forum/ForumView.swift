@@ -816,7 +816,7 @@ struct ForumView: View {
                 .foregroundColor(.gray.opacity(0.4))
             
             VStack(spacing: 8) {
-                Text("没有找到「\(searchText)」相关内容")
+                Text(String(format: NSLocalizedString("没有找到「%@」相关内容", comment: ""), searchText))
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                 
@@ -3109,7 +3109,7 @@ struct VideoPlayerView: View {
         URLSession.shared.dataTask(with: request) { _, response, error in
             DispatchQueue.main.async {
                 if let error = error {
-                    self.videoLoadError = "网络错误: \(error.localizedDescription)"
+                    self.videoLoadError = String(format: NSLocalizedString("网络错误: %@", comment: ""), error.localizedDescription)
                     self.isVideoLoading = false
                     return
                 }
@@ -3123,7 +3123,7 @@ struct VideoPlayerView: View {
                 if httpResponse.statusCode == 200 {
                     self.setupAndPlayVideo(url: url)
                 } else {
-                    self.videoLoadError = "视频不可用 (状态码: \(httpResponse.statusCode))"
+                    self.videoLoadError = String(format: NSLocalizedString("视频不可用 (状态码: %d)", comment: ""), httpResponse.statusCode)
                     self.isVideoLoading = false
                 }
             }
@@ -3254,7 +3254,7 @@ struct CommentsSheetView: View {
             }
             .background(Color.adaptiveCard)
             .scrollDismissesKeyboard(.interactively)
-            .navigationTitle("\(comments.count) 条评论")
+            .navigationTitle(String(format: NSLocalizedString("%d 条评论", comment: ""), comments.count))
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(primaryColor.opacity(0.08), for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
@@ -3722,7 +3722,7 @@ struct PostDetailView: View {
             .cornerRadius(8)
             
             if let reward = post.reward {
-                Text("悬赏 \(reward)")
+                Text(String(format: NSLocalizedString("悬赏 %@", comment: ""), reward))
                     .font(.caption)
                     .fontWeight(.semibold)
                     .foregroundColor(.white)
@@ -3800,7 +3800,7 @@ struct PostDetailView: View {
                     Image(systemName: "photo")
                         .font(.system(size: 50))
                         .foregroundColor(post.postType == .findBird ? urgentColor.opacity(0.4) : primaryColor.opacity(0.4))
-                    Text("图片 \(index + 1)")
+                    Text(String(format: NSLocalizedString("图片 %d", comment: ""), index + 1))
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -4088,7 +4088,7 @@ struct PostDetailView: View {
             // 回复提示条
             if let replyComment = replyingToComment {
                 HStack {
-                    Text("回复 @\(replyComment.authorName)")
+                    Text(String(format: NSLocalizedString("回复 @%@", comment: ""), replyComment.authorName))
                         .font(.caption)
                         .foregroundColor(.secondary)
                     
@@ -4405,24 +4405,24 @@ struct PostComment: Identifiable {
         
         // 1小时内
         if days == 0 && hours == 0 {
-            return "\(minutes)分钟前"
+            return String(format: NSLocalizedString("%d分钟前", comment: ""), minutes)
         }
         
         // 24小时内（今天）
         if days == 0 {
-            return "\(hours)小时前"
+            return String(format: NSLocalizedString("%d小时前", comment: ""), hours)
         }
         
         // 昨天
         if days == 1 {
             let formatter = DateFormatter()
             formatter.dateFormat = "HH:mm"
-            return "昨天 \(formatter.string(from: createdAt))"
+            return String(format: NSLocalizedString("昨天 %@", comment: ""), formatter.string(from: createdAt))
         }
         
         // 7天内
         if days <= 7 {
-            return "\(days)天前"
+            return String(format: NSLocalizedString("%d天前", comment: ""), days)
         }
         
         // 今年内
@@ -4533,7 +4533,7 @@ struct CommentWithRepliesView: View {
                             }
                         } label: {
                             HStack(spacing: 4) {
-                                Text("展开\(comment.replies.count - defaultVisibleReplies)条回复")
+                                Text(String(format: NSLocalizedString("展开%d条回复", comment: ""), comment.replies.count - defaultVisibleReplies))
                                     .font(.caption)
                                     .foregroundColor(primaryColor)
                                 Image(systemName: "chevron.down")
@@ -5089,24 +5089,24 @@ struct ForumPost: Identifiable, Equatable {
         
         // 1小时内
         if days == 0 && hours == 0 {
-            return "\(minutes)分钟前"
+            return String(format: NSLocalizedString("%d分钟前", comment: ""), minutes)
         }
         
         // 24小时内（今天）
         if days == 0 {
-            return "\(hours)小时前"
+            return String(format: NSLocalizedString("%d小时前", comment: ""), hours)
         }
         
         // 昨天
         if days == 1 {
             let formatter = DateFormatter()
             formatter.dateFormat = "HH:mm"
-            return "昨天 \(formatter.string(from: createdAt))"
+            return String(format: NSLocalizedString("昨天 %@", comment: ""), formatter.string(from: createdAt))
         }
         
         // 7天内
         if days <= 7 {
-            return "\(days)天前"
+            return String(format: NSLocalizedString("%d天前", comment: ""), days)
         }
         
         // 今年内
@@ -5946,7 +5946,7 @@ struct CreatePostView: View {
                     .fontWeight(.medium)
                 
                 if !selectedBirdIds.isEmpty {
-                    Text("\(selectedBirdIds.count)只")
+                    Text(String(format: NSLocalizedString("%d只", comment: ""), selectedBirdIds.count))
                         .font(.caption)
                         .padding(.horizontal, 8)
                         .padding(.vertical, 2)
@@ -6874,7 +6874,7 @@ struct CreateFindBirdPostView: View {
         
         // 获取位置信息
         let lostLocationText = useCurrentLocation ? locationService.fullAddress : customLocationName
-        let rewardText = reward.isEmpty ? nil : "\(reward)元"
+        let rewardText = reward.isEmpty ? nil : String(format: NSLocalizedString("%@元", comment: ""), reward)
         
         Task {
             do {
@@ -6929,7 +6929,7 @@ struct CreateFindBirdPostView: View {
                 print("❌ 发布寻鸟帖子失败: \(error)")
                 await MainActor.run {
                     isPosting = false
-                    validationErrorMessage = "发布失败：\(error.localizedDescription)"
+                    validationErrorMessage = String(format: NSLocalizedString("发布失败：%@", comment: ""), error.localizedDescription)
                     showValidationError = true
                 }
             }

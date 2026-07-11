@@ -252,7 +252,7 @@ struct SplashCalendarView: View {
                     ProgressView()
                         .tint(.white)
                 } else {
-                    Text("立即购买 ¥\(SplashService.shared.currentPrice.formatted(.number.precision(.fractionLength(0))))")
+                    Text(String(format: NSLocalizedString("立即购买 ¥%@", comment: ""), SplashService.shared.currentPrice.formatted(.number.precision(.fractionLength(0)))))
                 }
             }
             .font(.headline)
@@ -357,7 +357,7 @@ struct SplashDayCell: View {
                             .font(.system(size: 8))
                             .foregroundColor(.secondary)
                     } else {
-                        Text("剩\(availableSlots)")
+                        Text(String(format: NSLocalizedString("剩%d", comment: ""), availableSlots))
                             .font(.system(size: 8))
                             .foregroundColor(isSelected ? .white.opacity(0.8) : primaryColor.opacity(0.8))
                     }

@@ -181,7 +181,7 @@ struct PhysiologicalCycleView: View {
         let filteredCycles = cycles.filter { $0.cycleType == selectedCycleType }
         
         if filteredCycles.isEmpty {
-            Text("暂无\(selectedCycleType.displayName)记录")
+            Text(String(format: NSLocalizedString("暂无%@记录", comment: ""), selectedCycleType.displayName))
                 .foregroundColor(.secondary)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .listRowBackground(Color.clear)
@@ -222,14 +222,14 @@ struct PhysiologicalCycleView: View {
             HStack {
                 Label(NSLocalizedString("平均间隔", comment: ""), systemImage: "calendar")
                 Spacer()
-                Text("\(stats.mean) 天 (±\(Int(stats.stdDev)))")
+                Text(String(format: NSLocalizedString("%@ 天 (±%d)", comment: ""), stats.mean, Int(stats.stdDev)))
                     .foregroundColor(.secondary)
             }
             
             HStack {
                 Label(NSLocalizedString("间隔范围", comment: ""), systemImage: "arrow.left.and.right")
                 Spacer()
-                Text("\(stats.min)-\(stats.max) 天")
+                Text(String(format: NSLocalizedString("%@-%@ 天", comment: ""), stats.min, stats.max))
                     .foregroundColor(.secondary)
             }
             
@@ -238,7 +238,7 @@ struct PhysiologicalCycleView: View {
                 HStack {
                     Image(systemName: "exclamationmark.triangle.fill")
                         .foregroundColor(.orange)
-                    Text("周期间隔波动较大（CV: \(String(format: "%.0f%%", stats.cv * 100))）")
+                    Text(String(format: NSLocalizedString("周期间隔波动较大（CV: %@）", comment: ""), String(format: "%.0f%%", stats.cv * 100)))
                         .font(.caption)
                         .foregroundColor(.orange)
                 }
@@ -349,7 +349,7 @@ struct PhysiologicalCycleView: View {
                 
                 // 过期警告
                 if isPastDue {
-                    Text("已过预期 \(daysPastDue) 天")
+                    Text(String(format: NSLocalizedString("已过预期 %d 天", comment: ""), daysPastDue))
                         .font(.caption)
                         .foregroundColor(.red)
                     
@@ -619,9 +619,9 @@ struct ActiveCycleCard: View {
                 .frame(width: 30)
             
             VStack(alignment: .leading, spacing: 2) {
-                Text("\(cycle.cycleType.displayName)进行中")
+                Text(String(format: NSLocalizedString("%@进行中", comment: ""), cycle.cycleType.displayName))
                     .font(.headline)
-                Text("第 \(cycle.durationDays) 天")
+                Text(String(format: NSLocalizedString("第 %d 天", comment: ""), cycle.durationDays))
                     .font(.subheadline)
                     .foregroundColor(.secondary)
             }
@@ -704,7 +704,7 @@ struct CycleHistoryRow: View {
                         .foregroundColor(.green)
                         .cornerRadius(4)
                 } else {
-                    Text("\(cycle.durationDays) 天")
+                    Text(String(format: NSLocalizedString("%d 天", comment: ""), cycle.durationDays))
                         .font(.subheadline)
                         .foregroundColor(cycle.isAnomalous ? .orange : .secondary)
                 }
@@ -736,7 +736,7 @@ struct CycleHistoryRow: View {
         if let end = cycle.endDate {
             return "\(start) - \(formatter.string(from: end))"
         }
-        return "\(start) - 至今"
+        return String(format: NSLocalizedString("%@ - 至今", comment: ""), start)
     }
 }
 

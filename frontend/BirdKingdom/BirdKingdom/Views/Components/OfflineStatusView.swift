@@ -27,7 +27,7 @@ struct OfflineStatusView: View {
                             .foregroundColor(.blue)
                     }
                 } else if offlineService.pendingSyncCount > 0 {
-                    Text("待同步: \(offlineService.pendingSyncCount)")
+                    Text(String(format: NSLocalizedString("待同步: %d", comment: ""), offlineService.pendingSyncCount))
                         .font(.caption)
                         .foregroundColor(.blue)
                 }
@@ -75,7 +75,7 @@ struct OfflineBanner: View {
                     Spacer()
                     
                     if offlineService.pendingSyncCount > 0 {
-                        Text("\(offlineService.pendingSyncCount)项待同步")
+                        Text(String(format: NSLocalizedString("%d项待同步", comment: ""), offlineService.pendingSyncCount))
                             .font(.caption)
                             .fontWeight(.medium)
                             .foregroundColor(.white)
@@ -142,7 +142,7 @@ struct LastSyncTimeView: View {
                     .font(.caption)
                     .foregroundColor(.secondary)
                 
-                Text("上次同步: \(formatTime(lastSync))")
+                Text(String(format: NSLocalizedString("上次同步: %@", comment: ""), formatTime(lastSync)))
                     .font(.caption)
                     .foregroundColor(.secondary)
             }

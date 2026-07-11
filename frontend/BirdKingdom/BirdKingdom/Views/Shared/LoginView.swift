@@ -863,7 +863,7 @@ struct ForgotPasswordView: View {
         case .phone:
             return NSLocalizedString("请输入您的注册手机号", comment: "")
         case .code:
-            return "验证码已发送至 \(phone)"
+            return String(format: NSLocalizedString("验证码已发送至 %@", comment: ""), phone)
         case .password:
             return NSLocalizedString("请设置您的新密码", comment: "")
         }

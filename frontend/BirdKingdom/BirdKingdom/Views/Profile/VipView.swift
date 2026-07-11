@@ -808,7 +808,7 @@ struct VipView: View {
             } catch {
                 await MainActor.run {
                     isLoading = false
-                    alertMessage = "购买失败：\(error.localizedDescription)"
+                    alertMessage = String(format: NSLocalizedString("购买失败：%@", comment: ""), error.localizedDescription)
                     showError = true
                 }
             }

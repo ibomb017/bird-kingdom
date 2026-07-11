@@ -67,7 +67,7 @@ struct SplashUploadView: View {
                 dismiss()
             }
         } message: {
-            Text("您的开屏图片已提交，正在等待审核。\n\n审核通过后将在 \(reserveResponse.displayDate) 展示给所有用户。\n\n如审核未通过，费用将自动退还。")
+            Text(String(format: NSLocalizedString("您的开屏图片已提交，正在等待审核。\n\n审核通过后将在 %@ 展示给所有用户。\n\n如审核未通过，费用将自动退还。", comment: ""), reserveResponse.displayDate))
         }
         .alert(NSLocalizedString("确认上传", comment: ""), isPresented: $showConfirmAlert) {
             Button(L10n.cancel, role: .cancel) { }
@@ -372,7 +372,7 @@ struct SplashUploadView: View {
                 // 根据错误阶段给出不同提示
                 if error.domain == "Upload" || error.localizedDescription.contains(NSLocalizedString("上传", comment: "")) {
                     // 支付已成功但上传失败的情况
-                    errorMessage = "支付已成功，但图片上传失败。\n请进入「我的订单」重新上传图片，或联系客服处理退款。\n\n错误详情：\(error.localizedDescription)"
+                    errorMessage = String(format: NSLocalizedString("支付已成功，但图片上传失败。\n请进入「我的订单」重新上传图片，或联系客服处理退款。\n\n错误详情：%@", comment: ""), error.localizedDescription)
                 } else {
                     errorMessage = error.localizedDescription
                 }

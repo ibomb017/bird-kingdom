@@ -120,7 +120,7 @@ struct TrashView: View {
             }
         } message: {
             if let bird = selectedBird {
-                Text("确定要恢复「\(bird.nickname)」吗？")
+                Text(String(format: NSLocalizedString("确定要恢复「%@」吗？", comment: ""), bird.nickname))
             }
         }
         .alert(NSLocalizedString("VIP专属功能", comment: ""), isPresented: $showVipAlert) {

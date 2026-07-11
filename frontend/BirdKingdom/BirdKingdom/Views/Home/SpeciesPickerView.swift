@@ -100,7 +100,7 @@ struct SpeciesPickerView: View {
                 }
             } catch {
                 await MainActor.run {
-                    errorMessage = "加载失败: \(error.localizedDescription)"
+                    errorMessage = String(format: NSLocalizedString("加载失败: %@", comment: ""), error.localizedDescription)
                     isLoading = false
                 }
             }

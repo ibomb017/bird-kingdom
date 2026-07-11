@@ -589,7 +589,7 @@ struct EditBirdView: View {
                 await MainActor.run {
                     isSaving = false
                     isUploadingAvatar = false
-                    errorMessage = "保存失败: \(error.localizedDescription)"
+                    errorMessage = String(format: NSLocalizedString("保存失败: %@", comment: ""), error.localizedDescription)
                     showErrorAlert = true
                 }
                 print("❌ 保存失败: \(error)")

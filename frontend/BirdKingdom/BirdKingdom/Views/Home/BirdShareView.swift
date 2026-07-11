@@ -209,7 +209,7 @@ struct BirdShareView: View {
                 Text(NSLocalizedString("共享给", comment: ""))
                     .font(.headline)
                 Spacer()
-                Text("\(sharedUsers.count) 人")
+                Text(String(format: NSLocalizedString("%d人", comment: ""), sharedUsers.count))
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
@@ -442,7 +442,7 @@ struct ShareInviteView: View {
                         .font(.title2)
                         .fontWeight(.bold)
                     
-                    Text("输入对方的手机号，邀请TA一起照顾 \(bird.nickname)")
+                    Text(String(format: NSLocalizedString("输入对方的手机号，邀请TA一起照顾 %@", comment: ""), bird.nickname))
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
@@ -585,7 +585,7 @@ struct ShareInviteView: View {
                 dismiss()
             }
         } message: {
-            Text("已向 \(foundUser?.nickname ?? targetPhone) 发送共享邀请，等待对方确认")
+            Text(String(format: NSLocalizedString("已向 %@ 发送共享邀请，等待对方确认", comment: ""), foundUser?.nickname ?? targetPhone))
         }
     }
     
@@ -750,7 +750,8 @@ struct PendingInvitationsView: View {
                 Spacer()
             }
             
-            Text("\(invitation.fromUsername) 邀请你成为 \(invitation.birdName) 的\(invitation.role == .owner ? "主人" : "查看者")")
+            let roleText = invitation.role == .owner ? NSLocalizedString("主人", comment: "") : NSLocalizedString("查看者", comment: "")
+            Text(String(format: NSLocalizedString("%@ 邀请你成为 %@ 的%@", comment: ""), invitation.fromUsername, invitation.birdName, roleText))
                 .font(.subheadline)
                 .foregroundColor(.secondary)
             

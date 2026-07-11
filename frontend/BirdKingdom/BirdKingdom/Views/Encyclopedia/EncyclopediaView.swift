@@ -442,7 +442,7 @@ struct EncyclopediaView: View {
             VStack(spacing: 12) {
                 featureRow(icon: "mic.fill", text: NSLocalizedString("实时录音，2-10秒即可识别", comment: ""))
                 featureRow(icon: "cpu", text: NSLocalizedString("端侧CNN推理，约32ms完成", comment: ""))
-                featureRow(icon: "bird.fill", text: "支持识别\(BirdVoiceRecognitionService.supportedSpecies.count)种常见鸟类")
+                featureRow(icon: "bird.fill", text: String(format: NSLocalizedString("支持识别%d种常见鸟类", comment: ""), BirdVoiceRecognitionService.supportedSpecies.count))
                 featureRow(icon: "lock.shield.fill", text: NSLocalizedString("音频仅在本地处理，保护隐私", comment: ""))
             }
             .padding(.top, 10)
@@ -575,7 +575,7 @@ struct EncyclopediaView: View {
                                     .font(.headline)
                                     .foregroundColor(themeManager.textPrimary)
                                 Spacer()
-                                Text("\(searchResults.count) 种")
+                                Text(String(format: NSLocalizedString("%d 种", comment: ""), searchResults.count))
                                     .font(.caption)
                                     .foregroundColor(themeManager.textSecondary)
                             }
@@ -608,7 +608,7 @@ struct EncyclopediaView: View {
                                     .font(.headline)
                                     .foregroundColor(themeManager.textPrimary)
                                 Spacer()
-                                Text("\(birdsInCategory.count) 种")
+                                Text(String(format: NSLocalizedString("%d 种", comment: ""), birdsInCategory.count))
                                     .font(.caption)
                                     .foregroundColor(themeManager.textSecondary)
                             }

@@ -192,7 +192,7 @@ struct ExpenseListView: View {
         if let lastDash = month.lastIndex(of: "-") {
             let monthPart = month[month.index(after: lastDash)...]
             if let monthNum = Int(monthPart) {
-                return "\(monthNum)月"
+                return String(format: NSLocalizedString("%d月", comment: ""), monthNum)
             }
         }
         return month
@@ -682,7 +682,7 @@ struct AddExpenseView: View {
                             date: date,
                             birdId: bird.id,
                             birdName: bird.nickname,
-                            note: note.isEmpty ? nil : (note + " (共\(birdCount)只鸟平分)")
+                            note: note.isEmpty ? nil : (note + String(format: NSLocalizedString(" (共%d只鸟平分)", comment: ""), birdCount))
                         )
                         if !success {
                             allSuccess = false

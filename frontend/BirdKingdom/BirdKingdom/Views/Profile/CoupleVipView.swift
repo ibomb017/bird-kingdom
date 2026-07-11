@@ -594,7 +594,7 @@ struct CoupleVipView: View {
                 }
             } catch {
                 await MainActor.run {
-                    errorMessage = "取消失败：\(error.localizedDescription)"
+                    errorMessage = String(format: NSLocalizedString("取消失败：%@", comment: ""), error.localizedDescription)
                     showError = true
                 }
             }
@@ -622,7 +622,7 @@ struct CoupleVipView: View {
             } catch {
                 await MainActor.run {
                     isBinding = false
-                    errorMessage = "绑定失败：\(error.localizedDescription)"
+                    errorMessage = String(format: NSLocalizedString("绑定失败：%@", comment: ""), error.localizedDescription)
                     showError = true
                 }
             }
@@ -644,7 +644,7 @@ struct CoupleVipView: View {
                 }
             } catch {
                 await MainActor.run {
-                    errorMessage = "解绑失败：\(error.localizedDescription)"
+                    errorMessage = String(format: NSLocalizedString("解绑失败：%@", comment: ""), error.localizedDescription)
                     showError = true
                 }
             }
@@ -679,7 +679,7 @@ struct CoupleVipView: View {
             } catch {
                 await MainActor.run {
                     isBinding = false
-                    errorMessage = "修改失败：\(error.localizedDescription)"
+                    errorMessage = String(format: NSLocalizedString("修改失败：%@", comment: ""), error.localizedDescription)
                     showError = true
                 }
             }
@@ -723,7 +723,7 @@ struct CoupleVipView: View {
             } catch {
                 await MainActor.run {
                     isProcessingInvitation = false
-                    errorMessage = "接受邀请失败：\(error.localizedDescription)"
+                    errorMessage = String(format: NSLocalizedString("接受邀请失败：%@", comment: ""), error.localizedDescription)
                     showError = true
                 }
             }
@@ -743,7 +743,7 @@ struct CoupleVipView: View {
             } catch {
                 await MainActor.run {
                     isProcessingInvitation = false
-                    errorMessage = "拒绝邀请失败：\(error.localizedDescription)"
+                    errorMessage = String(format: NSLocalizedString("拒绝邀请失败：%@", comment: ""), error.localizedDescription)
                     showError = true
                 }
             }

@@ -120,7 +120,7 @@ struct SettingsView: View {
             }
         } message: {
             let details = CacheManager.shared.getCacheSizeDetails()
-            Text("当前缓存:\n图片: \(details.images)\n视频: \(details.videos)\n帖子: \(details.posts)\n\n⚠️ 将清除所有本地数据（包括未同步的离线日志），请确保网络正常后再操作")
+            Text(String(format: NSLocalizedString("当前缓存:\n图片: %@\n视频: %@\n帖子: %@\n\n⚠️ 将清除所有本地数据（包括未同步的离线日志），请确保网络正常后再操作", comment: ""), details.images, details.videos, details.posts))
         }
         
         // Navigation destinations within the settings context

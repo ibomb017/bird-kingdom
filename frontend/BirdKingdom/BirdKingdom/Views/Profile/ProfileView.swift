@@ -244,7 +244,7 @@ struct ProfileView: View {
             }
         } message: {
             let details = CacheManager.shared.getCacheSizeDetails()
-            Text("当前缓存:\n图片: \(details.images)\n视频: \(details.videos)\n帖子: \(details.posts)\n\n⚠️ 将清除所有本地数据（包括未同步的离线日志），请确保网络正常后再操作")
+            Text(String(format: NSLocalizedString("当前缓存:\n图片: %@\n视频: %@\n帖子: %@\n\n⚠️ 将清除所有本地数据（包括未同步的离线日志），请确保网络正常后再操作", comment: ""), details.images, details.videos, details.posts))
         }
         // #14 修复：使用 .task 替代 onAppear + Task，实现自动取消机制
         // #13 修复：.task(id:) 可防止重复请求（如需要可添加 id 参数）
@@ -354,7 +354,7 @@ struct ProfileView: View {
                 print("❌ 头像上传/更新失败: \(error)")
                 await MainActor.run {
                     isUploadingAvatar = false
-                    errorMessage = "头像上传失败: \(error.localizedDescription)"
+                    errorMessage = String(format: NSLocalizedString("头像上传失败: %@", comment: ""), error.localizedDescription)
                     showError = true
                 }
             }

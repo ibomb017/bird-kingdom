@@ -237,7 +237,7 @@ struct BirdDetailView: View {
                     if let deathDate = bird.deathDate {
                         HStack(spacing: 4) {
                             Text("🕯️")
-                            Text("忌日: \(formatDeathDate(deathDate))")
+                            Text(String(format: NSLocalizedString("忌日: %@", comment: ""), formatDeathDate(deathDate)))
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
@@ -414,7 +414,7 @@ struct BirdDetailView: View {
                     Image(systemName: "person.2.fill")
                         .font(.caption)
                         .foregroundColor(.blue)
-                    Text("此鸟已共享给 \(bird.sharedWith?.count ?? 0) 位用户")
+                    Text(String(format: NSLocalizedString("此鸟已共享给 %d 位用户", comment: ""), bird.sharedWith?.count ?? 0))
                         .font(.caption)
                         .foregroundColor(.secondary)
                     Spacer()

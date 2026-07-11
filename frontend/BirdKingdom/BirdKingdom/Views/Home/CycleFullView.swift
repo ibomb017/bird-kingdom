@@ -123,7 +123,7 @@ struct CycleFullView: View {
             }
         } message: {
             if let record = recordToDelete {
-                Text("确定要删除 \(formatDate(record.startDate)) 的\(record.cycleType.displayName)记录吗？此操作不可撤销。")
+                Text(String(format: NSLocalizedString("确定要删除 %@ 的%@记录吗？此操作不可撤销。", comment: ""), formatDate(record.startDate), record.cycleType.displayName))
             }
         }
         .task {

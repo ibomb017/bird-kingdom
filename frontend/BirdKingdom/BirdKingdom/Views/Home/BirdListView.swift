@@ -323,7 +323,7 @@ struct BirdListView: View {
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("SyncConflictDetected"))) { notification in
             // 收到同步冲突通知时显示提示
             if let nickname = notification.userInfo?["nickname"] as? String {
-                syncConflictMessage = "「\(nickname)」的数据已被其他设备修改，请下拉刷新获取最新数据"
+                syncConflictMessage = String(format: NSLocalizedString("「%@」的数据已被其他设备修改，请下拉刷新获取最新数据", comment: ""), nickname)
                 showSyncConflictAlert = true
             }
         }
@@ -650,13 +650,13 @@ struct BirdListView: View {
                 
                 if let years = components.year, years >= 1 {
                     if let months = components.month, months > 0 {
-                        return "\(years)岁\(months)个月"
+                        return String(format: NSLocalizedString("%d岁%d个月", comment: ""), years, months)
                     }
-                    return "\(years)岁"
+                    return String(format: NSLocalizedString("%d岁", comment: ""), years)
                 } else if let months = components.month, months > 0 {
-                    return "\(months)个月"
+                    return String(format: NSLocalizedString("%d个月", comment: ""), months)
                 } else if let days = components.day {
-                    return "\(max(1, days))天"
+                    return String(format: NSLocalizedString("%d天", comment: ""), max(1, days))
                 }
                 return ""
             }
@@ -683,13 +683,13 @@ struct BirdListView: View {
             
             if let years = components.year, years >= 1 {
                 if let months = components.month, months > 0 {
-                    return "\(years)岁\(months)个月"
+                    return String(format: NSLocalizedString("%d岁%d个月", comment: ""), years, months)
                 }
-                return "\(years)岁"
+                return String(format: NSLocalizedString("%d岁", comment: ""), years)
             } else if let months = components.month, months > 0 {
-                return "\(months)个月"
+                return String(format: NSLocalizedString("%d个月", comment: ""), months)
             } else if let days = components.day, days > 0 {
-                return "\(days)天"
+                return String(format: NSLocalizedString("%d天", comment: ""), days)
             } else {
                 return NSLocalizedString("刚出生", comment: "")
             }
@@ -834,7 +834,7 @@ struct BirdListView: View {
                     onMarkFound?()
                 }
             } message: {
-                Text("太好了！\(bird.nickname)回来了！\n确认后将取消丢失模式")
+                Text(String(format: NSLocalizedString("太好了！%@回来了！\n确认后将取消丢失模式", comment: ""), bird.nickname))
             }
         }
     }
@@ -1375,7 +1375,7 @@ struct BirdListView: View {
                 if let bird = selectedBird {
                     // 选中鸟：左侧显示该鸟支出，右侧显示本月支出
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("\(bird.nickname)支出")
+                        Text(String(format: NSLocalizedString("%@支出", comment: ""), bird.nickname))
                             .font(.caption)
                             .foregroundColor(.secondary)
                         Text("¥\(ExpenseService.formatAmount(selectedBirdExpense))")
@@ -1890,7 +1890,7 @@ struct BirdListView: View {
             } catch {
                 print("❌ 删除日志失败: \(error)")
                 await MainActor.run {
-                    errorMessage = "删除失败: \(error.localizedDescription)"
+                    errorMessage = String(format: NSLocalizedString("删除失败: %@", comment: ""), error.localizedDescription)
                 }
             }
         }

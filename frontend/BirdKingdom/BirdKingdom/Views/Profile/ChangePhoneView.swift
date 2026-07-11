@@ -426,7 +426,7 @@ struct ChangePhoneView: View {
             } catch {
                 await MainActor.run {
                     isChanging = false
-                    errorMessage = "修改失败：\(error.localizedDescription)"
+                    errorMessage = String(format: NSLocalizedString("修改失败：%@", comment: ""), error.localizedDescription)
                     showError = true
                 }
             }

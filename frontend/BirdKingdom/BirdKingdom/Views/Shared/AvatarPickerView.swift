@@ -234,7 +234,7 @@ struct AvatarPickerView: View {
             } catch {
                 await MainActor.run {
                     isLoading = false
-                    errorMessage = "加载图片失败: \(error.localizedDescription)"
+                    errorMessage = String(format: NSLocalizedString("加载图片失败: %@", comment: ""), error.localizedDescription)
                     showError = true
                 }
             }
@@ -266,7 +266,7 @@ struct AvatarPickerView: View {
             } catch {
                 await MainActor.run {
                     isLoading = false
-                    errorMessage = "保存头像失败: \(error.localizedDescription)"
+                    errorMessage = String(format: NSLocalizedString("保存头像失败: %@", comment: ""), error.localizedDescription)
                     showError = true
                 }
             }
