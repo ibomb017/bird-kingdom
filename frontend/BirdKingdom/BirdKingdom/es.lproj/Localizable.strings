@@ -725,7 +725,7 @@ El simulador no admite micrófono";
 "寻鸟" = "buscando pájaros";
 "寻鸟信息" = "Información sobre la caza de aves.";
 "寻鸟启事" = "aviso de caza de aves";
-"寻鸟启事已发布，将推送给附近5公里内的鸟友" = "El aviso de caza de aves se publicó y se enviará a los amantes de las aves cercanas en un radio de 5 kilómetros.";
+"寻鸟启事已发布，将推送给附近10公里内的鸟友" = "El aviso de búsqueda de aves se publicó y se enviará a los amantes de las aves cercanas en un radio de 10 kilómetros.";
 "将鸟放在暖和避风处，温度保持在22-25°C" = "Coloque el ave en un lugar cálido y protegido a una temperatura de 22-25°C.";
 "将鸟笼移至暗处，减少光线刺激" = "Mueva la jaula a un lugar oscuro para reducir la estimulación de la luz.";
 "将鸟笼移至避风温暖处（22-25°C）" = "Traslade la jaula a un lugar cálido y protegido del viento (22-25°C)";

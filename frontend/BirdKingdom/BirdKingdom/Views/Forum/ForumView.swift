@@ -6359,7 +6359,7 @@ struct CreateFindBirdPostView: View {
         .alert("发布成功", isPresented: $showSuccess) {
                 Button("确定") { dismiss() }
             } message: {
-                Text("寻鸟启事已发布，将推送给附近5公里内的鸟友")
+                Text("寻鸟启事已发布，将推送给附近10公里内的鸟友")
             }
         .alert("信息不完整", isPresented: $showValidationError) {
             Button("知道了", role: .cancel) { }
